@@ -1,0 +1,127 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Clickly Admin</title><meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FFF8EC;--cream:#FCEFD6;--ink:#1F140D;--ink2:#8A7262;--card:#fff;--line:rgba(31,20,13,.10);--acc:#F6884C;--accd:#E06D32;--good:#2E7D4F;--bad:#C8412B;--warn:#B7791F}
+[hidden]{display:none!important}*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.4 Nunito,system-ui,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
+.logo{font:700 30px Fredoka,Nunito,sans-serif;color:var(--acc);letter-spacing:-.5px}.logo small{font:800 13px Nunito;color:var(--ink);background:var(--cream);padding:3px 9px;border-radius:20px;margin-left:8px;vertical-align:middle;letter-spacing:.04em}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:0 18px;border-radius:999px;border:0;background:var(--acc);color:var(--ink);font-weight:800}
+.pill.ink{background:var(--ink);color:var(--paper)}.pill.ghost{background:var(--cream)}.pill.sm{min-height:34px;padding:0 13px;font-size:14px}.pill:disabled{opacity:.5;cursor:default}
+.card{background:var(--card);border-radius:20px;padding:16px;box-shadow:0 1px 0 var(--line),0 8px 24px rgba(31,20,13,.05)}
+input,select,textarea{width:100%;min-height:42px;padding:8px 12px;border-radius:12px;border:2px solid var(--line);background:#fff}input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc)}
+label{display:block;font-size:13px;font-weight:800;margin:0 0 4px;color:var(--ink2)}
+#login{min-height:100vh;display:grid;place-items:center;padding:16px}#login .card{width:min(420px,100%);padding:26px}
+#login h1{margin:0 0 4px}.muted{color:var(--ink2)}.err{color:var(--bad);font-weight:700;min-height:1.3em;margin-top:8px}
+header{position:sticky;top:0;z-index:5;background:rgba(255,248,236,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px}
+.tabs{display:flex;gap:6px;margin-left:auto}.tabs button{border:0;background:transparent;font-weight:800;padding:8px 14px;border-radius:999px;color:var(--ink2)}.tabs button.on{background:var(--ink);color:var(--paper)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:6px 0 16px}.kpi{background:var(--card);border-radius:16px;padding:12px 14px}.kpi b{display:block;font:800 26px Nunito}.kpi span{color:var(--ink2);font-size:13px;font-weight:700}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}.chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-weight:800;font-size:14px}.chip.on{border-color:var(--acc);background:var(--cream)}
+.orders{display:grid;gap:12px}.order{display:grid;gap:8px}.order .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.code{font:800 18px Nunito;letter-spacing:.04em}.st{display:inline-block;padding:3px 10px;border-radius:999px;font-weight:800;font-size:13px}
+.st.Nueva{background:#FFE7D6;color:var(--accd)}.st.Confirmada{background:#E3EEFF;color:#2F5FB8}.st.Pagada{background:#E2F3E8;color:var(--good)}.st.Enviada{background:#EFE6FF;color:#6A42C2}.st.Entregada{background:#E8E8E8;color:#444}.st.Cancelada{background:#FBE1DD;color:var(--bad)}
+.boxes{display:grid;gap:4px;background:var(--paper);border-radius:12px;padding:8px 10px;font-size:15px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:640px){.row2{grid-template-columns:1fr}}
+.prods{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.prod{display:grid;gap:10px}.prod .head{display:flex;gap:12px;align-items:center}.sw{width:46px;height:46px;border-radius:14px;flex:none;display:grid;place-items:center;overflow:hidden}.sw img{width:100%;height:100%;object-fit:contain}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.stock{display:flex;gap:4px}.stock button{width:38px;flex:none;border-radius:10px;border:2px solid var(--line);background:#fff;font-weight:900}
+.tog{display:flex;align-items:center;gap:8px;font-weight:800}.tog input{width:auto;min-height:auto;transform:scale(1.4)}
+.low{color:var(--warn);font-weight:800}.zero{color:var(--bad);font-weight:800}
+details.more summary{cursor:pointer;font-weight:800;color:var(--ink2);font-size:14px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-weight:800;transition:.25s;z-index:20}.toast.on{opacity:1;transform:translateX(-50%)}
+.empty{text-align:center;padding:40px 10px;color:var(--ink2)}
+a{color:var(--accd);font-weight:800}
+</style></head><body>
+<section id="login"><div class="card">
+ <div class="logo">clickly<small>ADMIN</small></div>
+ <p class="muted">Pedidos, precios, pops y stock de la tienda.</p>
+ <form id="lf"><label for="clave">Clave</label><input id="clave" type="password" autocomplete="current-password" required>
+  <details class="more" style="margin-top:12px"><summary>Conexión</summary><label for="api" style="margin-top:8px">URL de la app web (Google Apps Script)</label><input id="api" placeholder="https://script.google.com/macros/s/…/exec"></details>
+  <div class="err" id="lerr"></div><button class="pill ink" style="width:100%;margin-top:6px">Entrar</button></form>
+</div></section>
+<section id="app" hidden>
+<header><div class="wrap"><div class="logo">clickly<small>ADMIN</small></div>
+ <nav class="tabs"><button data-tab="pedidos" class="on">Pedidos</button><button data-tab="productos">Pops y stock</button><button data-tab="ajustes">Ajustes</button></nav>
+ <button class="pill sm ghost" id="reload" title="Actualizar">↻ Actualizar</button></div></header>
+<main class="wrap">
+ <div id="t-pedidos"><div class="kpis" id="kpis"></div><div class="bar" id="filters"></div><input id="q" placeholder="Buscar por nombre, código, ciudad o contacto…" style="margin-bottom:12px"><div class="orders" id="orders"></div></div>
+ <div id="t-productos" hidden><div class="bar"><b style="font-size:20px">Pops y stock</b><span class="muted">Los cambios se ven en la tienda al recargarla.</span><button class="pill sm" id="newp" style="margin-left:auto">+ Nuevo pop</button></div><div class="prods" id="prods"></div></div>
+ <div id="t-ajustes" hidden><div class="card" style="max-width:460px"><b style="font-size:20px">Cambiar clave</b>
+  <form id="cf" style="display:grid;gap:10px;margin-top:10px"><div><label>Clave actual</label><input type="password" id="c1" required></div><div><label>Clave nueva (6 o más)</label><input type="password" id="c2" required minlength="6"></div><div class="err" id="cerr"></div><button class="pill ink">Guardar clave</button></form></div>
+  <div class="card" style="max-width:460px;margin-top:12px"><b>Sesión</b><p class="muted">La sesión dura 6 horas.</p><button class="pill sm ghost" id="logout">Cerrar sesión</button></div></div>
+</main></section>
+<div class="toast" id="toast"></div>
+<script>
+const DEFAULT_API='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec';
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let API='';try{API=localStorage.getItem('ck.api')||DEFAULT_API}catch(e){API=DEFAULT_API}
+let TOKEN='';try{TOKEN=sessionStorage.getItem('ck.tk')||''}catch(e){}
+let D={productos:[],pedidos:[],estados:[]},filt='Todas',q='';
+const money=v=>'$'+Math.round(Number(v)||0).toLocaleString('es-AR');
+let tt;function toast(s){const t=$('#toast');t.textContent=s;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2200)}
+async function call(body){const ac=new AbortController(),to=setTimeout(()=>ac.abort(),25000);let r;try{r=await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...body,token:TOKEN}),signal:ac.signal,redirect:'follow'})}catch(e){throw new Error(e.name==='AbortError'?'El servidor tardó demasiado. Probá de nuevo.':'No me pude conectar con Google. Abrí este archivo en Chrome (no en una vista previa) y revisá internet.')}finally{clearTimeout(to)}
+  const tx=await r.text();let j;try{j=JSON.parse(tx)}catch(e){throw new Error('Google no devolvió datos. Revisá que la implementación tenga acceso: Cualquier persona.')}
+  if(!j.ok&&/Sesión vencida/.test(j.error||'')){logout();throw new Error(j.error)}return j}
+$('#api').value=API;
+$('#lf').addEventListener('submit',async e=>{e.preventDefault();$('#lerr').textContent='';API=$('#api').value.trim()||DEFAULT_API;
+  if(!/^https?:\/\//.test(API)){$('#lerr').textContent='Falta la URL de la app web en "Conexión".';$('details.more').open=true;return}
+  try{localStorage.setItem('ck.api',API)}catch(e){}
+  const b=e.submitter||$('#lf button');b.disabled=true;b.textContent='Entrando…';
+  try{const j=await call({a:'login',clave:$('#clave').value});if(!j.ok)throw new Error(j.error||'No se pudo entrar');TOKEN=j.token;try{sessionStorage.setItem('ck.tk',TOKEN)}catch(e){}$('#clave').value='';await load();show()}
+  catch(err){$('#lerr').textContent=err.message}finally{b.disabled=false;b.textContent='Entrar'}});
+function show(){$('#login').hidden=true;$('#app').hidden=false}
+function logout(){TOKEN='';try{sessionStorage.removeItem('ck.tk')}catch(e){}$('#app').hidden=true;$('#login').hidden=false}
+$('#logout').onclick=logout;
+async function load(){const j=await call({a:'panel'});if(!j.ok)throw new Error(j.error);D=j;render()}
+$('#reload').onclick=async()=>{try{await load();toast('Actualizado')}catch(e){toast(e.message)}};
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('on',x===b));['pedidos','productos','ajustes'].forEach(t=>$('#t-'+t).hidden=t!==b.dataset.tab)});
+function render(){renderOrders();renderProds()}
+function contactLink(c){c=String(c||'').trim();const d=c.replace(/\D/g,'');if(c.startsWith('@'))return `<a href="https://instagram.com/${encodeURIComponent(c.slice(1))}" target="_blank" rel="noopener">${esc(c)}</a>`;
+  if(d.length>=8)return `<a href="https://wa.me/${d.startsWith('54')?d:'549'+d.replace(/^0/,'')}" target="_blank" rel="noopener">${esc(c)} (WhatsApp)</a>`;return esc(c)}
+function renderOrders(){const P=D.pedidos||[];const act=P.filter(o=>o.estado!=='Cancelada');
+  const pend=act.filter(o=>!['Pagada','Enviada','Entregada'].includes(o.estado)).reduce((a,o)=>a+Number(o.total||0),0);
+  $('#kpis').innerHTML=`<div class="kpi"><b>${P.filter(o=>o.estado==='Nueva').length}</b><span>Nuevas sin confirmar</span></div><div class="kpi"><b>${act.length}</b><span>Reservas activas</span></div><div class="kpi"><b>${act.reduce((a,o)=>a+Number(o.cantidad_cajas||0),0)}</b><span>Cajas reservadas</span></div><div class="kpi"><b>${money(pend)}</b><span>Por cobrar</span></div>`;
+  const ests=['Todas',...(D.estados||[])];$('#filters').innerHTML=ests.map(s=>`<button class="chip ${s===filt?'on':''}" data-f="${esc(s)}">${esc(s)} ${s==='Todas'?P.length:P.filter(o=>o.estado===s).length}</button>`).join('');
+  const L=P.filter(o=>(filt==='Todas'||o.estado===filt)&&(!q||JSON.stringify(o).toLowerCase().includes(q)));
+  $('#orders').innerHTML=L.length?L.map(o=>`<article class="card order"><div class="top"><div><span class="code">${esc(o.codigo)}</span> <span class="st ${esc(o.estado)}">${esc(o.estado)}</span><div class="muted">${new Date(o.fecha).toLocaleString('es-AR',{dateStyle:'medium',timeStyle:'short'})}</div></div><b style="font-size:22px">${money(o.total)}</b></div>
+   <div><b>${esc(o.nombre)} ${esc(o.apellido)}</b> · ${contactLink(o.contacto)}</div>
+   <div class="muted">${esc(o.direccion)}, ${esc(o.ciudad)} (${esc(o.cp)}), ${esc(o.provincia)}, ${esc(o.pais)} <button class="pill sm ghost" data-copy="${esc(`${o.nombre} ${o.apellido}\n${o.direccion}\n${o.ciudad} (${o.cp}), ${o.provincia}, ${o.pais}\n${o.contacto}`)}">Copiar dirección</button></div>
+   <div class="boxes">${String(o.cajas||'').split(' | ').map(c=>`<div>${esc(c)}</div>`).join('')}</div>
+   <div class="row2"><div><label>Estado</label><select data-est="${esc(o.codigo)}">${(D.estados||[]).map(s=>`<option ${s===o.estado?'selected':''}>${esc(s)}</option>`).join('')}</select></div>
+   <div><label>Notas internas</label><input data-notes="${esc(o.codigo)}" value="${esc(o.notas)}" placeholder="Ej: pagó seña por transferencia"></div></div></article>`).join(''):`<div class="empty card">${P.length?'No hay pedidos con ese filtro.':'Todavía no hay reservas. Cuando alguien reserve en la tienda, aparece acá.'}</div>`}
+$('#filters').addEventListener('click',e=>{const b=e.target.closest('[data-f]');if(b){filt=b.dataset.f;renderOrders()}});
+$('#q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();renderOrders()});
+$('#orders').addEventListener('change',async e=>{const s=e.target.closest('[data-est]');if(!s)return;const est=s.value,codigo=s.dataset.est;s.disabled=true;
+  try{const j=await call({a:'estado',codigo,estado:est});if(!j.ok)throw new Error(j.error);toast(`${codigo}: ${est}${est==='Cancelada'?' · stock devuelto':''}`);await load()}catch(err){toast(err.message);await load()}});
+$('#orders').addEventListener('focusout',async e=>{const i=e.target.closest('[data-notes]');if(!i)return;const o=(D.pedidos||[]).find(x=>x.codigo===i.dataset.notes);if(!o||String(o.notas||'')===i.value)return;
+  try{const j=await call({a:'estado',codigo:o.codigo,estado:o.estado,notas:i.value});if(!j.ok)throw new Error(j.error);o.notas=i.value;toast('Nota guardada')}catch(err){toast(err.message)}});
+$('#orders').addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(!b)return;navigator.clipboard?.writeText(b.dataset.copy).then(()=>toast('Dirección copiada'),()=>toast('No se pudo copiar'))});
+const LINES={base:'BASE',ar:'ARGENTINA',bf:'BREACKFAST',sweet:'SWEET'};
+function prodCard(p,isNew){const st=Number(p.stock||0);return `<article class="card prod" data-id="${esc(p.id)}" ${isNew?'data-new="1"':''}>
+  <div class="head"><div class="sw" style="background:${esc(p.color||'#F6884C')}">${p.imagen?`<img src="${esc(p.imagen)}" alt="">`:''}</div><div style="flex:1"><b style="font-size:18px">${esc(p.nombre||'Nuevo pop')}</b><div class="muted" style="font-size:13px">${isNew?'Nuevo':'id: '+esc(p.id)} · ${st<=0?'<span class="zero">Agotado</span>':st<=5?`<span class="low">Quedan ${st}</span>`:`Stock ${st}`}</div></div>
+  <label class="tog"><input type="checkbox" name="activo" ${p.activo||isNew?'checked':''}> Visible</label></div>
+  ${isNew?`<div><label>Id (sin espacios, ej: empanada)</label><input name="id" required pattern="[a-z0-9_-]+"></div>`:''}
+  <div><label>Nombre</label><input name="nombre" value="${esc(p.nombre)}"></div>
+  <div class="g3"><div><label>Precio por pop ($)</label><input name="precio" type="number" min="0" step="100" value="${esc(p.precio??6000)}"></div>
+  <div style="grid-column:span 2"><label>Stock</label><div class="stock"><button type="button" data-d="-1">−</button><input name="stock" type="number" min="0" step="1" value="${st}"><button type="button" data-d="1">+</button><button type="button" data-d="10">+10</button></div></div></div>
+  <details class="more"><summary>Más datos</summary><div style="display:grid;gap:8px;margin-top:8px">
+   <div class="row2"><div><label>Línea</label><select name="linea">${Object.entries(LINES).map(([k,v])=>`<option value="${k}" ${p.linea===k?'selected':''}>${v}</option>`).join('')}</select></div><div><label>Color</label><input name="color" type="color" value="${esc(/^#[0-9a-f]{6}$/i.test(p.color||'')?p.color:'#F6884C')}"></div></div>
+   <div><label>Descripción</label><textarea name="descripcion" rows="2">${esc(p.descripcion)}</textarea></div>
+   <div><label>Imagen (URL, PNG con fondo transparente)</label><input name="imagen" value="${esc(p.imagen)}" placeholder="Solo para pops nuevos"></div></div></details>
+  <div style="display:flex;gap:8px"><button class="pill ink sm" data-save>Guardar</button>${isNew?'<button class="pill ghost sm" data-cancel>Cancelar</button>':'<button class="pill ghost sm" data-del>Borrar</button>'}</div></article>`}
+function renderProds(){$('#prods').innerHTML=(D.productos||[]).map(p=>prodCard(p,false)).join('')}
+$('#newp').onclick=()=>{if($('[data-new]'))return;$('#prods').insertAdjacentHTML('afterbegin',prodCard({nombre:'',precio:6000,stock:10,linea:'base',color:'#F6884C'},true));$('[data-new] input[name=id]').focus()};
+$('#prods').addEventListener('click',async e=>{const card=e.target.closest('.prod');if(!card)return;
+  const d=e.target.closest('[data-d]');if(d){const i=card.querySelector('[name=stock]');i.value=Math.max(0,(+i.value||0)+(+d.dataset.d));return}
+  if(e.target.closest('[data-cancel]')){card.remove();return}
+  if(e.target.closest('[data-del]')){const b=e.target.closest('[data-del]');if(b.dataset.sure!=='1'){b.dataset.sure='1';b.textContent='¿Seguro? Tocá de nuevo';setTimeout(()=>{b.dataset.sure='';b.textContent='Borrar'},3000);return}
+    try{const j=await call({a:'borrarProducto',id:card.dataset.id});if(!j.ok)throw new Error(j.error);toast('Pop borrado');await load()}catch(err){toast(err.message)}return}
+  if(e.target.closest('[data-save]')){const f=n=>card.querySelector(`[name=${n}]`);const p={id:card.dataset.new?f('id').value.trim().toLowerCase():card.dataset.id,nombre:f('nombre').value.trim(),precio:+f('precio').value,stock:+f('stock').value,activo:f('activo').checked,linea:f('linea').value,color:f('color').value,descripcion:f('descripcion').value.trim(),imagen:f('imagen').value.trim()};
+    if(!p.id){toast('Poné un id');return}if(card.dataset.new&&(D.productos||[]).some(x=>x.id===p.id)){toast('Ese id ya existe');return}
+    const b=e.target.closest('[data-save]');b.disabled=true;b.textContent='Guardando…';
+    try{const j=await call({a:'producto',producto:p});if(!j.ok)throw new Error(j.error);toast(`${p.nombre||p.id} guardado`);await load()}catch(err){toast(err.message);b.disabled=false;b.textContent='Guardar'}}});
+$('#cf').addEventListener('submit',async e=>{e.preventDefault();$('#cerr').textContent='';try{const j=await call({a:'clave',actual:$('#c1').value,nueva:$('#c2').value});if(!j.ok)throw new Error(j.error);$('#c1').value=$('#c2').value='';toast('Clave cambiada')}catch(err){$('#cerr').textContent=err.message}});
+if(TOKEN&&API){load().then(show).catch(()=>logout())}
+</script></body></html>
