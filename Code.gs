@@ -98,7 +98,8 @@ function reservar_(r, pagar){
     for (const id in qty) sh.getRange(byId[id]._row, colStock).setValue(byId[id].stock - qty[id]);
     const envio = ENVIOS[r.envio] ? r.envio : 'sucursal';
     const llenas = cajas.filter(c => c.length === POPS_POR_CAJA).length;
-    const costoEnvio = llenas >= CAJAS_ENVIO_GRATIS ? 0 : ENVIOS[envio].p;
+    const TARIFA = {retiro:[0,0,0], sucursal:[7500,4990,0], domicilio:[11500,8990,4000]};   // sin caja llena / 1 caja llena / 2+ cajas llenas
+    const costoEnvio = (TARIFA[envio] || [0,0,0])[llenas >= CAJAS_ENVIO_GRATIS ? 2 : llenas >= 1 ? 1 : 0];
     const subtotal = cajas.reduce((t, c) => t + (c.length === POPS_POR_CAJA ? PRECIO_CAJA : c.length * PRECIO_POP), 0); // caja llena $12.000, si no $2.500 por pop
     const total = subtotal + costoEnvio;
     const conPago = !!(pagar && mpToken_());
