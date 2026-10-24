@@ -363,7 +363,7 @@ footer hr{border:0;border-top:1px solid rgba(255,243,226,.14);margin:0}
 </section>
 
 <section class="sec" id="caja"><div class="wrap">
-  <div class="sh center rv"><span class="eye">Preventa · Armá tus cajas</span><h2 class="h-sec">Mezclá como quieras.</h2><p class="intro">Cada pop sale $2.500 y la caja llena de cinco, <span class="g" style="font-weight:600">$12.000</span>. Podés armar <b>hasta 5 cajas</b>, y con 5 cajas llenas <b>el envío es gratis</b>.</p></div>
+  <div class="sh center rv"><span class="eye">Preventa · Armá tus cajas</span><h2 class="h-sec">Mezclá como quieras.</h2><p class="intro">Cada pop sale $2.500 y la caja llena de cinco, <span class="g" style="font-weight:600">$12.000</span>. Podés armar <b>hasta 5 cajas</b>, y desde 2 cajas llenas <b>el envío es gratis</b>.</p></div>
   <div class="boxtabs" id="boxtabs" role="tablist" aria-label="Tus cajas"></div>
   <div class="cfg">
     <div class="boxv">
@@ -386,8 +386,8 @@ footer hr{border:0;border-top:1px solid rgba(255,243,226,.14);margin:0}
   <div class="faq">
     <details><summary>¿Son comida?</summary><p>No. Son clickers impresos en 3D con forma de lo que más te gusta. No se comen, no se derriten y no caducan.</p></details>
     <details><summary>¿Puedo repetir el mismo pop?</summary><p>Sí. La caja es de cinco y podés poner el mismo pop las veces que quieras.</p></details>
-    <details><summary>¿Cuánto sale la caja llena?</summary><p>Cada pop sale $2.500 y la caja llena de cinco, $12.000. El envío se paga aparte, salvo que lleves 5 cajas llenas: ahí el envío es gratis.</p></details>
-    <details><summary>¿Cuánto sale el envío?</summary><p>Enviamos a todo el país con Correo Argentino, a sucursal ($7.500) o a domicilio ($11.500), y se paga aparte. Si llevás 5 cajas llenas, el envío es gratis.</p></details>
+    <details><summary>¿Cuánto sale la caja llena?</summary><p>Cada pop sale $2.500 y la caja llena de cinco, $12.000. El envío se paga aparte, salvo que lleves 2 cajas llenas o más: ahí el envío es gratis.</p></details>
+    <details><summary>¿Cuánto sale el envío?</summary><p>Enviamos a todo el país con Correo Argentino, a sucursal ($7.500) o a domicilio ($11.500), y se paga aparte. Desde 2 cajas llenas, el envío es gratis.</p></details>
     <details><summary>¿Qué es la Línea ARGENTINA?</summary><p>Es la línea con los colores de la bandera. Tiene Medialuna Pop, Alfajor Pop y Mate Pop, y vamos a ir sumando más pops.</p></details>
     <details><summary>¿Hasta cuándo está la Línea BREACKFAST?</summary><p>Es por tiempo limitado. Clickly Box, de la línea BASE, se queda para siempre.</p></details>
     <details><summary>¿Cuántas cajas puedo reservar?</summary><p>Hasta 5 cajas por reserva. Cada caja lleva 5 pops y la armás como quieras.</p></details>
@@ -426,7 +426,7 @@ const POPS=[
  {id:'pancake',n:'Pancake Pop',w:'PANCAKE',line:'bf',c:'#E8A33D',ct:'Click en el panqueque de arriba',d:'Una pila de panqueques con almíbar y una pastillita de manteca arriba.'},
  {id:'macaron',n:'Pink Macaron Pop',w:'MACARON',line:'sweet',c:'#EF97B1',ct:'Click en la tapita de arriba',d:'Un macaron con tapitas rosa pastel y relleno blanco.'}];
 const LINES={base:{n:'Línea BASE',tag:'Para siempre'},ar:{n:'Línea ARGENTINA',tag:'Nuevo'},bf:{n:'Línea BREACKFAST',tag:'Tiempo limitado'},sweet:{n:'Línea SWEET',tag:'Nuevo'}};
-const PRICE=2500,PBOX=12000,FREE=5,MAX=5,KEY='clickly.caja5';
+const PRICE=2500,PBOX=12000,FREE=2,MAX=5,KEY='clickly.caja5';
 /* Catálogo en vivo (Clickly Admin): precios, stock y pops visibles */
 const API='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec';const CATKEY='clickly.catalogo';
 let ENV={retiro:{n:'Retiro en persona (sin cargo)',p:0},sucursal:{n:'Correo Argentino a sucursal',p:7500},domicilio:{n:'Correo Argentino a domicilio',p:11500}},PAGO=false;
@@ -572,7 +572,7 @@ function drawCfg(){const T=totals(),ids=list();drawTabs();
   $('#stp').innerHTML=T.allFull?`Paso 2. <span>Revisá y reservá ${T.nb>1?`tus ${T.nb} cajas`:'tu caja'}.</span>`:T.full?`Caja ${cur+1} lista. <span>Completá la caja ${pend+1} o sumá otra.</span>`:`Paso 1. <span>${T.n?`Te faltan ${MAX-T.n} en la caja ${cur+1}. Podés repetir.`:`Tocá un pop para sumarlo a la caja ${cur+1}.`}</span>`;
   $('#opts').innerHTML=POPS.map(p=>`<button class="op ${C[p.id]?'has':''}" style="--pc:${p.c}" data-plus="${p.id}" ${T.full||avail(p.id)<=0?'disabled':''} aria-label="Sumar ${p.n}"><img src="${IMG[p.id]}" alt=""><span><b>${p.n}</b><small>${money(priceOf(p.id))} · ${avail(p.id)<=0?'<span style="color:#d9412b;font-weight:700">Agotado</span>':p.stock!==undefined&&avail(p.id)<=5?`Quedan ${avail(p.id)}`:LINES[p.line].tag}</small></span><span class="q tab">${C[p.id]||''}</span></button>`).join('');
   const R=getRes();
-  $('#sum').innerHTML=`<div><span>${T.nb} ${T.nb>1?'cajas':'caja'} · ${T.all} pops</span><span>${money(T.sub)}</span></div>`+`<div><span>Envío</span><span style="color:var(--ink2)">${T.free?'¡gratis!':'aparte (gratis con 5 cajas llenas)'}</span></div>`+`<div class="t"><span>Total</span><span>${money(T.tot)}</span></div>`+
+  $('#sum').innerHTML=`<div><span>${T.nb} ${T.nb>1?'cajas':'caja'} · ${T.all} pops</span><span>${money(T.sub)}</span></div>`+`<div><span>Envío</span><span style="color:var(--ink2)">${T.free?'¡gratis!':'aparte (gratis desde 2 cajas llenas)'}</span></div>`+`<div class="t"><span>Total</span><span>${money(T.tot)}</span></div>`+
   (T.n||T.nb>1?'':'<button class="sugg" id="sugg"><span class="st">'+['base','alfajor','medialuna'].map(k=>`<img src="${IMG[k]}" alt="">`).join('')+'</span><span><b>Usar la caja sugerida</b><small>Box, Alfajor, Medialuna, Mate y Waffle · $12.000</small></span></button>')+
   `<div class="act"><button class="pill undo" id="undo" ${T.n?'':'disabled'}>Quitar el último</button><button class="pill ink" id="order" ${T.ok?'':'disabled'}>${!T.all?'Elegí tus pops':T.allFull?`Reservar ${T.nb>1?T.nb+' cajas':'mi caja'}`:T.ok?`Reservar ${T.all} ${T.all>1?'pops':'pop'}`:'Hay una caja vacía'}</button></div>`+
   (R.length?`<div class="rsaved"><b>Tenés ${R.length>1?R.length+' reservas guardadas':'una reserva guardada'}</b> en este dispositivo · última: ${R[R.length-1].codigo}. <a href="#" id="showres" style="color:var(--link);font-weight:700">Ver</a></div>`:'')}
