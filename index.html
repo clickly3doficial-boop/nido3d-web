@@ -141,6 +141,56 @@ footer .legal{margin-top:16px;display:flex;justify-content:space-between;gap:12p
 .tile.nov .mac i{position:absolute;border-radius:50%;background:#fff;opacity:.55;animation:bob 4s ease-in-out infinite}
 @keyframes macf{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-22px) rotate(4deg)}}
 @media (prefers-reduced-motion:reduce){.tile.nov .mac img,.tile.nov .mac i{animation:none}}
+
+/* 5 · bolsas NiDoo */
+.bags{position:relative;z-index:3;background:var(--bg);padding:90px 0 100px;text-align:center;overflow:hidden}
+.bags .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--fg3)}
+.bags h2{font-size:clamp(40px,6vw,72px);font-weight:600;letter-spacing:-.045em;line-height:1.05;margin-top:6px}
+.bags h2 .holo{background:linear-gradient(100deg,#9fd8f6,#f3b5e0 30%,#c9b6f7 55%,#8fe3e8 80%,#f6c1dc);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:holo 6s linear infinite}
+.bags .lead{font-size:clamp(17px,2vw,21px);color:var(--fg2);max-width:620px;margin:12px auto 0;letter-spacing:-.02em}
+.bchips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:34px auto 0;max-width:760px;padding:0 16px}
+.bchips button{font-size:14px;font-weight:500;padding:8px 16px;border-radius:980px;background:var(--bg2);color:var(--fg);transition:background .2s,color .2s,transform .15s}
+.bchips button:active{transform:scale(.96)}
+.bchips button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.brow{display:flex;align-items:flex-end;justify-content:center;gap:clamp(10px,3vw,40px);margin:46px auto 0;padding:0 16px;max-width:1000px}
+.bag{--w:150px;--h:200px;position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;cursor:pointer;transition:opacity .35s,filter .35s,transform .35s var(--ease);background:none;border:0;padding:0;color:var(--fg)}
+.bag .sh{position:relative;width:var(--w);height:var(--h);border-radius:6px 6px 10px 10px;
+ background:
+  radial-gradient(120% 20% at 50% 30%,rgba(255,255,255,.55),transparent 60%),
+  radial-gradient(120% 18% at 50% 55%,rgba(255,255,255,.45),transparent 60%),
+  radial-gradient(120% 16% at 50% 80%,rgba(255,255,255,.4),transparent 60%),
+  linear-gradient(170deg,#e9a8e0 0%,#8fd6f0 14%,#f4a9d6 27%,#b8a6f2 39%,#6fd3e3 52%,#f0b3e2 64%,#9dc4f7 77%,#f7a8cf 90%,#8ee3ea 100%);
+ background-size:100% 100%,100% 100%,100% 100%,260% 260%;
+ animation:holo2 7s ease-in-out infinite;
+ -webkit-mask:radial-gradient(circle at 50% calc(var(--w)*.09),transparent calc(var(--w)*.045),#000 calc(var(--w)*.045 + .5px));mask:radial-gradient(circle at 50% calc(var(--w)*.09),transparent calc(var(--w)*.045),#000 calc(var(--w)*.045 + .5px));
+ box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);filter:drop-shadow(0 18px 22px rgba(120,90,160,.22))}
+.bag .sh::before{content:"";position:absolute;left:4%;right:4%;top:calc(var(--w)*.2);height:calc(var(--w)*.07);border-top:2px solid rgba(255,255,255,.75);border-bottom:2px solid rgba(110,120,180,.25);border-radius:2px}
+.bag .sh::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.65) 48%,transparent 60%);background-size:250% 100%;animation:sheen 4.5s ease-in-out infinite;mix-blend-mode:soft-light}
+.bag .sh svg{position:absolute;left:50%;top:56%;width:calc(var(--w)*.27);height:calc(var(--w)*.33);translate:-50% -50%;color:#000;filter:drop-shadow(0 4px 4px rgba(0,0,0,.25))}
+.bag b{font-size:17px;font-weight:600;letter-spacing:-.02em}
+.bag small{font-size:13px;color:var(--fg3);margin-top:-12px}
+.bag.s{--w:clamp(44px,13vw,120px);--h:calc(var(--w)*1.4)}
+.bag.m{--w:clamp(58px,17vw,160px);--h:calc(var(--w)*1.42)}
+.bag.l{--w:clamp(76px,22vw,210px);--h:calc(var(--w)*1.45)}
+.bag.xl{--w:clamp(92px,26vw,250px);--h:calc(var(--w)*1.5)}
+.bag:hover .sh{transform:translateY(-6px) rotate(-1.5deg)}.bag .sh{transition:transform .35s var(--ease)}
+.bag.off{opacity:.25;filter:grayscale(.7)}
+.bag.sel .sh{transform:translateY(-10px) scale(1.04)}
+.bag.sel b::after{content:"";display:block;height:3px;border-radius:2px;margin-top:4px;background:linear-gradient(90deg,#9fd8f6,#f3b5e0,#c9b6f7)}
+.binfo{max-width:620px;margin:40px auto 0;padding:26px 24px;border-radius:24px;background:var(--bg2);text-align:left;min-height:170px}
+.binfo h3{font-size:24px;font-weight:600;letter-spacing:-.03em}
+.binfo p{color:var(--fg2);margin-top:6px}
+.binfo ul{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.binfo li{font-size:14px;padding:6px 12px;border-radius:10px;background:var(--bg);color:var(--fg)}
+.bincl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px;max-width:900px;margin:40px auto 0;padding:0 16px;text-align:left}
+.bincl div{padding:20px;border-radius:20px;background:var(--bg2)}
+.bincl b{display:block;font-size:17px;letter-spacing:-.02em}
+.bincl span{display:block;font-size:14px;color:var(--fg2);margin-top:4px}
+@keyframes holo{to{background-position:200% 0}}
+@keyframes holo2{0%,100%{background-position:0 0,0 0,0 0,0% 50%}50%{background-position:0 0,0 0,0 0,100% 50%}}
+@keyframes sheen{0%{background-position:150% 0}60%,100%{background-position:-60% 0}}
+@media (max-width:600px){.brow{gap:8px;padding:0 10px}.bag b{font-size:13px}.bag small{display:none}}
+@media (prefers-reduced-motion:reduce){.bag .sh,.bag .sh::after,.bags h2 .holo{animation:none}}
 </style>
 
 <style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -160,6 +210,7 @@ footer .legal{margin-top:16px;display:flex;justify-content:space-between;gap:12p
         <span>Más marcas, muy pronto</span>
       </div>
     </div>
+    <a href="#bolsas">Bolsas</a>
     <a href="#ayuda">Ayuda</a>
     <span class="sp"></span>
   </div>
@@ -211,6 +262,29 @@ footer .legal{margin-top:16px;display:flex;justify-content:space-between;gap:12p
       <span class="tag" style="margin-top:20px">Preventa hasta el 18/12</span>
     </section>
   </div>
+
+  <!-- 5 · bolsas NiDoo -->
+  <section class="bags" id="bolsas" aria-labelledby="bolsasT">
+    <div class="eyebrow">El servicio NiDoo</div>
+    <h2 id="bolsasT">Todo llega en su <span class="holo">bolsa NiDoo.</span></h2>
+    <p class="lead">Cada pedido viaja en una bolsa holográfica con cierre zip y el huevito NiDoo. Hay cuatro tamaños y elegimos la justa para lo que pediste.</p>
+    <div class="bchips" role="group" aria-label="¿Qué vas a pedir?">
+      <button aria-pressed="true" data-c="all">Todo</button><button aria-pressed="false" data-c="clicker">Clickers</button><button aria-pressed="false" data-c="fidget">Fidgets</button><button aria-pressed="false" data-c="flexi">Flexis</button><button aria-pressed="false" data-c="figura">Figuras</button><button aria-pressed="false" data-c="llavero">Llaveros</button><button aria-pressed="false" data-c="perso">Personalización</button><button aria-pressed="false" data-c="creator">Creator</button>
+    </div>
+    <div class="brow">
+      <button class="bag s" data-b="s" data-c="clicker llavero perso"><span class="sh"><svg><use href="#egg"/></svg></span><b>Pequeño</b><small>1 pieza</small></button>
+      <button class="bag m" data-b="m" data-c="clicker fidget flexi llavero perso"><span class="sh"><svg><use href="#egg"/></svg></span><b>Mediano</b><small>2 a 3 piezas</small></button>
+      <button class="bag l" data-b="l" data-c="clicker fidget flexi figura perso"><span class="sh"><svg><use href="#egg"/></svg></span><b>Grande</b><small>una caja o figura</small></button>
+      <button class="bag xl" data-b="xl" data-c="clicker flexi figura perso creator"><span class="sh"><svg><use href="#egg"/></svg></span><b>XL</b><small>combos y pedidos grandes</small></button>
+    </div>
+    <div class="binfo" id="binfo" aria-live="polite"></div>
+    <div class="bincl">
+      <div><b>Bolsa holográfica</b><span>Con cierre zip, para guardar tus piezas después.</span></div>
+      <div><b>Armado a mano</b><span>Cada pieza se revisa antes de cerrar la bolsa.</span></div>
+      <div><b>Todas las marcas</b><span>Clickly y las que vienen comparten la misma bolsa.</span></div>
+      <div><b>A todo el país</b><span>La bolsa va protegida dentro del envío.</span></div>
+    </div>
+  </section>
 </main>
 
 
@@ -270,6 +344,27 @@ document.querySelectorAll('[data-tilt]').forEach(t=>{
 var pg=/clickly/.test(location.pathname)?'clickly':'nidoo',sk='nidoo.v.'+pg;if(sessionStorage.getItem(sk))return;sessionStorage.setItem(sk,'1');
 var q=new URLSearchParams(location.search),r=q.get('utm_source')||(q.get('fbclid')?'instagram':''),ref='';try{ref=document.referrer?new URL(document.referrer).hostname:''}catch(e){}
 if(!r)r=ref===location.hostname?'interno':ref;if(!r&&/Instagram|FBAN|FBAV/.test(navigator.userAgent))r='instagram';
-new Image().src='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec?a=v&id='+id+'&p='+pg+'&r='+encodeURIComponent(r)+'&m='+(/Mobi|Android|iPhone/i.test(navigator.userAgent)?1:0)+'&n='+nw+'&t='+Date.now()}catch(e){}})();</script>
+new Image().src='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec?a=v&id='+id+'&p='+pg+'&r='+encodeURIComponent(r)+'&m='+(/Mobi|Android|iPhone/i.test(navigator.userAgent)?1:0)+'&n='+nw+'&t='+Date.now()}catch(e){}})();
+/* bolsas NiDoo */
+(function(){
+const INFO={
+ s:{t:'Bolsa Pequeña',d:'Para una sola pieza chica.',i:['1 pop Clickly','1 llavero','Un detalle personalizado']},
+ m:{t:'Bolsa Mediana',d:'Para un par de piezas o un fidget.',i:['2 o 3 pops Clickly','Un fidget','Un flexi chico','Llaveros']},
+ l:{t:'Bolsa Grande',d:'Para una caja completa o una figura.',i:['Caja Clickly de 5 pops','Una figura','Un flexi','Fidgets']},
+ xl:{t:'Bolsa XL',d:'Para combos, varias cajas y pedidos especiales.',i:['Varias cajas Clickly','Figuras y flexis grandes','Pedidos personalizados','Kits Creator']}};
+const CN={all:'',clicker:'Clickers',fidget:'Fidgets',flexi:'Flexis',figura:'Figuras',llavero:'Llaveros',perso:'Personalización',creator:'Creator'};
+const bags=[...document.querySelectorAll('.bag')],chips=[...document.querySelectorAll('.bchips button')],box=document.getElementById('binfo');
+let cat='all',sel='l';
+function show(){
+ bags.forEach(b=>{const ok=cat==='all'||b.dataset.c.split(' ').includes(cat);b.classList.toggle('off',!ok);b.classList.toggle('sel',b.dataset.b===sel)});
+ const f=INFO[sel];const fits=cat==='all'||document.querySelector('.bag[data-b="'+sel+'"]').dataset.c.split(' ').includes(cat);
+ box.innerHTML='<h3>'+f.t+'</h3><p>'+(cat==='all'?f.d:(fits?CN[cat]+': entra en esta bolsa. ':CN[cat]+': para esto usamos otra bolsa. ')+f.d)+'</p><ul>'+f.i.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
+}
+bags.forEach(b=>b.addEventListener('click',()=>{sel=b.dataset.b;show()}));
+chips.forEach(c=>c.addEventListener('click',()=>{cat=c.dataset.c;chips.forEach(x=>x.setAttribute('aria-pressed',x===c));
+ if(cat!=='all'){const first=bags.find(b=>b.dataset.c.split(' ').includes(cat));if(first&&!first.dataset.c.split(' ').includes(cat)===false&&!bags.find(b=>b.dataset.b===sel).dataset.c.split(' ').includes(cat))sel=first.dataset.b}show()}));
+show();
+})();
+</script>
 </body>
 </html>
