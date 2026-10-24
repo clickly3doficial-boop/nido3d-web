@@ -52,6 +52,7 @@ function limpio_(s, max){ return String(s == null ? '' : s).replace(/[\u0000-\u0
 function doGet(e){
   try {
     const a = (e && e.parameter && e.parameter.a) || 'catalogo';
+    if (a === 'v') { registrarVisita_(e.parameter); return out_({ok:true}); }
     if (a === 'catalogo') { try { sembrarProductos_(); } catch (err) {} }
     if (a === 'catalogo') return out_({ok:true, sembrado:true, maxCajas:MAX_CAJAS, popsPorCaja:POPS_POR_CAJA, precioCaja:PRECIO_CAJA, precioPop:PRECIO_POP, cajasEnvioGratis:CAJAS_ENVIO_GRATIS, envios:ENVIOS, pago:!!mpToken_(), productos:productos_().filter(p => p.activo).map(p => { delete p._row; return p; })});
     return out_({ok:false, error:'Acción desconocida'});
@@ -67,6 +68,7 @@ function doPost(e){
       case 'reservar': return out_(reservar_(req.reserva || {}, false));
       case 'pagar': return out_(reservar_(req.reserva || {}, true));
       case 'login': if (!okClave_(req.clave)) { Utilities.sleep(800); return out_({ok:false, error:'Clave incorrecta'}); } return out_({ok:true, token:token_()});
+      case 'visitas': auth_(req.token); return out_(visitas_());
       case 'panel': auth_(req.token); return out_({ok:true, productos:productos_(), pedidos:rows_('Pedidos').reverse().map(o => { o.fecha = o.fecha instanceof Date ? o.fecha.toISOString() : String(o.fecha); return o; }), estados:ESTADOS});
       case 'estado': auth_(req.token); return out_(estado_(req.codigo, req.estado, req.notas));
       case 'producto': auth_(req.token); return out_(guardarProducto_(req.producto || {}));
@@ -231,4 +233,29 @@ function sembrarProductos_(){
     const ids = productos_().map(p => p.id), sh = sheet_('Productos');
     pend.forEach(r => { if (ids.indexOf(r[0]) < 0) sh.appendRow(r); pr.setProperty('SEED_' + r[0], '1'); });
   } finally { lock.releaseLock(); }
+}
+
+
+/* ---------- visitas a la web (anónimas: un id al azar por navegador, sin IP ni datos personales) ---------- */
+function registrarVisita_(p){
+  const id = limpio_(p.id, 24).replace(/[^a-z0-9]/gi,''); if (!id) return;
+  const pag = ({nidoo:'NiDoo', clickly:'Clickly'})[p.p] || 'otra';
+  let o = limpio_(p.r, 60).toLowerCase();
+  o = /instagram|^ig$|l\.instagram/.test(o) ? 'Instagram' : /facebook|fb/.test(o) ? 'Facebook' : /google/.test(o) ? 'Google' : /whatsapp|wa\.me/.test(o) ? 'WhatsApp' : o === 'interno' ? 'Navegando la web' : o ? o : 'Directo / link';
+  let sh = sheet_('Visitas');
+  if (!sh) { sh = SpreadsheetApp.getActiveSpreadsheet().insertSheet('Visitas'); sh.appendRow(['fecha','visitante','pagina','origen','movil','nuevo']); sh.setFrozenRows(1); }
+  sh.appendRow([new Date(), id, pag, o, p.m === '1' ? 'Sí' : 'No', p.n === '1' ? 'Sí' : 'No']);
+}
+function visitas_(){
+  const sh = sheet_('Visitas'); if (!sh || sh.getLastRow() < 2) return {ok:true, total:0, unicos:0, hoy:0, hoyUnicos:0, semana:0, dias:[], paginas:{}, origenes:{}, movil:0};
+  const v = sh.getRange(2, 1, sh.getLastRow() - 1, 5).getValues();
+  const tz = 'America/Argentina/Buenos_Aires', dia = d => Utilities.formatDate(new Date(d), tz, 'yyyy-MM-dd'), hoy = dia(new Date());
+  const desde7 = Date.now() - 7 * 864e5, ids = new Set(), idsHoy = new Set(), ids7 = new Set(), porDia = {}, pag = {}, ori = {}; let mov = 0, n7 = 0, nHoy = 0;
+  v.forEach(r => { const t = new Date(r[0]).getTime(), d = dia(r[0]); ids.add(r[1]);
+    if (d === hoy) { nHoy++; idsHoy.add(r[1]); }
+    if (t >= desde7) { n7++; ids7.add(r[1]); }
+    (porDia[d] = porDia[d] || {v:0, u:new Set()}).v++; porDia[d].u.add(r[1]);
+    pag[r[2]] = (pag[r[2]] || 0) + 1; ori[r[3]] = (ori[r[3]] || 0) + 1; if (r[4] === 'Sí') mov++; });
+  const dias = []; for (let i = 13; i >= 0; i--) { const d = dia(Date.now() - i * 864e5); dias.push({d:d, v:porDia[d] ? porDia[d].v : 0, u:porDia[d] ? porDia[d].u.size : 0}); }
+  return {ok:true, total:v.length, unicos:ids.size, hoy:nHoy, hoyUnicos:idsHoy.size, semana:n7, semanaUnicos:ids7.size, dias:dias, paginas:pag, origenes:ori, movil:Math.round(mov / v.length * 100)};
 }
