@@ -1,2 +1,4 @@
 # nido3d-web
-Web de NiDoo (nido3d.ar) y Clickly
+
+Web de NiDoo (https://nido3d.ar) y la marca Clickly (/clickly/).
+Hostinger la publica sola desde la rama main.
