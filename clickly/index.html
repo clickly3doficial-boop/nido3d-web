@@ -428,7 +428,7 @@ const PRICE=6000,MAX=5,KEY='clickly.caja5';
 const API='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec';const CATKEY='clickly.catalogo';
 let ENV={retiro:{n:'Retiro en Tucumán (sin cargo)',p:0},sucursal:{n:'Correo Argentino a sucursal',p:7500},domicilio:{n:'Correo Argentino a domicilio',p:11500}},PAGO=false;
 function applyCat(cat){if(!cat||!Array.isArray(cat.productos))return false;if(cat.envios)ENV=cat.envios;PAGO=!!cat.pago;const byId={};cat.productos.forEach(q=>byId[q.id]=q);let changed=false;
-  for(let i=POPS.length-1;i>=0;i--)if(!byId[POPS[i].id]){POPS.splice(i,1);changed=true}
+  for(let i=POPS.length-1;i>=0;i--)if(!byId[POPS[i].id]&&!(POPS[i].id==='macaron'&&!cat.sembrado)){POPS.splice(i,1);changed=true}
   cat.productos.forEach(q=>{let p=POPS.find(x=>x.id===q.id);if(q.imagen&&!IMG[q.id])IMG[q.id]=q.imagen;
     if(!p){if(!IMG[q.id])return;p={id:q.id,n:q.nombre,w:String(q.nombre).toUpperCase().replace(/ POP$/,''),line:LINES[q.linea]?q.linea:'base',c:q.color||'#F6884C',ct:'Hace clic arriba',d:q.descripcion||''};POPS.push(p);changed=true}
     p.n=q.nombre||p.n;p.price=Number(q.precio)>=100?Number(q.precio):PRICE;p.stock=Math.max(0,Math.floor(Number(q.stock)||0));if(q.descripcion)p.d=q.descripcion;if(q.color)p.c=q.color});
