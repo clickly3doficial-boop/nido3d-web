@@ -4,7 +4,7 @@
  * 3) Implementar > Nueva implementación > Aplicación web · Ejecutar como: Yo · Acceso: Cualquier persona.
  */
 const CLAVE_INICIAL = '1214';
-const MAX_CAJAS = 5, POPS_POR_CAJA = 5, PRECIO_POP = 2500, PRECIO_CAJA = 12000, CAJAS_ENVIO_GRATIS = 5; // pesos: pop suelto $2.500, caja llena de 5 $12.000; 5 cajas llenas = envío gratis
+const MAX_CAJAS = 5, POPS_POR_CAJA = 5, PRECIO_POP = 2500, PRECIO_CAJA = 12000, CAJAS_ENVIO_GRATIS = 2; // pesos: pop suelto $2.500, caja llena de 5 $12.000; desde 2 cajas llenas = envío gratis
 const COL_P = ['id','nombre','precio','stock','activo','linea','color','descripcion','imagen'];
 const COL_O = ['codigo','fecha','estado','nombre','apellido','direccion','ciudad','cp','provincia','pais','contacto','cajas','cantidad_cajas','pops','total','notas','ids','envio','costo_envio','pago_id'];
 const ESTADOS = ['Nueva','Pendiente de pago','Confirmada','Pagada','Enviada','Entregada','Cancelada'];
