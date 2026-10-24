@@ -4,7 +4,7 @@
  * 3) Implementar > Nueva implementación > Aplicación web · Ejecutar como: Yo · Acceso: Cualquier persona.
  */
 const CLAVE_INICIAL = '1214';
-const MAX_CAJAS = 5, POPS_POR_CAJA = 5, PRECIO_POP = 1700, PRECIO_CAJA = 8000, CAJAS_ENVIO_GRATIS = 5; // pesos: pop suelto $1.700, caja llena de 5 $8.000; 5 cajas llenas = envío gratis
+const MAX_CAJAS = 5, POPS_POR_CAJA = 5, PRECIO_POP = 2500, PRECIO_CAJA = 12000, CAJAS_ENVIO_GRATIS = 5; // pesos: pop suelto $2.500, caja llena de 5 $12.000; 5 cajas llenas = envío gratis
 const COL_P = ['id','nombre','precio','stock','activo','linea','color','descripcion','imagen'];
 const COL_O = ['codigo','fecha','estado','nombre','apellido','direccion','ciudad','cp','provincia','pais','contacto','cajas','cantidad_cajas','pops','total','notas','ids','envio','costo_envio','pago_id'];
 const ESTADOS = ['Nueva','Pendiente de pago','Confirmada','Pagada','Enviada','Entregada','Cancelada'];
@@ -99,7 +99,7 @@ function reservar_(r, pagar){
     const envio = ENVIOS[r.envio] ? r.envio : 'sucursal';
     const llenas = cajas.filter(c => c.length === POPS_POR_CAJA).length;
     const costoEnvio = llenas >= CAJAS_ENVIO_GRATIS ? 0 : ENVIOS[envio].p;
-    const subtotal = cajas.reduce((t, c) => t + (c.length === POPS_POR_CAJA ? PRECIO_CAJA : c.length * PRECIO_POP), 0); // caja llena $8.000, si no $1.700 por pop
+    const subtotal = cajas.reduce((t, c) => t + (c.length === POPS_POR_CAJA ? PRECIO_CAJA : c.length * PRECIO_POP), 0); // caja llena $12.000, si no $2.500 por pop
     const total = subtotal + costoEnvio;
     const conPago = !!(pagar && mpToken_());
     const codigo = 'CLK-' + Utilities.getUuid().slice(0, 5).toUpperCase();
