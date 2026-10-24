@@ -386,8 +386,8 @@ footer hr{border:0;border-top:1px solid rgba(255,243,226,.14);margin:0}
   <div class="faq">
     <details><summary>¿Son comida?</summary><p>No. Son clickers impresos en 3D con forma de lo que más te gusta. No se comen, no se derriten y no caducan.</p></details>
     <details><summary>¿Puedo repetir el mismo pop?</summary><p>Sí. La caja es de cinco y podés poner el mismo pop las veces que quieras.</p></details>
-    <details><summary>¿Cuánto sale la caja llena?</summary><p>Cada pop sale $2.500 y la caja llena de cinco, $12.000. El envío se paga aparte, salvo que lleves 2 cajas llenas o más: ahí el envío es gratis.</p></details>
-    <details><summary>¿Cuánto sale el envío?</summary><p>Enviamos a todo el país con Correo Argentino, a sucursal ($7.500) o a domicilio ($11.500), y se paga aparte. Desde 2 cajas llenas, el envío es gratis.</p></details>
+    <details><summary>¿Cuánto sale la caja llena?</summary><p>Cada pop sale $2.500 y la caja llena de cinco, $12.000. El envío se paga aparte, y desde 2 cajas llenas el envío a sucursal es gratis.</p></details>
+    <details><summary>¿Cuánto sale el envío?</summary><p>Con al menos una caja llena, el envío a sucursal de Correo Argentino sale $4.990 a todo el país (a domicilio, $8.990). Desde 2 cajas llenas, el envío a sucursal es gratis (a domicilio pagás $4.000). Pops sueltos sin caja llena: envío a sucursal $7.500 o a domicilio $11.500. Retiro en persona, siempre gratis.</p></details>
     <details><summary>¿Qué es la Línea ARGENTINA?</summary><p>Es la línea con los colores de la bandera. Tiene Medialuna Pop, Alfajor Pop y Mate Pop, y vamos a ir sumando más pops.</p></details>
     <details><summary>¿Hasta cuándo está la Línea BREACKFAST?</summary><p>Es por tiempo limitado. Clickly Box, de la línea BASE, se queda para siempre.</p></details>
     <details><summary>¿Cuántas cajas puedo reservar?</summary><p>Hasta 5 cajas por reserva. Cada caja lleva 5 pops y la armás como quieras.</p></details>
@@ -430,7 +430,7 @@ const PRICE=2500,PBOX=12000,FREE=2,MAX=5,KEY='clickly.caja5';
 /* Catálogo en vivo (Clickly Admin): precios, stock y pops visibles */
 const API='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec';const CATKEY='clickly.catalogo';
 let ENV={retiro:{n:'Retiro en persona (sin cargo)',p:0},sucursal:{n:'Correo Argentino a sucursal',p:7500},domicilio:{n:'Correo Argentino a domicilio',p:11500}},PAGO=false;
-function applyCat(cat){if(!cat||!Array.isArray(cat.productos))return false;if(cat.envios)ENV=cat.envios;PAGO=!!cat.pago;const byId={};cat.productos.forEach(q=>byId[q.id]=q);let changed=false;
+function applyCat(cat){if(!cat||!Array.isArray(cat.productos))return false;/* envíos: reglas fijas de la web (ver ENVR) */PAGO=!!cat.pago;const byId={};cat.productos.forEach(q=>byId[q.id]=q);let changed=false;
   for(let i=POPS.length-1;i>=0;i--)if(!byId[POPS[i].id]&&!(POPS[i].id==='macaron'&&!cat.sembrado)){POPS.splice(i,1);changed=true}
   cat.productos.forEach(q=>{let p=POPS.find(x=>x.id===q.id);if(q.imagen&&!IMG[q.id])IMG[q.id]=q.imagen;
     if(!p){if(!IMG[q.id])return;p={id:q.id,n:q.nombre,w:String(q.nombre).toUpperCase().replace(/ POP$/,''),line:LINES[q.linea]?q.linea:'base',c:q.color||'#F6884C',ct:'Hace clic arriba',d:q.descripcion||''};POPS.push(p);changed=true}
@@ -487,8 +487,12 @@ const N=()=>cnt(C);
 const listOf=b=>{const o=[];POPS.forEach(p=>{for(let i=0;i<(b[p.id]||0);i++)o.push(p.id)});return o};
 const list=()=>listOf(C);
 const boxPrice=b=>{const k=cnt(b);return k===MAX?PBOX:k*PRICE};
-const totals=()=>{const n=N(),all=B.reduce((a,b)=>a+cnt(b),0),allFull=B.every(b=>cnt(b)===MAX),full5=B.filter(b=>cnt(b)===MAX).length;const sub=B.reduce((a,b)=>a+boxPrice(b),0);return{n,sub,full:n===MAX,tot:sub,all,allFull,ok:all>0&&B.every(b=>cnt(b)>0),free:full5>=FREE,nb:B.length}};
-const envCost=(k,T)=>T.free?0:(ENV[k]?ENV[k].p:0);
+const totals=()=>{const n=N(),all=B.reduce((a,b)=>a+cnt(b),0),allFull=B.every(b=>cnt(b)===MAX),full5=B.filter(b=>cnt(b)===MAX).length;const sub=B.reduce((a,b)=>a+boxPrice(b),0);return{n,sub,full:n===MAX,tot:sub,all,allFull,ok:all>0&&B.every(b=>cnt(b)>0),free:full5>=FREE,full5,nb:B.length}};
+/* envío: sin caja llena = costo real; con 1 caja llena = precio promo; desde 2 cajas llenas = gratis a sucursal (domicilio +$4.000) */
+const ENVR={retiro:[0,0,0],sucursal:[7500,4990,0],domicilio:[11500,8990,4000]};
+const tier=T=>T.full5>=2?2:T.full5>=1?1:0;
+const envCost=(k,T)=>(ENVR[k]||[0,0,0])[tier(T)];
+const envTxt=T=>tier(T)==2?'¡gratis a sucursal!':tier(T)==1?'a sucursal $4.990':'a sucursal $7.500 · con 1 caja llena $4.990';
 const used=id=>B.reduce((a,b)=>a+(b[id]||0),0);
 const avail=id=>{const p=pop(id);return !p?0:(p.stock===undefined?99:p.stock-used(id))};
 const getRes=()=>{try{return JSON.parse(localStorage.getItem(RKEY))||[]}catch(e){return[]}};
@@ -572,14 +576,14 @@ function drawCfg(){const T=totals(),ids=list();drawTabs();
   $('#stp').innerHTML=T.allFull?`Paso 2. <span>Revisá y reservá ${T.nb>1?`tus ${T.nb} cajas`:'tu caja'}.</span>`:T.full?`Caja ${cur+1} lista. <span>Completá la caja ${pend+1} o sumá otra.</span>`:`Paso 1. <span>${T.n?`Te faltan ${MAX-T.n} en la caja ${cur+1}. Podés repetir.`:`Tocá un pop para sumarlo a la caja ${cur+1}.`}</span>`;
   $('#opts').innerHTML=POPS.map(p=>`<button class="op ${C[p.id]?'has':''}" style="--pc:${p.c}" data-plus="${p.id}" ${T.full||avail(p.id)<=0?'disabled':''} aria-label="Sumar ${p.n}"><img src="${IMG[p.id]}" alt=""><span><b>${p.n}</b><small>${money(priceOf(p.id))} · ${avail(p.id)<=0?'<span style="color:#d9412b;font-weight:700">Agotado</span>':p.stock!==undefined&&avail(p.id)<=5?`Quedan ${avail(p.id)}`:LINES[p.line].tag}</small></span><span class="q tab">${C[p.id]||''}</span></button>`).join('');
   const R=getRes();
-  $('#sum').innerHTML=`<div><span>${T.nb} ${T.nb>1?'cajas':'caja'} · ${T.all} pops</span><span>${money(T.sub)}</span></div>`+`<div><span>Envío</span><span style="color:var(--ink2)">${T.free?'¡gratis!':'aparte (gratis desde 2 cajas llenas)'}</span></div>`+`<div class="t"><span>Total</span><span>${money(T.tot)}</span></div>`+
+  $('#sum').innerHTML=`<div><span>${T.nb} ${T.nb>1?'cajas':'caja'} · ${T.all} pops</span><span>${money(T.sub)}</span></div>`+`<div><span>Envío</span><span style="color:var(--ink2)">${envTxt(T)}</span></div>`+`<div class="t"><span>Total</span><span>${money(T.tot)}</span></div>`+
   (T.n||T.nb>1?'':'<button class="sugg" id="sugg"><span class="st">'+['base','alfajor','medialuna'].map(k=>`<img src="${IMG[k]}" alt="">`).join('')+'</span><span><b>Usar la caja sugerida</b><small>Box, Alfajor, Medialuna, Mate y Waffle · $12.000</small></span></button>')+
   `<div class="act"><button class="pill undo" id="undo" ${T.n?'':'disabled'}>Quitar el último</button><button class="pill ink" id="order" ${T.ok?'':'disabled'}>${!T.all?'Elegí tus pops':T.allFull?`Reservar ${T.nb>1?T.nb+' cajas':'mi caja'}`:T.ok?`Reservar ${T.all} ${T.all>1?'pops':'pop'}`:'Hay una caja vacía'}</button></div>`+
   (R.length?`<div class="rsaved"><b>Tenés ${R.length>1?R.length+' reservas guardadas':'una reserva guardada'}</b> en este dispositivo · última: ${R[R.length-1].codigo}. <a href="#" id="showres" style="color:var(--link);font-weight:700">Ver</a></div>`:'')}
 function syncAdds(){const full=N()>=MAX;document.querySelectorAll('[data-add]').forEach(b=>{const id=b.dataset.add;if(!id)return;const q=C[id]||0;if(avail(id)<=0){b.disabled=true;b.textContent='Agotado';return}b.disabled=full&&B.length>=MAXB;b.textContent=full?(B.length<MAXB?'Sumar en otra caja':'Cajas llenas'):q?`Sumar otro (${q})`:'Sumar a la caja'})}
 function ui(){const T=totals(),ids=list();$('#bagn').textContent=T.all||'';$('#bag').setAttribute('aria-label',`Ver tus cajas, ${T.all} pops`);
   $('#mini').innerHTML=Array.from({length:MAX},(_,i)=>`<i>${ids[i]?`<img src="${IMG[ids[i]]}" alt="">`:''}</i>`).join('');
-  $('#bart').textContent=T.nb>1?`Tus cajas · ${T.nb} cajas`:`Tu caja · ${T.n} de 5`;$('#bars').textContent=T.all?`${money(T.tot)} ${T.free?'· envío gratis':'+ envío'}`:'$2.500 c/u · caja llena $12.000';
+  $('#bart').textContent=T.nb>1?`Tus cajas · ${T.nb} cajas`:`Tu caja · ${T.n} de 5`;$('#bars').textContent=T.all?`${money(T.tot)} ${tier(T)==2?'· envío gratis':'+ envío'}`:'$2.500 c/u · caja llena $12.000';
   $('#barb').textContent=T.ok?'Reservar':'Ver cajas';drawCfg();syncAdds()}
 function add(id,src){if(!pop(id))return;if(avail(id)<=0){toast(`${pop(id).n}: sin stock por ahora`);return}if(N()>=MAX){const e=B.findIndex(b=>cnt(b)<MAX);if(e>=0){cur=e;C=B[cur]}else if(B.length<MAXB){B.push({});cur=B.length-1;C=B[cur];toast(`Abriste la caja ${cur+1}`)}else{toast('Llegaste al máximo de 5 cajas');return}}
   C[id]=(C[id]||0)+1;undoStack.push(id);ordered=false;save();click(true);fly(id,src);ui();const n=N();toast(n===MAX?`Caja ${cur+1} lista`:`Sumaste ${pop(id).n} · caja ${cur+1}: ${n} de 5`);frame()}
@@ -600,7 +604,7 @@ let draft={};try{draft=JSON.parse(localStorage.getItem('clickly.datos'))||{}}cat
 function boxRows(boxes){return boxes.map((ids,i)=>`<div class="row"><span>Caja ${i+1}</span><span class="ims">${ids.map(id=>`<img src="${IMG[id]}" alt="${pop(id).n}" title="${pop(id).n}">`).join('')}</span><span>${money(ids.length===MAX?PBOX:ids.length*PRICE)}</span></div>`).join('')}
 function openRes(){const T=totals();if(!T.ok)return;const boxes=B.map(listOf);const f=(id,lab,req,extra='')=>`<div class="rf ${extra}"><label for="r_${id}">${lab}${req?' <em>*</em>':''}</label>`;
   $('#rsheet').innerHTML=`<span class="eye">Preventa</span><h3 id="rtitle">Reservá ${boxes.length>1?`tus ${boxes.length} cajas`:'tu caja'}</h3><p class="lead">${PAGO?'Completá tus datos y pagás con Mercado Pago: tarjeta, débito o dinero en cuenta. Despachamos desde el 18/12.':'No se cobra nada ahora. Te escribimos para coordinar el pago y el envío.'}</p>
-  <div class="rbox">${boxRows(boxes)}<div class="row"><span>Envío</span><span></span><span id="r_envc">${T.free?'¡Gratis!':money(envCost(draft.envio||'sucursal',T))}</span></div><div class="row tot"><span>Total</span><span></span><span id="r_tot">${money(T.tot+envCost(draft.envio||'sucursal',T))}</span></div></div>
+  <div class="rbox">${boxRows(boxes)}<div class="row"><span>Envío</span><span></span><span id="r_envc">${envCost(draft.envio||'sucursal',T)?money(envCost(draft.envio||'sucursal',T)):'¡Gratis!'}</span></div><div class="row tot"><span>Total</span><span></span><span id="r_tot">${money(T.tot+envCost(draft.envio||'sucursal',T))}</span></div></div>
   <form id="rform" novalidate class="rgrid">
    ${f('nombre','Nombre',1)}<input id="r_nombre" name="nombre" autocomplete="given-name" required value="${esc(draft.nombre||'')}"><div class="err"></div></div>
    ${f('apellido','Apellido',1)}<input id="r_apellido" name="apellido" autocomplete="family-name" required value="${esc(draft.apellido||'')}"><div class="err"></div></div>
@@ -609,11 +613,11 @@ function openRes(){const T=totals();if(!T.ok)return;const boxes=B.map(listOf);co
    ${f('cp','Código postal',1)}<input id="r_cp" name="cp" inputmode="numeric" autocomplete="postal-code" required value="${esc(draft.cp||'')}"><div class="err"></div></div>
    ${f('provincia','Provincia',1)}<select id="r_provincia" name="provincia" required><option value="">Elegí…</option>${PROV.map(p=>`<option ${draft.provincia===p?'selected':''}>${p}</option>`).join('')}</select><div class="err"></div></div>
    ${f('pais','País',1)}<input id="r_pais" name="pais" value="Argentina" readonly required aria-readonly="true"><div class="err" style="color:var(--ink2)">Por ahora, solo envíos en Argentina.</div></div>
-   ${f('envio','Entrega',1,'full')}<select id="r_envio" name="envio" required>${Object.keys(ENV).map(k=>`<option value="${k}" ${(draft.envio||'sucursal')===k?'selected':''}>${ENV[k].n}${ENV[k].p&&!T.free?' · '+money(ENV[k].p):''}</option>`).join('')}</select><div class="err"></div></div>
+   ${f('envio','Entrega',1,'full')}<select id="r_envio" name="envio" required>${Object.keys(ENV).map(k=>`<option value="${k}" ${(draft.envio||'sucursal')===k?'selected':''}>${ENV[k].n}${envCost(k,T)?' · '+money(envCost(k,T)):(k==='retiro'?'':' · ¡gratis!')}</option>`).join('')}</select><div class="err"></div></div>
    ${f('contacto','Instagram o WhatsApp (para avisarte)',1,'full')}<input id="r_contacto" name="contacto" placeholder="@tuusuario o 11 1234 5678" required value="${esc(draft.contacto||'')}"><div class="err"></div></div>
    <div class="ract full"><button type="button" class="pill undo" id="rclose">Volver</button><button type="submit" class="pill ink">${PAGO?'Ir a pagar':'Confirmar reserva'}</button></div>
   </form>${PAGO?'<p class="lead" style="font-size:.85rem;margin-top:.6rem">El pago se hace en la página segura de Mercado Pago. Nunca vemos los datos de tu tarjeta.</p>':''}`;
-  $('#r_envio').addEventListener('change',e=>{const c=envCost(e.target.value,T);$('#r_envc').textContent=T.free?'¡Gratis!':money(c);$('#r_tot').textContent=money(T.tot+c)});
+  $('#r_envio').addEventListener('change',e=>{const c=envCost(e.target.value,T);$('#r_envc').textContent=c?money(c):'¡Gratis!';$('#r_tot').textContent=money(T.tot+c)});
   $('#rmodal').hidden=false;document.body.style.overflow='hidden';setTimeout(()=>$('#r_nombre').focus(),50)}
 function closeRes(){$('#rmodal').hidden=true;document.body.style.overflow=''}
 function submitRes(e){e.preventDefault();const fm=$('#rform');let ok=true;const d={};
