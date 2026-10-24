@@ -50,11 +50,16 @@ a{color:var(--accd);font-weight:600}
 </div></section>
 <section id="app" hidden>
 <header><div class="wrap"><div class="logo"><svg viewBox="0 0 26 32" aria-hidden="true"><path fill="currentColor" d="M12.2 1C5.6 1.4 1 10.6 1 19.4 1 26.6 6.2 31 13.4 31 20.5 31 25 26.3 25 19.6 25 10.1 19.5.6 12.2 1Z"/></svg>NiDoo<small>ADMIN</small></div>
- <nav class="tabs"><button data-tab="pedidos" class="on">Pedidos</button><button data-tab="productos">Stock</button><button data-tab="ajustes">Ajustes</button></nav>
+ <nav class="tabs"><button data-tab="pedidos" class="on">Pedidos</button><button data-tab="productos">Stock</button><button data-tab="visitas">Visitas</button><button data-tab="ajustes">Ajustes</button></nav>
  <button class="pill sm ghost" id="reload" title="Actualizar">↻ Actualizar</button></div></header>
 <main class="wrap">
  <div id="t-pedidos"><div class="kpis" id="kpis"></div><div class="bar" id="filters"></div><input id="q" placeholder="Buscar por nombre, código, ciudad o contacto…" style="margin-bottom:12px"><div class="orders" id="orders"></div></div>
  <div id="t-productos" hidden><div class="bar"><b style="font-size:22px;letter-spacing:-.02em">Stock de todas las líneas</b><span class="muted">Los cambios se ven en la web al recargarla.</span><button class="pill sm" id="newp" style="margin-left:auto">+ Nuevo producto</button></div><div class="kpis" id="lkpis"></div><div class="bar" id="lfilters"></div><div id="prods"></div></div>
+ <div id="t-visitas" hidden><div class="bar"><b style="font-size:22px;letter-spacing:-.02em">Gente que entra a la web</b><span class="muted">Personas distintas, sin contar tus dispositivos.</span></div>
+  <div class="kpis" id="vkpis"><div class="kpi"><b>…</b><span>Cargando</span></div></div>
+  <div class="card" style="margin-top:12px"><b>Últimos 14 días</b><div id="vchart" style="display:flex;align-items:flex-end;gap:6px;height:170px;margin-top:14px"></div></div>
+  <div class="row2" style="margin-top:12px"><div class="card"><b>¿De dónde vienen?</b><div id="vori" style="margin-top:8px"></div></div><div class="card"><b>¿Qué página ven?</b><div id="vpag" style="margin-top:8px"></div></div></div>
+  <div class="card" style="margin-top:12px"><b>Tus dispositivos</b><p class="muted" id="yotxt"></p><button class="pill sm ghost" id="yobtn"></button></div></div>
  <div id="t-ajustes" hidden><div class="card" style="max-width:460px"><b style="font-size:20px">Cambiar clave</b>
   <form id="cf" style="display:grid;gap:10px;margin-top:10px"><div><label>Clave actual</label><input type="password" id="c1" required></div><div><label>Clave nueva (6 o más)</label><input type="password" id="c2" required minlength="6"></div><div class="err" id="cerr"></div><button class="pill ink">Guardar clave</button></form></div>
   <div class="card" style="max-width:460px;margin-top:12px"><b>Sesión</b><p class="muted">La sesión dura 6 horas.</p><button class="pill sm ghost" id="logout">Cerrar sesión</button></div></div>
@@ -78,12 +83,20 @@ $('#lf').addEventListener('submit',async e=>{e.preventDefault();$('#lerr').textC
   const b=e.submitter||$('#lf button');b.disabled=true;b.textContent='Entrando…';
   try{const j=await call({a:'login',clave:$('#clave').value});if(!j.ok)throw new Error(j.error||'No se pudo entrar');TOKEN=j.token;try{sessionStorage.setItem('ck.tk',TOKEN)}catch(e){}$('#clave').value='';await load();show()}
   catch(err){$('#lerr').textContent=err.message}finally{b.disabled=false;b.textContent='Entrar'}});
-function show(){$('#login').hidden=true;$('#app').hidden=false}
+function show(){$('#login').hidden=true;$('#app').hidden=false;try{if(localStorage.getItem('nidoo.yo')===null)localStorage.setItem('nidoo.yo','1')}catch(e){}yoUI()}
+/* visitas: tus dispositivos no cuentan (al entrar al admin, este navegador queda marcado como tuyo) */
+function yoUI(){let y='1';try{y=localStorage.getItem('nidoo.yo')}catch(e){}const mio=y==='1';$('#yotxt').textContent=mio?'Este dispositivo es tuyo: tus visitas a la web no se cuentan. Entrá al admin una vez desde cada celu o compu tuya.':'Este dispositivo SÍ se está contando como un visitante más.';$('#yobtn').textContent=mio?'Contar este dispositivo':'No contar este dispositivo (es mío)'}
+$('#yobtn').onclick=()=>{try{localStorage.setItem('nidoo.yo',localStorage.getItem('nidoo.yo')==='1'?'0':'1')}catch(e){}yoUI()};
+async function loadV(){try{const j=await call({a:'visitas'});if(!j.ok)throw new Error(j.error||'');renderV(j)}catch(e){$('#vkpis').innerHTML=`<div class="kpi"><b>–</b><span>${esc(e.message||'Falta actualizar el servidor')}</span></div>`}}
+function bars(o){const T=Object.values(o).reduce((a,b)=>a+b,0)||1;return Object.entries(o).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div style="margin:8px 0"><div style="display:flex;justify-content:space-between"><span>${esc(k)}</span><b>${v} · ${Math.round(v/T*100)}%</b></div><div style="height:8px;border-radius:6px;background:#eee"><div style="height:100%;width:${v/T*100}%;border-radius:6px;background:var(--acc,#0071e3)"></div></div></div>`).join('')||'<p class="muted">Todavía sin datos.</p>'}
+function renderV(j){$('#vkpis').innerHTML=`<div class="kpi"><b>${j.hoyUnicos||0}</b><span>Personas hoy</span></div><div class="kpi"><b>${j.semanaUnicos||0}</b><span>Personas en 7 días</span></div><div class="kpi"><b>${j.unicos||0}</b><span>Personas en total</span></div><div class="kpi"><b>${j.total||0}</b><span>Visitas en total · ${j.movil||0}% desde celular</span></div>`;
+  const M=Math.max(1,...(j.dias||[]).map(d=>d.u));$('#vchart').innerHTML=(j.dias||[]).map(d=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end"><b style="font-size:12px">${d.u||''}</b><div title="${d.u} personas · ${d.v} visitas" style="width:100%;height:${d.u/M*120+2}px;border-radius:6px;background:var(--acc,#0071e3)"></div><span class="muted" style="font-size:11px">${d.d.slice(8)}/${d.d.slice(5,7)}</span></div>`).join('');
+  $('#vori').innerHTML=bars(j.origenes||{});$('#vpag').innerHTML=bars(j.paginas||{})}
 function logout(){TOKEN='';try{sessionStorage.removeItem('ck.tk')}catch(e){}$('#app').hidden=true;$('#login').hidden=false}
 $('#logout').onclick=logout;
 async function load(){const j=await call({a:'panel'});if(!j.ok)throw new Error(j.error);D=j;render()}
 $('#reload').onclick=async()=>{try{await load();toast('Actualizado')}catch(e){toast(e.message)}};
-document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('on',x===b));['pedidos','productos','ajustes'].forEach(t=>$('#t-'+t).hidden=t!==b.dataset.tab)});
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('on',x===b));['pedidos','productos','visitas','ajustes'].forEach(t=>$('#t-'+t).hidden=t!==b.dataset.tab);if(b.dataset.tab==='visitas')loadV()});
 function render(){renderOrders();renderProds()}
 function contactLink(c){c=String(c||'').trim();const d=c.replace(/\D/g,'');if(c.startsWith('@'))return `<a href="https://instagram.com/${encodeURIComponent(c.slice(1))}" target="_blank" rel="noopener">${esc(c)}</a>`;
   if(d.length>=8)return `<a href="https://wa.me/${d.startsWith('54')?d:'549'+d.replace(/^0/,'')}" target="_blank" rel="noopener">${esc(c)} (WhatsApp)</a>`;return esc(c)}

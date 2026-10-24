@@ -265,5 +265,11 @@ document.querySelectorAll('[data-tilt]').forEach(t=>{
 </script>
 
 
+<script>/* visitas anónimas (sin datos personales): un id al azar por navegador; los dispositivos del dueño no cuentan */
+(function(){try{if(localStorage.getItem('nidoo.yo')==='1')return;var k='nidoo.vid',id=localStorage.getItem(k),nw=0;if(!id){id=Math.random().toString(36).slice(2,10)+Date.now().toString(36);localStorage.setItem(k,id);nw=1}
+var pg=/clickly/.test(location.pathname)?'clickly':'nidoo',sk='nidoo.v.'+pg;if(sessionStorage.getItem(sk))return;sessionStorage.setItem(sk,'1');
+var q=new URLSearchParams(location.search),r=q.get('utm_source')||(q.get('fbclid')?'instagram':''),ref='';try{ref=document.referrer?new URL(document.referrer).hostname:''}catch(e){}
+if(!r)r=ref===location.hostname?'interno':ref;if(!r&&/Instagram|FBAN|FBAV/.test(navigator.userAgent))r='instagram';
+new Image().src='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec?a=v&id='+id+'&p='+pg+'&r='+encodeURIComponent(r)+'&m='+(/Mobi|Android|iPhone/i.test(navigator.userAgent)?1:0)+'&n='+nw+'&t='+Date.now()}catch(e){}})();</script>
 </body>
 </html>
