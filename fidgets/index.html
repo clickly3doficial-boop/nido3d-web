@@ -121,6 +121,33 @@ img{max-width:100%;height:auto;display:block}
 .prev{margin:26px auto 0;width:min(260px,70vw)}
 .prev img{width:100%}
 
+
+/* catálogo */
+.cat{padding:30px 0 20px}
+.cathead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:18px}
+.cathead h2{font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-.04em}
+.cathead span{color:var(--fg3);font-size:15px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
+.card{position:relative;border-radius:28px;overflow:hidden;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.card:hover{transform:translateY(-4px);box-shadow:0 24px 50px -24px rgba(80,90,150,.35)}
+.card .ph{position:relative;aspect-ratio:1/1;display:grid;place-items:center;background:radial-gradient(70% 70% at 50% 45%,#ffffff 0%,var(--tint,#e6f2fc) 100%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .card .ph{background:radial-gradient(70% 70% at 50% 45%,#2a3048 0%,#1b1f33 100%)}}
+:root[data-theme="dark"] .card .ph{background:radial-gradient(70% 70% at 50% 45%,#2a3048 0%,#1b1f33 100%)}
+.card .ph img{width:58%;filter:drop-shadow(0 22px 20px rgba(70,110,160,.25));transition:transform .5s var(--ease)}
+.card:hover .ph img{transform:translateY(-6px) rotate(-3deg)}
+.card .badge{position:absolute;left:16px;top:16px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:980px;background:var(--pink);color:#7a2850}
+.card .bd{padding:18px 20px 20px;display:flex;flex-direction:column;gap:4px}
+.card h3{font-size:22px;font-weight:700;letter-spacing:-.03em}
+.card p{color:var(--fg2);font-size:15px}
+.card .row{display:flex;align-items:center;justify-content:space-between;margin-top:10px;gap:10px}
+.dots{display:flex;gap:8px}
+.dots button{width:22px;height:22px;border-radius:50%;border:0;padding:0;cursor:pointer;box-shadow:inset 0 -3px 6px rgba(0,0,0,.08);outline:2px solid transparent;outline-offset:2px}
+.dots button[aria-pressed="true"]{outline-color:var(--fg)}
+.card .pr{font-size:14px;font-weight:600;color:var(--fg3)}
+.card.ghost{border-style:dashed;background:transparent;justify-content:center;align-items:center;min-height:280px;text-align:center;color:var(--fg3)}
+.card.ghost:hover{transform:none;box-shadow:none}
+.card.ghost svg{width:46px;height:56px;opacity:.35;margin-bottom:10px}
+
 /* próximos */
 .next{padding:60px 0 30px}
 .nbox{border-radius:32px;padding:clamp(28px,5vw,56px);text-align:center;background:linear-gradient(120deg,#e3f1fc,#fbe4ef 55%,#ece5fb)}
@@ -149,7 +176,7 @@ footer a{color:var(--fg2);text-decoration:underline}
     <a class="k on" href="/fidgets/">Fidgets</a>
     <a class="k" href="/clickly/">Clickly</a>
     <span class="sp"></span>
-    <a class="k" href="#egg-info">Sensorial Egg</a>
+    <a class="k" href="#catalogo">Ver todos</a>
   </div>
 </nav>
 
@@ -160,79 +187,22 @@ footer a{color:var(--fg2);text-decoration:underline}
       <div class="eye">NiDoo presenta</div>
       <h1>Fidgets</h1>
       <p class="lead">Objetos para tus manos. Suaves, satisfactorios y con un sonido que no vas a poder dejar de escuchar.</p>
-      <div class="chips" aria-hidden="true"><span>Impresos en 3D</span><span>Cuatro colores pastel</span><span>Hechos en Argentina</span></div>
+      <div class="chips" aria-hidden="true"><span>Impresos en 3D</span><span>Colores pastel</span><span>Hechos en Argentina</span></div>
     </div>
   </header>
 
-  <section class="feat" id="egg-info">
+  <section class="cat" id="catalogo">
     <div class="wrap">
-      <div class="stage rv">
-        <div class="egg">
-          <i class="ring" style="width:118%;aspect-ratio:1"></i><i class="ring" style="width:88%;aspect-ratio:1;animation-direction:reverse;animation-duration:30s"></i>
-          <img id="eggImg" src="sensorial-egg.webp?v=2" width="609" height="807" alt="Sensorial Egg: huevo celeste impreso en 3D, con escamas en espiral">
-        </div>
-        <div class="info">
-          <span class="tag">Fidget N.º 1 · Nuevo</span>
-          <h2>Sensorial <em>Egg</em></h2>
-          <p class="d">Un huevo que se transforma. Lo girás, las escamas se acomodan y se vuelve una espiral, con un sonido suave que te calma.</p>
-          <div class="price"><a class="btn" href="https://www.instagram.com/clickly_oficial/" target="_blank" rel="noopener">Avisame cuando salga</a><span class="soon">Próximamente</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="how">
-    <div class="wrap">
-      <h3 class="rv">Girás. Suena. Se transforma.</h3>
-      <p class="s rv">Así funciona el Sensorial Egg.</p>
-      <div class="steps">
-        <div class="step rv"><span class="n">1</span>
-          <svg viewBox="0 0 120 120" aria-hidden="true"><path d="M58 18c-20 1-34 26-34 50 0 20 15 34 36 34s36-13 36-33c0-27-17-52-38-51Z" fill="#dceefc" stroke="#7fbfea" stroke-width="3"/>
-          <path d="M30 70q30-14 60 0M28 54q32-14 64 0M34 38q26-12 52 0M30 86q30-12 60 0" fill="none" stroke="#a9d6f5" stroke-width="3" stroke-linecap="round"/></svg>
-          <b>Sostenelo</b><span>Entra justo en la palma de la mano.</span></div>
-        <div class="step rv"><span class="n">2</span>
-          <svg viewBox="0 0 120 120" aria-hidden="true"><g class="twist"><path d="M58 18c-20 1-34 26-34 50 0 20 15 34 36 34s36-13 36-33c0-27-17-52-38-51Z" fill="#fde3ee" stroke="#ee8fb6" stroke-width="3"/>
-          <path d="M40 32 L80 88M30 52 L70 100M52 22 L92 72" stroke="#f6b8d1" stroke-width="3" stroke-linecap="round"/></g>
-          <g fill="#ee8fb6"><circle class="wave" cx="104" cy="40" r="4"/><circle class="wave" cx="110" cy="56" r="3"/><circle class="wave" cx="104" cy="72" r="4"/></g></svg>
-          <b>Girá</b><span>Las escamas giran con un sonido suave.</span></div>
-        <div class="step rv"><span class="n">3</span>
-          <svg viewBox="0 0 120 120" aria-hidden="true" class="spiral"><path d="M60 60m0 0a4 4 0 0 1 8 0a10 10 0 0 1-18 4a16 16 0 0 1 26-18a24 24 0 0 1-10 38a32 32 0 0 1-40-28a40 40 0 0 1 48-40a46 46 0 0 1 36 52" fill="none" stroke="#cbbcf3" stroke-width="6" stroke-linecap="round"/></svg>
-          <b>Espiral</b><span>Se transforma en una espiral hipnótica.</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="feats">
-    <div class="wrap">
-      <h3 class="rv">Hecho para tus manos.</h3>
-      <div class="fg">
-        <div class="f a rv"><i aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 16m0 0a2 2 0 0 1 4 0a5 5 0 0 1-9 2a8 8 0 0 1 13-9a12 12 0 0 1-5 19a15 15 0 0 1-16-14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></i><b>Se transforma</b><span>De huevo a espiral, y de vuelta.</span></div>
-        <div class="f b rv"><i aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 13v6M11 9v14M16 5v22M21 9v14M26 13v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></i><b>Sonido suave</b><span>Un sonido relajante en cada giro.</span></div>
-        <div class="f c rv"><i aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 20l8-14 8 14M4 27l6-10 6 10 6-10 6 10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></svg></i><b>Textura sensorial</b><span>Escamas para recorrer con los dedos.</span></div>
-        <div class="f e rv"><i aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 25h20M8 20h16M10 15h12M12 10h8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></i><b>Impreso en 3D</b><span>Capa por capa, en Argentina.</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cols">
-    <div class="wrap">
-      <h3 class="rv">Colores pastel.</h3>
-      <p class="s rv">Celeste pastel, lavanda, rosa pastel y amarillo pastel. Tocá uno para verlo.</p>
-      <div class="sw rv" role="group" aria-label="Colores">
-        <button aria-pressed="true" data-src="sensorial-egg.webp?v=2"><i style="background:#b9dcf2"></i>Celeste pastel</button>
-        <button aria-pressed="false" data-src="egg-lavanda.webp"><i style="background:#cdbff0"></i>Lavanda</button>
-        <button aria-pressed="false" data-src="egg-rosa.webp"><i style="background:#f4bfd6"></i>Rosa pastel</button>
-        <button aria-pressed="false" data-src="egg-amarillo.webp"><i style="background:#f9e79a"></i>Amarillo pastel</button>
-      </div>
-      <div class="prev"><img id="swImg" src="sensorial-egg.webp?v=2" width="609" height="807" alt="Sensorial Egg en el color elegido"></div>
+      <div class="cathead rv"><h2>Todos los fidgets</h2><span id="catN"></span></div>
+      <div class="cgrid" id="cgrid"></div>
     </div>
   </section>
 
   <section class="next">
     <div class="wrap">
       <div class="nbox rv">
-        <h3>Este es solo el primero.</h3>
-        <p>Vienen más fidgets NiDoo. Seguinos para enterarte antes que nadie.</p>
+        <h3>Vienen más.</h3>
+        <p>Seguinos para enterarte antes que nadie de cada fidget nuevo.</p>
         <div class="ctas"><a class="btn" href="https://www.instagram.com/clickly_oficial/" target="_blank" rel="noopener">Seguinos en Instagram</a><a class="btn soft" href="/clickly/">Ver los pops de Clickly</a></div>
       </div>
     </div>
@@ -246,8 +216,22 @@ footer a{color:var(--fg2);text-decoration:underline}
 <script>
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-const sw=[...document.querySelectorAll('.sw button')],im=document.getElementById('swImg');
-sw.forEach(b=>{const pre=new Image();pre.src=b.dataset.src;b.addEventListener('click',()=>{sw.forEach(x=>x.setAttribute('aria-pressed',x===b));im.src=b.dataset.src})});
+/* Para sumar un fidget nuevo: agregá un objeto a FIDGETS */
+const FIDGETS=[
+ {id:'egg',nombre:'Sensorial Egg',desc:'Lo girás y se vuelve espiral.',badge:'Nuevo',precio:'Próximamente',tint:'#e3f0fc',
+  colores:[['Celeste pastel','#b9dcf2','sensorial-egg.webp?v=3'],['Lavanda','#cdbff0','egg-lavanda.webp?v=2'],['Rosa pastel','#f4bfd6','egg-rosa.webp?v=2'],['Amarillo pastel','#f9e79a','egg-amarillo.webp?v=2']]}
+];
+const G=document.getElementById('cgrid');
+G.innerHTML=FIDGETS.map(f=>`<article class="card rv" data-id="${f.id}" style="--tint:${f.tint}">
+  <div class="ph">${f.badge?`<span class="badge">${f.badge}</span>`:''}<img src="${f.colores[0][2]}" alt="${f.nombre}, color ${f.colores[0][0]}" width="609" height="807" loading="lazy"></div>
+  <div class="bd"><h3>${f.nombre}</h3><p>${f.desc}</p>
+  <div class="row"><div class="dots" role="group" aria-label="Colores de ${f.nombre}">${f.colores.map((c,k)=>`<button aria-pressed="${k===0}" title="${c[0]}" aria-label="${c[0]}" data-k="${k}" style="background:${c[1]}"></button>`).join('')}</div><span class="pr">${f.precio}</span></div></div>
+ </article>`).join('')+`<div class="card ghost rv"><svg viewBox="0 0 26 32" aria-hidden="true"><use href="#egg"/></svg><b style="color:var(--fg2)">Próximo fidget</b><span style="font-size:14px">Muy pronto</span></div>`;
+document.getElementById('catN').textContent=FIDGETS.length+(FIDGETS.length===1?' modelo':' modelos');
+G.querySelectorAll('.card[data-id]').forEach(card=>{const f=FIDGETS.find(x=>x.id===card.dataset.id),img=card.querySelector('img'),bs=[...card.querySelectorAll('.dots button')];
+ f.colores.forEach(c=>{const p=new Image();p.src=c[2]});
+ bs.forEach(b=>b.addEventListener('click',()=>{const c=f.colores[b.dataset.k];bs.forEach(x=>x.setAttribute('aria-pressed',x===b));img.src=c[2];img.alt=f.nombre+', color '+c[0]}))});
+G.querySelectorAll('.rv').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
