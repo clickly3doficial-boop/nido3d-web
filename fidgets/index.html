@@ -246,7 +246,9 @@ function render(list){
 let cache=null;try{cache=JSON.parse(localStorage.getItem('nidoo.fidgets'))}catch(e){}
 render(cache&&cache.length?cache:BASE);
 fetch(API+'?a=catalogo&t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{if(!d||!Array.isArray(d.productos))return;
- const L=d.productos.filter(p=>p.linea==='fidget');try{localStorage.setItem('nidoo.fidgets',JSON.stringify(L))}catch(e){}render(L)}).catch(()=>{});
+ let L=d.productos.filter(p=>p.linea==='fidget');
+ /* si el Admin todavía no conoce un fidget nuevo, se muestra igual con sus datos base */
+ if(!Array.isArray(d.fidgetIds))BASE.forEach(b=>{if(!L.find(x=>x.id===b.id))L.push(b)});try{localStorage.setItem('nidoo.fidgets',JSON.stringify(L))}catch(e){}render(L)}).catch(()=>{});
 /* visitas anónimas */
 (function(){try{if(localStorage.getItem('nidoo.yo')==='1')return;var k='nidoo.vid',id=localStorage.getItem(k),nw=0;if(!id){id=Math.random().toString(36).slice(2,10)+Date.now().toString(36);localStorage.setItem(k,id);nw=1}
 var pg='fidgets',sk='nidoo.v.'+pg;if(sessionStorage.getItem(sk))return;sessionStorage.setItem(sk,'1');
