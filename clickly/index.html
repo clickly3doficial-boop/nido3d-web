@@ -641,7 +641,7 @@ function finishRes(r,boxes,d,sent){const codigo=r.codigo;
   const R=getRes();R.push(r);try{localStorage.setItem(RKEY,JSON.stringify(R))}catch(e){}
   const txt=`PREVENTA ${codigo}\n${d.nombre} ${d.apellido}\n${d.direccion}, ${d.ciudad} (${d.cp}), ${d.provincia}, Argentina\nContacto: ${d.contacto}\n`+r.cajas.map((c,i)=>`Caja ${i+1}: ${c.join(', ')}`).join('\n')+`\nTotal: ${r.total} ${totals().free?'· envío gratis':'+ envío'}`;
   B=[{}];cur=0;C=B[0];undoStack=[];save();ui();click(true);
-  $('#rsheet').innerHTML=`<div class="rok"><span class="eye">Preventa</span><h3 id="rtitle">¡Reserva hecha!</h3><p class="lead">${sent?'Ya nos llegó tu reserva. Te escribimos a '+esc(d.contacto)+' para coordinar el pago y el envío.':'Guardamos tu reserva en este dispositivo. Para que nos llegue, mandanos este resumen por DM a @clickly_oficial.'}</p><div class="code">${codigo}</div>
+  $('#rsheet').innerHTML=`<div class="rok"><span class="eye">Preventa</span><h3 id="rtitle">¡Reserva hecha!</h3><p class="lead">${sent?'Ya nos llegó tu reserva. Te escribimos a '+esc(d.contacto)+' para coordinar el pago y el envío.':'Guardamos tu reserva en este dispositivo. Para que nos llegue, mandanos este resumen por DM a @nidoo3d_oficial.'}</p><div class="code">${codigo}</div>
   <div class="rbox" style="text-align:left">${boxRows(boxes)}<div class="row tot"><span>Total · envío aparte</span><span></span><span>${r.total}</span></div></div>
   ${sent?'':'<div class="ract"><button type="button" class="pill" id="rdm">Copiar y enviar por DM</button></div>'}<div class="ract"><button type="button" class="pill undo" id="rclose">Listo</button></div></div>`;
   $('#rsheet').dataset.txt=txt}
@@ -672,7 +672,7 @@ function loadCat(){if(!API)return;fetch(API+'?a=catalogo',{cache:'no-store'}).th
 loadCat();
 /* vuelta desde Mercado Pago */
 (()=>{const q=new URLSearchParams(location.search),st=q.get('pago');if(!st)return;let pend={};try{pend=JSON.parse(localStorage.getItem('clickly.pend')||'{}')}catch(e){}
-  const cod=q.get('external_reference')||pend.codigo||'';const T={ok:['¡Pago aprobado!','Listo, ya es tuyo. Te escribimos para avisarte cuando sale el envío.'],pendiente:['Pago en proceso','Mercado Pago lo está confirmando. Te avisamos apenas se acredite.'],error:['El pago no se completó','No se cobró nada. Podés volver a intentarlo desde tu caja o escribirnos por DM a @clickly_oficial.']}[st]||null;if(!T)return;
+  const cod=q.get('external_reference')||pend.codigo||'';const T={ok:['¡Pago aprobado!','Listo, ya es tuyo. Te escribimos para avisarte cuando sale el envío.'],pendiente:['Pago en proceso','Mercado Pago lo está confirmando. Te avisamos apenas se acredite.'],error:['El pago no se completó','No se cobró nada. Podés volver a intentarlo desde tu caja o escribirnos por DM a @nidoo3d_oficial.']}[st]||null;if(!T)return;
   if(st==='ok')try{localStorage.removeItem('clickly.pend')}catch(e){}
   $('#rsheet').innerHTML=`<div class="rok"><span class="eye">Mercado Pago</span><h3 id="rtitle">${T[0]}</h3><p class="lead">${T[1]}</p>${cod?`<div class="code">${esc(cod)}</div>`:''}<div class="ract"><button type="button" class="pill undo" id="rclose">Listo</button></div></div>`;
   $('#rmodal').hidden=false;document.body.style.overflow='hidden';try{history.replaceState(null,'',location.pathname)}catch(e){}})();
