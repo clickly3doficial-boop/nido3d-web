@@ -134,6 +134,12 @@ img{max-width:100%;height:auto;display:block}
 footer{color:var(--fg3);font-size:12px;padding:30px 0 50px;text-align:center;line-height:1.6}
 footer a{color:var(--fg2);text-decoration:underline}
 
+.wear{padding:40px 0 10px}
+.wbox{display:flex;align-items:center;gap:28px;max-width:720px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:28px;padding:18px;box-shadow:0 20px 40px -30px rgba(60,40,90,.35)}
+.wbox img{width:220px;height:220px;object-fit:cover;border-radius:20px;flex:none;display:block}
+.wbox h3{font-size:clamp(26px,3.4vw,34px);font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.wbox p{color:var(--fg2);font-size:17px;margin-top:8px;line-height:1.45}
+@media (max-width:560px){.wbox{gap:16px;padding:14px}.wbox img{width:120px;height:120px;border-radius:16px}.wbox p{font-size:15px}}
 .rv{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}.rv{opacity:1;transform:none}}
@@ -198,6 +204,15 @@ footer a{color:var(--fg2);text-decoration:underline}
         <div class="step rv"><span class="n">3</span>
           <svg viewBox="0 0 120 120" aria-hidden="true" class="spiral"><circle cx="60" cy="60" r="30" fill="none" stroke="#cdbff0" stroke-width="16"/><path d="M60 14a46 46 0 1 1-40 23" fill="none" stroke="#9f8be0" stroke-width="4" stroke-linecap="round"/><path d="M14 30l6 8 9-5" fill="none" stroke="#9f8be0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <b>Loop</b><span>Hacela girar sobre sí misma, sin fin.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wear">
+    <div class="wrap">
+      <div class="wbox rv">
+        <img src="pulsera.webp" width="640" height="640" alt="Donut Loop amarilla usada como pulsera" loading="lazy">
+        <div><h3>También es pulsera.</h3><p>Ponétela en la muñeca y llevala a todos lados. Cuando la querés usar, la sacás y jugás.</p></div>
       </div>
     </div>
   </section>
