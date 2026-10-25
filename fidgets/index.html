@@ -107,8 +107,8 @@ img{max-width:100%;height:auto;display:block}
 .f{border-radius:24px;padding:22px;min-height:150px;display:flex;flex-direction:column;justify-content:flex-end}
 .f b{font-size:19px;letter-spacing:-.025em;color:#1d1d2b}
 .f span{font-size:15px;color:#44485a;margin-top:4px}
-.f i{font-style:normal;font-size:30px;margin-bottom:auto}
-.f.a{background:#dceefc}.f.b{background:#fde3ee}.f.c{background:#e8e2fb}.f.e{background:#dcf5ec}
+.f i{display:block;width:34px;height:34px;margin-bottom:auto;color:#1d1d2b;opacity:.75}.f i svg{width:100%;height:100%}
+.f.a{background:#dceefc}.f.b{background:#fde3ee}.f.c{background:#e8e2fb}.f.e{background:#fdf3c4}
 
 /* colores */
 .cols{padding:60px 0 20px;text-align:center}
@@ -160,7 +160,7 @@ footer a{color:var(--fg2);text-decoration:underline}
       <div class="eye">NiDoo presenta</div>
       <h1>Fidgets</h1>
       <p class="lead">Objetos para tus manos. Suaves, satisfactorios y con un sonido que no vas a poder dejar de escuchar.</p>
-      <div class="chips" aria-hidden="true"><span>Impresos en 3D</span><span>Colores pastel</span><span>Hechos en Argentina</span></div>
+      <div class="chips" aria-hidden="true"><span>Impresos en 3D</span><span>Cuatro colores pastel</span><span>Hechos en Argentina</span></div>
     </div>
   </header>
 
@@ -206,10 +206,10 @@ footer a{color:var(--fg2);text-decoration:underline}
     <div class="wrap">
       <h3 class="rv">Hecho para tus manos.</h3>
       <div class="fg">
-        <div class="f a rv"><i>🌀</i><b>Se transforma</b><span>De huevo a espiral, y de vuelta.</span></div>
-        <div class="f b rv"><i>🎧</i><b>Sonido suave</b><span>Un sonido relajante en cada giro.</span></div>
-        <div class="f c rv"><i>✋</i><b>Textura sensorial</b><span>Escamas para recorrer con los dedos.</span></div>
-        <div class="f e rv"><i>🇦🇷</i><b>Impreso en 3D</b><span>Capa por capa, en Argentina.</span></div>
+        <div class="f a rv"><i aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 16m0 0a2 2 0 0 1 4 0a5 5 0 0 1-9 2a8 8 0 0 1 13-9a12 12 0 0 1-5 19a15 15 0 0 1-16-14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></i><b>Se transforma</b><span>De huevo a espiral, y de vuelta.</span></div>
+        <div class="f b rv"><i aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 13v6M11 9v14M16 5v22M21 9v14M26 13v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></i><b>Sonido suave</b><span>Un sonido relajante en cada giro.</span></div>
+        <div class="f c rv"><i aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 20l8-14 8 14M4 27l6-10 6 10 6-10 6 10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></svg></i><b>Textura sensorial</b><span>Escamas para recorrer con los dedos.</span></div>
+        <div class="f e rv"><i aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 25h20M8 20h16M10 15h12M12 10h8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></i><b>Impreso en 3D</b><span>Capa por capa, en Argentina.</span></div>
       </div>
     </div>
   </section>
@@ -217,12 +217,12 @@ footer a{color:var(--fg2);text-decoration:underline}
   <section class="cols">
     <div class="wrap">
       <h3 class="rv">Colores pastel.</h3>
-      <p class="s rv">Mirá cómo se vería en cada color.</p>
+      <p class="s rv">Celeste pastel, lavanda, rosa pastel y amarillo. Tocá uno para verlo.</p>
       <div class="sw rv" role="group" aria-label="Colores">
-        <button aria-pressed="true" data-f="none"><i style="background:#b9dcf2"></i>Celeste</button>
-        <button aria-pressed="false" data-f="hue-rotate(115deg) saturate(1.1)"><i style="background:#f4bfd6"></i>Rosa</button>
-        <button aria-pressed="false" data-f="hue-rotate(50deg) saturate(.9)"><i style="background:#cfc3f3"></i>Lila</button>
-        <button aria-pressed="false" data-f="hue-rotate(-60deg) saturate(.85)"><i style="background:#bfead9"></i>Menta</button>
+        <button aria-pressed="true" data-f="none"><i style="background:#b9dcf2"></i>Celeste pastel</button>
+        <button aria-pressed="false" data-f="hue-rotate(60deg) saturate(.9) brightness(1.03)"><i style="background:#cdbff0"></i>Lavanda</button>
+        <button aria-pressed="false" data-f="hue-rotate(115deg) saturate(1.1)"><i style="background:#f4bfd6"></i>Rosa pastel</button>
+        <button aria-pressed="false" data-f="YEL"><i style="background:#f8e48c"></i>Amarillo</button>
       </div>
       <div class="prev"><img id="swImg" src="sensorial-egg.webp?v=2" width="609" height="807" alt="Sensorial Egg en el color elegido"></div>
     </div>
@@ -247,7 +247,7 @@ footer a{color:var(--fg2);text-decoration:underline}
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 const sw=[...document.querySelectorAll('.sw button')],im=document.getElementById('swImg');
-sw.forEach(b=>b.addEventListener('click',()=>{sw.forEach(x=>x.setAttribute('aria-pressed',x===b));im.style.filter=b.dataset.f==='none'?'':b.dataset.f}));
+sw.forEach(b=>b.addEventListener('click',()=>{sw.forEach(x=>x.setAttribute('aria-pressed',x===b));im.style.filter=b.dataset.f==='none'?'':b.dataset.f==='YEL'?'sepia(1) saturate(2.1) hue-rotate(-4deg) brightness(1.12)':b.dataset.f}));
 </script>
 </body>
 </html>
