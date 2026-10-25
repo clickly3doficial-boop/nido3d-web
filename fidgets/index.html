@@ -220,19 +220,21 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 /* Fidgets: el catálogo sale de NiDoo Admin (línea "NiDoo · FIDGETS"). Acá solo van los extras de diseño (fotos por color y página propia). */
 const API='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec';
 const EXTRA={
+ donut:{url:'donut-loop/',badge:'Nuevo',tint:'#fdf3d2',w:'78%',
+  colores:[['Amarillo pastel','#f9e79a','donut-amarillo.webp'],['Celeste pastel','#b9dcf2','donut-celeste.webp'],['Lavanda','#cdbff0','donut-lavanda.webp'],['Rosa pastel','#f4bfd6','donut-rosa.webp']]},
  egg:{url:'sensorial-egg/',badge:'Nuevo',tint:'#e3f0fc',
   colores:[['Celeste pastel','#b9dcf2','sensorial-egg.webp?v=3'],['Lavanda','#cdbff0','egg-lavanda.webp?v=2'],['Rosa pastel','#f4bfd6','egg-rosa.webp?v=2'],['Amarillo pastel','#f9e79a','egg-amarillo.webp?v=2']]}
 };
-const BASE=[{id:'egg',nombre:'Sensorial Egg',descripcion:'Lo girás y se vuelve espiral.',precio:0,stock:0,color:'#b9dcf2',imagen:''}];
+const BASE=[{id:'egg',nombre:'Sensorial Egg',descripcion:'Lo girás y se vuelve espiral.',precio:0,stock:0,color:'#b9dcf2',imagen:''},{id:'donut',nombre:'Donut Loop',descripcion:'Se estira, se retuerce y gira sin fin.',precio:0,stock:0,color:'#f9e79a',imagen:''}];
 const money=v=>'$'+Math.round(v).toLocaleString('es-AR');
 const G=document.getElementById('cgrid');
 function render(list){
- const F=list.map(q=>{const x=EXTRA[q.id]||{};return{id:q.id,nombre:q.nombre,desc:q.descripcion||'',url:x.url||'',badge:x.badge||'',tint:x.tint||'#eef0fb',
+ const F=list.map(q=>{const x=EXTRA[q.id]||{};return{w:x.w||'',id:q.id,nombre:q.nombre,desc:q.descripcion||'',url:x.url||'',badge:x.badge||'',tint:x.tint||'#eef0fb',
   precio:q.precio>0?(q.stock>0?money(q.precio):'Agotado'):'Próximamente',
   colores:x.colores||[[q.nombre,q.color||'#cdbff0',q.imagen||'sensorial-egg.webp?v=3']]}});
  G.innerHTML=F.map(f=>{const L=(a,b,c='')=>f.url?`<a ${c} href="${f.url}">${a}</a>`:`<span ${c}>${a}</span>`;
   return `<article class="card rv in" data-id="${f.id}" style="--tint:${f.tint}">
-  ${f.url?`<a class="ph" href="${f.url}" aria-hidden="true" tabindex="-1">`:'<div class="ph">'}${f.badge?`<span class="badge">${f.badge}</span>`:''}<img src="${f.colores[0][2]}" alt="${f.nombre}, color ${f.colores[0][0]}" width="609" height="807" loading="lazy">${f.url?'</a>':'</div>'}
+  ${f.url?`<a class="ph" href="${f.url}" aria-hidden="true" tabindex="-1">`:'<div class="ph">'}${f.badge?`<span class="badge">${f.badge}</span>`:''}<img src="${f.colores[0][2]}" alt="${f.nombre}, color ${f.colores[0][0]}" loading="lazy"${f.w?` style="width:${f.w}"`:''}>${f.url?'</a>':'</div>'}
   <div class="bd"><h3>${f.url?`<a class="lk" href="${f.url}">${f.nombre}</a>`:f.nombre}</h3><p>${f.desc}</p>
   <div class="row"><div class="dots" role="group" aria-label="Colores de ${f.nombre}">${f.colores.length>1?f.colores.map((c,k)=>`<button aria-pressed="${k===0}" title="${c[0]}" aria-label="${c[0]}" data-k="${k}" style="background:${c[1]}"></button>`).join(''):''}</div><span class="pr">${f.precio}</span></div>${f.url?`<a class="more" href="${f.url}">Ver más ›</a>`:''}</div>
  </article>`}).join('')+`<div class="card ghost rv in"><svg viewBox="0 0 26 32" aria-hidden="true"><use href="#egg"/></svg><b style="color:var(--fg2)">Próximo fidget</b><span style="font-size:14px">Muy pronto</span></div>`;
