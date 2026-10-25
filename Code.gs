@@ -94,6 +94,7 @@ function reservar_(r, pagar){
     for (const id in qty) {
       const p = byId[id];
       if (!p || !p.activo) return {ok:false, error:'Un pop ya no está disponible. Actualizá la página.'};
+      if (p.linea === 'fidget') return {ok:false, error:'Los fidgets todavía no se venden en las cajas de Clickly.'};
       if (p.stock < qty[id]) return {ok:false, error:'No queda stock suficiente de ' + p.nombre + ' (quedan ' + p.stock + ')', stock:p.stock, id:id};
     }
     const envioPedido = ENVIOS[r.envio] ? r.envio : 'sucursal';
@@ -224,7 +225,8 @@ function notificar_(asunto, cuerpo){ try { MailApp.sendEmail(Session.getEffectiv
 
 /* Agrega una sola vez los pops nuevos a la hoja Productos (si después los borrás, no vuelven) */
 const NUEVOS = [
-  ['macaron','Pink Macaron Pop',6000,10,true,'sweet','#EF97B1','Un macaron con tapitas rosa pastel y relleno blanco.','']
+  ['macaron','Pink Macaron Pop',6000,10,true,'sweet','#EF97B1','Un macaron con tapitas rosa pastel y relleno blanco.',''],
+  ['egg','Sensorial Egg',0,0,true,'fidget','#B9DCF2','Lo girás y se vuelve espiral.','https://nido3d.ar/fidgets/sensorial-egg.webp?v=3']
 ];
 function sembrarProductos_(){
   const pr = PropertiesService.getScriptProperties();
@@ -241,7 +243,7 @@ function sembrarProductos_(){
 /* ---------- visitas a la web (anónimas: un id al azar por navegador, sin IP ni datos personales) ---------- */
 function registrarVisita_(p){
   const id = limpio_(p.id, 24).replace(/[^a-z0-9]/gi,''); if (!id) return;
-  const pag = ({nidoo:'NiDoo', clickly:'Clickly'})[p.p] || 'otra';
+  const pag = ({nidoo:'NiDoo', clickly:'Clickly', fidgets:'Fidgets'})[p.p] || 'otra';
   let o = limpio_(p.r, 60).toLowerCase();
   o = /instagram|^ig$|l\.instagram/.test(o) ? 'Instagram' : /facebook|fb/.test(o) ? 'Facebook' : /google/.test(o) ? 'Google' : /whatsapp|wa\.me/.test(o) ? 'WhatsApp' : o === 'interno' ? 'Navegando la web' : o ? o : 'Directo / link';
   let sh = sheet_('Visitas');
