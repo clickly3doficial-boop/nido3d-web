@@ -226,7 +226,8 @@ function notificar_(asunto, cuerpo){ try { MailApp.sendEmail(Session.getEffectiv
 /* Agrega una sola vez los pops nuevos a la hoja Productos (si después los borrás, no vuelven) */
 const NUEVOS = [
   ['macaron','Pink Macaron Pop',6000,10,true,'sweet','#EF97B1','Un macaron con tapitas rosa pastel y relleno blanco.',''],
-  ['egg','Sensorial Egg',0,0,true,'fidget','#B9DCF2','Lo girás y se vuelve espiral.','https://nido3d.ar/fidgets/sensorial-egg.webp?v=3']
+  ['egg','Sensorial Egg',0,0,true,'fidget','#B9DCF2','Lo girás y se vuelve espiral.','https://nido3d.ar/fidgets/sensorial-egg.webp?v=3'],
+  ['donut','Donut Loop',0,0,true,'fidget','#F9E79A','Se estira, se retuerce y gira sin fin.','https://nido3d.ar/fidgets/donut-amarillo.webp']
 ];
 function sembrarProductos_(){
   const pr = PropertiesService.getScriptProperties();
