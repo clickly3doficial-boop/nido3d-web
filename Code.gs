@@ -4,15 +4,15 @@
  * 3) Implementar > Nueva implementación > Aplicación web · Ejecutar como: Yo · Acceso: Cualquier persona.
  */
 const CLAVE_INICIAL = '1214';
-const MAX_CAJAS = 5, POPS_POR_CAJA = 5, PRECIO_POP = 2500, PRECIO_CAJA = 12000, CAJAS_ENVIO_GRATIS = 2; // pesos: pop suelto $2.500, caja llena de 5 $12.000; desde 2 cajas llenas = envío gratis
+const MAX_CAJAS = 5, POPS_POR_CAJA = 5, PRECIO_POP = 3000, PRECIO_CAJA = 14500, CAJAS_ENVIO_GRATIS = 2; // pesos: pop suelto $3.000 (solo retiro), caja llena de 5 $14.500; envío por correo: mínimo 1 caja llena; desde 2 cajas llenas = sucursal gratis
 const COL_P = ['id','nombre','precio','stock','activo','linea','color','descripcion','imagen'];
 const COL_O = ['codigo','fecha','estado','nombre','apellido','direccion','ciudad','cp','provincia','pais','contacto','cajas','cantidad_cajas','pops','total','notas','ids','envio','costo_envio','pago_id'];
 const ESTADOS = ['Nueva','Pendiente de pago','Confirmada','Pagada','Enviada','Entregada','Cancelada'];
 /* Envíos: precio fijo en pesos por pedido (editá estos números cuando quieras) */
 const ENVIOS = {
   retiro:    {n:'Retiro en persona (sin cargo)',  p:0},
-  sucursal:  {n:'Correo Argentino a sucursal',    p:7500},
-  domicilio: {n:'Correo Argentino a domicilio',   p:11500}
+  sucursal:  {n:'Correo Argentino a sucursal',    p:2990},
+  domicilio: {n:'Correo Argentino a domicilio',   p:5990}
 };
 const HORAS_PARA_PAGAR = 48; // si no paga en este tiempo, se cancela y vuelve el stock
 
@@ -96,13 +96,15 @@ function reservar_(r, pagar){
       if (!p || !p.activo) return {ok:false, error:'Un pop ya no está disponible. Actualizá la página.'};
       if (p.stock < qty[id]) return {ok:false, error:'No queda stock suficiente de ' + p.nombre + ' (quedan ' + p.stock + ')', stock:p.stock, id:id};
     }
+    const envioPedido = ENVIOS[r.envio] ? r.envio : 'sucursal';
+    if (envioPedido !== 'retiro' && !cajas.some(c => c.length === POPS_POR_CAJA)) return {ok:false, error:'Para envío por correo el mínimo es una caja llena de 5 pops. Los pops sueltos son solo con retiro en persona.'};
     const sh = sheet_('Productos'), colStock = COL_P.indexOf('stock') + 1;
     for (const id in qty) sh.getRange(byId[id]._row, colStock).setValue(byId[id].stock - qty[id]);
     const envio = ENVIOS[r.envio] ? r.envio : 'sucursal';
     const llenas = cajas.filter(c => c.length === POPS_POR_CAJA).length;
-    const TARIFA = {retiro:[0,0,0], sucursal:[7500,4990,0], domicilio:[11500,8990,4000]};   // sin caja llena / 1 caja llena / 2+ cajas llenas
+    const TARIFA = {retiro:[0,0,0], sucursal:[0,2990,0], domicilio:[0,5990,4000]};   // sin caja llena (solo retiro) / 1 caja llena / 2+ cajas llenas
     const costoEnvio = (TARIFA[envio] || [0,0,0])[llenas >= CAJAS_ENVIO_GRATIS ? 2 : llenas >= 1 ? 1 : 0];
-    const subtotal = cajas.reduce((t, c) => t + (c.length === POPS_POR_CAJA ? PRECIO_CAJA : c.length * PRECIO_POP), 0); // caja llena $12.000, si no $2.500 por pop
+    const subtotal = cajas.reduce((t, c) => t + (c.length === POPS_POR_CAJA ? PRECIO_CAJA : c.length * PRECIO_POP), 0); // caja llena $14.500, si no $3.000 por pop
     const total = subtotal + costoEnvio;
     const conPago = !!(pagar && mpToken_());
     const codigo = 'CLK-' + Utilities.getUuid().slice(0, 5).toUpperCase();
