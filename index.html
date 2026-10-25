@@ -146,32 +146,6 @@ footer .legal{margin-top:16px;display:flex;justify-content:space-between;gap:12p
 .tile .shot{position:relative;flex:1;width:100%;min-height:240px;margin-top:30px;margin-bottom:6px}
 .tile .shot img{position:absolute;left:50%;bottom:0;height:100%;max-height:360px;width:auto;translate:-50% 0;object-fit:contain;transition:transform .6s var(--ease)}
 .tile:hover .shot img{transform:translateY(-6px) scale(1.02)}
-/* 4c · destacado Fidgets */
-.fx{position:relative;z-index:3;padding:84px 0 92px;text-align:center;overflow:hidden;background:
-  radial-gradient(120% 90% at 15% 0%,#e3f1fc 0%,transparent 55%),
-  radial-gradient(120% 90% at 85% 10%,#fbe4ef 0%,transparent 55%),
-  radial-gradient(100% 80% at 50% 100%,#fdf3d2 0%,transparent 60%),
-  var(--bg2)}
-.fx .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg3);font-weight:600}
-.fx h2{font-size:clamp(44px,8vw,96px);font-weight:700;letter-spacing:-.05em;line-height:.98;margin-top:8px;background:linear-gradient(100deg,#7fbfea,#9fb7f2 35%,#ee8fb6 70%,#f5a3c4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-.fx .lead{font-size:clamp(17px,2.2vw,22px);color:var(--fg2);max-width:560px;margin:14px auto 0;letter-spacing:-.02em}
-.fxg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:760px;margin:40px auto 0}
-.fxc{position:relative;display:flex;flex-direction:column;background:var(--sheet);border-radius:26px;overflow:hidden;box-shadow:0 30px 60px -36px rgba(80,60,130,.4);transition:transform .3s var(--ease),box-shadow .3s}
-.fxc:hover{transform:translateY(-6px);box-shadow:0 40px 70px -32px rgba(80,60,130,.5)}
-.fxc .ph{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;padding:14px}
-.fxc.egg .ph{background:radial-gradient(70% 70% at 50% 42%,#eaf4fc,#dfeef9)}
-.fxc.don .ph{background:radial-gradient(70% 70% at 50% 42%,#fdf6dc,#f9eec2)}
-.fxc .ph img{width:86%;height:86%;object-fit:contain;filter:drop-shadow(0 20px 26px rgba(80,60,130,.22))}
-.fxc .nv{position:absolute;left:14px;top:14px;font-size:11px;font-weight:700;letter-spacing:.02em;color:#c2497f;background:#fde3ef;padding:4px 11px;border-radius:980px}
-.fxc .bd{padding:18px 18px 20px;text-align:left}
-.fxc .bd h3{font-size:clamp(21px,3vw,26px);font-weight:700;letter-spacing:-.03em;color:var(--fg)}
-.fxc .bd p{font-size:14px;color:var(--fg2);margin-top:4px;line-height:1.4;min-height:38px}
-.fxc .row{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
-.fxc .pr{font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--fg)}
-.fxc .vm{font-size:14px;font-weight:600;color:var(--link)}
-.fx .ctas{margin-top:34px}
-@media(max-width:560px){.fxc .bd p{min-height:0}.fx h2{font-size:clamp(40px,14vw,64px)}}
-
 /* 5 · bolsas NiDoo */
 .bags{position:relative;z-index:3;background:var(--bg);padding:90px 0 100px;text-align:center;overflow:hidden}
 .bags .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--fg3)}
@@ -309,30 +283,6 @@ footer .legal{margin-top:16px;display:flex;justify-content:space-between;gap:12p
       <span class="tag" style="margin-top:20px">Preventa hasta el 18/12</span>
     </section>
   </div>
-
-  </div>
-
-  <!-- 4c · destacado Fidgets -->
-  <section class="fx" id="fidgets-dest" aria-labelledby="fxT">
-    <div class="wrap">
-      <div class="eyebrow">NiDoo presenta</div>
-      <h2 id="fxT">Fidgets</h2>
-      <p class="lead">Objetos para tus manos. Impresos en 3D, en colores pastel, pensados para no soltar.</p>
-      <div class="fxg">
-        <a class="fxc egg" href="fidgets/sensorial-egg/">
-          <div class="ph"><span class="nv">Nuevo</span><img src="fidgets/sensorial-egg.webp" alt="Sensorial Egg: huevo sensorial impreso en 3D" loading="lazy" width="900" height="900"></div>
-          <div class="bd"><h3>Sensorial Egg</h3><p>Lo girás y se vuelve una espiral.</p>
-            <div class="row"><span class="pr">$6.000</span><span class="vm">Ver más ›</span></div></div>
-        </a>
-        <a class="fxc don" href="fidgets/donut-loop/">
-          <div class="ph"><span class="nv">Nuevo</span><img src="fidgets/donut-amarillo.webp" alt="Donut Loop: dona flexible impresa en 3D" loading="lazy" width="900" height="718"></div>
-          <div class="bd"><h3>Donut Loop</h3><p>Se estira, se retuerce y gira sin fin.</p>
-            <div class="row"><span class="pr">$6.000</span><span class="vm">Ver más ›</span></div></div>
-        </a>
-      </div>
-      <div class="ctas"><a class="b" href="fidgets/">Ver todos los fidgets</a></div>
-    </div>
-  </section>
 
   <!-- 4b · NiDoo es una marca -->
   <section class="prem" aria-labelledby="premT">
