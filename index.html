@@ -195,6 +195,21 @@ footer .legal{margin-top:16px;display:flex;justify-content:space-between;gap:12p
 @keyframes sheen{0%{background-position:150% 0}60%,100%{background-position:-60% 0}}
 @media (max-width:600px){.brow{gap:8px;padding:0 10px}.bag b{font-size:13px}.bag small{display:none}}
 @media (prefers-reduced-motion:reduce){.bag .sh,.bag .sh::after,.bags h2 .holo{animation:none}}
+
+/* premium: NiDoo es una marca */
+.prem{position:relative;z-index:3;background:#000;color:#f5f5f7;text-align:center;padding:110px 0 100px;overflow:hidden}
+.prem .wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.prem .pe{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#86868b;font-weight:600}
+.prem h2{font-size:clamp(42px,7vw,88px);font-weight:600;letter-spacing:-.05em;line-height:1.02;margin:10px 0 0;text-wrap:balance}
+.prem h2 span{background:linear-gradient(100deg,#b9dcf2,#cdbff0 35%,#f4bfd6 65%,#f9e79a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.prem .pl{font-size:clamp(18px,2.2vw,24px);color:#a1a1a6;max-width:680px;margin:18px auto 0;letter-spacing:-.02em;line-height:1.4}
+.prem .pl b{color:#f5f5f7;font-weight:600}
+.prem .pg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:54px;text-align:left}
+@media (max-width:734px){.prem .pg{grid-template-columns:1fr}.prem{padding:80px 0 70px}}
+.prem .pc{background:#141416;border:1px solid #2a2a2e;border-radius:24px;padding:26px 24px}
+.prem .pc b{display:block;font-size:20px;letter-spacing:-.025em;color:#f5f5f7}
+.prem .pc span{display:block;font-size:15px;color:#a1a1a6;margin-top:6px;line-height:1.45}
+.prem .pc i{display:block;width:30px;height:30px;border-radius:50%;margin-bottom:18px}
 </style>
 
 <style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -268,6 +283,20 @@ footer .legal{margin-top:16px;display:flex;justify-content:space-between;gap:12p
       <span class="tag" style="margin-top:20px">Preventa hasta el 18/12</span>
     </section>
   </div>
+
+  <!-- 4b · NiDoo es una marca -->
+  <section class="prem" aria-labelledby="premT">
+    <div class="wrap">
+      <div class="pe">Por qué NiDoo</div>
+      <h2 id="premT">No es un objeto más.<br><span>Es NiDoo.</span></h2>
+      <p class="pl">Cuando elegís NiDoo no estás comprando algo cualquiera: <b>estás eligiendo una marca.</b> Piezas premium, pensadas al detalle y terminadas a mano, que se notan en tu escritorio y dicen algo de vos.</p>
+      <div class="pg">
+        <div class="pc"><i style="background:linear-gradient(135deg,#b9dcf2,#cdbff0)"></i><b>Terminación premium</b><span>Cada pieza se imprime capa por capa, se revisa y se arma a mano, una por una.</span></div>
+        <div class="pc"><i style="background:linear-gradient(135deg,#cdbff0,#f4bfd6)"></i><b>Diseño con criterio</b><span>Formas, colores y sensaciones elegidas para que dé gusto tenerlo y usarlo.</span></div>
+        <div class="pc"><i style="background:linear-gradient(135deg,#f4bfd6,#f9e79a)"></i><b>Se nota que es NiDoo</b><span>Llega en su bolsa holográfica con el huevito NiDoo. Para vos o para regalar.</span></div>
+      </div>
+    </div>
+  </section>
 
   <!-- 5 · bolsas NiDoo -->
   <section class="bags" id="bolsas" aria-labelledby="bolsasT">
