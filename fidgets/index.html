@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Fidgets · NiDoo</title>
+<meta name="description" content="Fidgets de NiDoo: objetos sensoriales impresos en 3D en Argentina. El primero: Sensorial Egg, un huevo que gira y se vuelve espiral.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#fbfaff;--bg2:#f1f4fb;--card:#ffffff;--fg:#1d1d2b;--fg2:#5f6478;--fg3:#8a8fa3;--line:#e4e6f0;
+  --sky:#a9d6f5;--sky2:#7fbfea;--pink:#f6b8d1;--pink2:#ee8fb6;--lila:#cbbcf3;--mint:#b6ead8;
+  --nav:rgba(251,250,255,.78);
+  --sf:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Inter,"Segoe UI",Roboto,Arial,sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0f17;--bg2:#161827;--card:#1b1d2e;--fg:#f3f3fa;--fg2:#b4b8cc;--fg3:#8a8fa3;--line:#2b2e44;--nav:rgba(14,15,23,.78);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e0f17;--bg2:#161827;--card:#1b1d2e;--fg:#f3f3fa;--fg2:#b4b8cc;--fg3:#8a8fa3;--line:#2b2e44;--nav:rgba(14,15,23,.78);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sf);font-size:17px;line-height:1.47;letter-spacing:-.022em;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,p{margin:0}h1,h2,h3{text-wrap:balance}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:2px solid var(--sky2);outline-offset:2px;border-radius:6px}
+
+/* nav */
+.gn{position:sticky;top:0;z-index:50;background:var(--nav);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid color-mix(in srgb,var(--line) 60%,transparent)}
+.gn .wrap{height:48px;display:flex;align-items:center;gap:24px;font-size:13px}
+.logo{display:flex;align-items:center;gap:6px;font-weight:600;font-size:17px;letter-spacing:-.02em}
+.logo svg{width:13px;height:16px}
+.gn .sp{flex:1}
+.gn a.k{color:var(--fg2)}.gn a.k:hover{color:var(--fg)}
+.gn a.on{color:var(--fg);font-weight:600}
+
+/* hero */
+.hero{position:relative;overflow:hidden;text-align:center;padding:90px 0 40px}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;pointer-events:none;animation:drift 14s ease-in-out infinite}
+.b1{width:520px;height:520px;background:var(--sky);left:-160px;top:-140px}
+.b2{width:460px;height:460px;background:var(--pink);right:-140px;top:40px;animation-delay:-5s}
+.b3{width:380px;height:380px;background:var(--lila);left:35%;top:260px;opacity:.35;animation-delay:-9s}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-24px) scale(1.05)}}
+.eye{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--fg3)}
+.hero h1{position:relative;font-size:clamp(64px,13vw,150px);font-weight:700;letter-spacing:-.055em;line-height:.95;margin-top:10px;
+ background:linear-gradient(100deg,var(--sky2) 0%,#9fb7f2 35%,var(--pink2) 70%,#f5a3c4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;padding-bottom:.08em}
+.hero .lead{position:relative;font-size:clamp(19px,2.4vw,26px);color:var(--fg2);max-width:640px;margin:14px auto 0;letter-spacing:-.025em}
+.chips{position:relative;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:26px}
+.chips span{font-size:14px;font-weight:500;padding:7px 14px;border-radius:980px;background:color-mix(in srgb,var(--card) 80%,transparent);border:1px solid var(--line)}
+
+/* producto destacado */
+.feat{padding:40px 0 30px}
+.stage{position:relative;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:30px;border-radius:36px;overflow:hidden;padding:clamp(28px,5vw,64px);
+ background:radial-gradient(70% 80% at 25% 45%,#ffffff 0%,#e9f4fd 45%,#dcecfb 100%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .stage{background:radial-gradient(70% 80% at 25% 45%,#2a3555 0%,#1d2440 55%,#171b30 100%)}}
+:root[data-theme="dark"] .stage{background:radial-gradient(70% 80% at 25% 45%,#2a3555 0%,#1d2440 55%,#171b30 100%)}
+@media (max-width:760px){.stage{grid-template-columns:1fr;text-align:center}}
+.egg{position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:clamp(320px,42vw,520px)}
+.egg img{width:clamp(220px,30vw,360px);filter:drop-shadow(0 34px 30px rgba(70,120,170,.28));animation:bob 5s ease-in-out infinite}
+.egg::after{content:"";position:absolute;bottom:6px;left:50%;width:clamp(160px,20vw,240px);height:22px;translate:-50% 0;background:radial-gradient(closest-side,rgba(60,100,150,.22),transparent);border-radius:50%;animation:shadow 5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-16px) rotate(2deg)}}
+@keyframes shadow{0%,100%{transform:scaleX(1);opacity:1}50%{transform:scaleX(.85);opacity:.7}}
+.egg .ring{position:absolute;left:50%;top:50%;translate:-50% -50%;border-radius:50%;border:1.5px dashed color-mix(in srgb,var(--sky2) 55%,transparent);pointer-events:none;animation:spin 22s linear infinite}
+@keyframes spin{to{rotate:360deg}}
+.info .tag{display:inline-block;font-size:12px;font-weight:600;padding:5px 12px;border-radius:980px;background:var(--pink);color:#7a2850}
+.info h2{font-size:clamp(40px,6vw,68px);font-weight:700;letter-spacing:-.045em;line-height:1.02;margin-top:12px}
+.info h2 em{font-style:normal;background:linear-gradient(90deg,var(--sky2),var(--pink2));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.info p.d{font-size:clamp(17px,2vw,21px);color:var(--fg2);margin-top:12px;max-width:440px}
+@media (max-width:760px){.info p.d{margin-inline:auto}}
+.price{display:flex;align-items:center;gap:14px;margin-top:22px;flex-wrap:wrap}
+@media (max-width:760px){.price{justify-content:center}}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 22px;border-radius:980px;font-weight:600;font-size:16px;background:var(--fg);color:var(--bg);transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.soft{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.soon{font-size:15px;color:var(--fg3)}
+
+/* como funciona */
+.how{padding:60px 0 20px;text-align:center}
+.how h3,.feats h3,.cols h3{font-size:clamp(32px,4.6vw,52px);font-weight:700;letter-spacing:-.04em;line-height:1.05}
+.how p.s{color:var(--fg2);font-size:19px;margin-top:8px}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:34px}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.step{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:30px 22px 26px;text-align:center}
+.step svg{width:120px;height:120px;margin:0 auto}
+.step b{display:block;font-size:20px;letter-spacing:-.025em;margin-top:14px}
+.step span{display:block;color:var(--fg2);font-size:15px;margin-top:4px}
+.step .n{display:grid;margin-inline:auto;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--bg2);color:var(--fg2);font-size:13px;font-weight:600;margin-bottom:10px}
+.twist{transform-origin:60px 60px;animation:tw 3.2s var(--ease) infinite}
+@keyframes tw{0%,15%{transform:rotate(0)}55%,80%{transform:rotate(-150deg)}100%{transform:rotate(0)}}
+.spiral path{stroke-dasharray:420;stroke-dashoffset:420;animation:draw 3.2s ease-in-out infinite}
+@keyframes draw{0%,10%{stroke-dashoffset:420}60%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:420}}
+.wave{animation:wv 1.6s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+.wave:nth-child(2){animation-delay:.2s}.wave:nth-child(3){animation-delay:.4s}
+@keyframes wv{0%,100%{opacity:.25;transform:scale(.9)}50%{opacity:1;transform:scale(1)}}
+
+/* features */
+.feats{padding:60px 0 20px;text-align:center}
+.fg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:30px;text-align:left}
+@media (max-width:860px){.fg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.fg{grid-template-columns:1fr}}
+.f{border-radius:24px;padding:22px;min-height:150px;display:flex;flex-direction:column;justify-content:flex-end}
+.f b{font-size:19px;letter-spacing:-.025em;color:#1d1d2b}
+.f span{font-size:15px;color:#44485a;margin-top:4px}
+.f i{font-style:normal;font-size:30px;margin-bottom:auto}
+.f.a{background:#dceefc}.f.b{background:#fde3ee}.f.c{background:#e8e2fb}.f.e{background:#dcf5ec}
+
+/* colores */
+.cols{padding:60px 0 20px;text-align:center}
+.cols p.s{color:var(--fg2);font-size:19px;margin-top:8px}
+.sw{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.sw button{display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;cursor:pointer;color:var(--fg2);font:inherit;font-size:14px}
+.sw i{display:block;width:54px;height:54px;border-radius:50%;box-shadow:inset 0 -6px 12px rgba(0,0,0,.08),0 6px 14px rgba(0,0,0,.08);outline:2px solid transparent;outline-offset:4px;transition:outline-color .2s,transform .2s}
+.sw button[aria-pressed="true"] i{outline-color:var(--fg);transform:scale(1.06)}
+.sw button[aria-pressed="true"]{color:var(--fg);font-weight:600}
+.prev{margin:26px auto 0;width:min(260px,70vw)}
+.prev img{width:100%;transition:filter .4s}
+
+/* próximos */
+.next{padding:60px 0 30px}
+.nbox{border-radius:32px;padding:clamp(28px,5vw,56px);text-align:center;background:linear-gradient(120deg,#e3f1fc,#fbe4ef 55%,#ece5fb)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .nbox{background:linear-gradient(120deg,#1e2b45,#3a2236 55%,#2a2446)}}
+:root[data-theme="dark"] .nbox{background:linear-gradient(120deg,#1e2b45,#3a2236 55%,#2a2446)}
+.nbox h3{font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-.04em}
+.nbox p{color:var(--fg2);margin-top:8px;font-size:18px}
+.nbox .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+
+footer{color:var(--fg3);font-size:12px;padding:30px 0 50px;text-align:center;line-height:1.6}
+footer a{color:var(--fg2);text-decoration:underline}
+
+.rv{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="egg" viewBox="0 0 26 32"><path fill="currentColor" d="M12.2 1C5.6 1.4 1 10.6 1 19.4 1 26.6 6.2 31 13.4 31 20.5 31 25 26.3 25 19.6 25 10.1 19.5.6 12.2 1Z"/></symbol>
+</defs></svg>
+
+<nav class="gn" aria-label="NiDoo">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="NiDoo, inicio"><svg aria-hidden="true"><use href="#egg"/></svg>NiDoo</a>
+    <a class="k on" href="/fidgets/">Fidgets</a>
+    <a class="k" href="/clickly/">Clickly</a>
+    <span class="sp"></span>
+    <a class="k" href="#egg-info">Sensorial Egg</a>
+  </div>
+</nav>
+
+<main>
+  <header class="hero">
+    <i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i>
+    <div class="wrap">
+      <div class="eye">NiDoo presenta</div>
+      <h1>Fidgets</h1>
+      <p class="lead">Objetos para tus manos. Suaves, satisfactorios y con un sonido que no vas a poder dejar de escuchar.</p>
+      <div class="chips" aria-hidden="true"><span>Impresos en 3D</span><span>Colores pastel</span><span>Hechos en Argentina</span></div>
+    </div>
+  </header>
+
+  <section class="feat" id="egg-info">
+    <div class="wrap">
+      <div class="stage rv">
+        <div class="egg">
+          <i class="ring" style="width:118%;aspect-ratio:1"></i><i class="ring" style="width:88%;aspect-ratio:1;animation-direction:reverse;animation-duration:30s"></i>
+          <img id="eggImg" src="sensorial-egg.webp?v=2" width="609" height="807" alt="Sensorial Egg: huevo celeste impreso en 3D, con escamas en espiral">
+        </div>
+        <div class="info">
+          <span class="tag">Fidget N.º 1 · Nuevo</span>
+          <h2>Sensorial <em>Egg</em></h2>
+          <p class="d">Un huevo que se transforma. Lo girás, las escamas se acomodan y se vuelve una espiral, con un sonido suave que te calma.</p>
+          <div class="price"><a class="btn" href="https://www.instagram.com/clickly_oficial/" target="_blank" rel="noopener">Avisame cuando salga</a><span class="soon">Próximamente</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="wrap">
+      <h3 class="rv">Girás. Suena. Se transforma.</h3>
+      <p class="s rv">Así funciona el Sensorial Egg.</p>
+      <div class="steps">
+        <div class="step rv"><span class="n">1</span>
+          <svg viewBox="0 0 120 120" aria-hidden="true"><path d="M58 18c-20 1-34 26-34 50 0 20 15 34 36 34s36-13 36-33c0-27-17-52-38-51Z" fill="#dceefc" stroke="#7fbfea" stroke-width="3"/>
+          <path d="M30 70q30-14 60 0M28 54q32-14 64 0M34 38q26-12 52 0M30 86q30-12 60 0" fill="none" stroke="#a9d6f5" stroke-width="3" stroke-linecap="round"/></svg>
+          <b>Sostenelo</b><span>Entra justo en la palma de la mano.</span></div>
+        <div class="step rv"><span class="n">2</span>
+          <svg viewBox="0 0 120 120" aria-hidden="true"><g class="twist"><path d="M58 18c-20 1-34 26-34 50 0 20 15 34 36 34s36-13 36-33c0-27-17-52-38-51Z" fill="#fde3ee" stroke="#ee8fb6" stroke-width="3"/>
+          <path d="M40 32 L80 88M30 52 L70 100M52 22 L92 72" stroke="#f6b8d1" stroke-width="3" stroke-linecap="round"/></g>
+          <g fill="#ee8fb6"><circle class="wave" cx="104" cy="40" r="4"/><circle class="wave" cx="110" cy="56" r="3"/><circle class="wave" cx="104" cy="72" r="4"/></g></svg>
+          <b>Girá</b><span>Las escamas giran con un sonido suave.</span></div>
+        <div class="step rv"><span class="n">3</span>
+          <svg viewBox="0 0 120 120" aria-hidden="true" class="spiral"><path d="M60 60m0 0a4 4 0 0 1 8 0a10 10 0 0 1-18 4a16 16 0 0 1 26-18a24 24 0 0 1-10 38a32 32 0 0 1-40-28a40 40 0 0 1 48-40a46 46 0 0 1 36 52" fill="none" stroke="#cbbcf3" stroke-width="6" stroke-linecap="round"/></svg>
+          <b>Espiral</b><span>Se transforma en una espiral hipnótica.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feats">
+    <div class="wrap">
+      <h3 class="rv">Hecho para tus manos.</h3>
+      <div class="fg">
+        <div class="f a rv"><i>🌀</i><b>Se transforma</b><span>De huevo a espiral, y de vuelta.</span></div>
+        <div class="f b rv"><i>🎧</i><b>Sonido suave</b><span>Un sonido relajante en cada giro.</span></div>
+        <div class="f c rv"><i>✋</i><b>Textura sensorial</b><span>Escamas para recorrer con los dedos.</span></div>
+        <div class="f e rv"><i>🇦🇷</i><b>Impreso en 3D</b><span>Capa por capa, en Argentina.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cols">
+    <div class="wrap">
+      <h3 class="rv">Colores pastel.</h3>
+      <p class="s rv">Mirá cómo se vería en cada color.</p>
+      <div class="sw rv" role="group" aria-label="Colores">
+        <button aria-pressed="true" data-f="none"><i style="background:#b9dcf2"></i>Celeste</button>
+        <button aria-pressed="false" data-f="hue-rotate(115deg) saturate(1.1)"><i style="background:#f4bfd6"></i>Rosa</button>
+        <button aria-pressed="false" data-f="hue-rotate(50deg) saturate(.9)"><i style="background:#cfc3f3"></i>Lila</button>
+        <button aria-pressed="false" data-f="hue-rotate(-60deg) saturate(.85)"><i style="background:#bfead9"></i>Menta</button>
+      </div>
+      <div class="prev"><img id="swImg" src="sensorial-egg.webp?v=2" width="609" height="807" alt="Sensorial Egg en el color elegido"></div>
+    </div>
+  </section>
+
+  <section class="next">
+    <div class="wrap">
+      <div class="nbox rv">
+        <h3>Este es solo el primero.</h3>
+        <p>Vienen más fidgets NiDoo. Seguinos para enterarte antes que nadie.</p>
+        <div class="ctas"><a class="btn" href="https://www.instagram.com/clickly_oficial/" target="_blank" rel="noopener">Seguinos en Instagram</a><a class="btn soft" href="/clickly/">Ver los pops de Clickly</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Copyright © 2026 NiDoo. Argentina. · <a href="/">Volver a NiDoo</a><br>Objetos impresos en 3D con piezas pequeñas: no aptos para menores de 3 años.</div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const sw=[...document.querySelectorAll('.sw button')],im=document.getElementById('swImg');
+sw.forEach(b=>b.addEventListener('click',()=>{sw.forEach(x=>x.setAttribute('aria-pressed',x===b));im.style.filter=b.dataset.f==='none'?'':b.dataset.f}));
+</script>
+</body>
+</html>
