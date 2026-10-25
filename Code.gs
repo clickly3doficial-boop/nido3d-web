@@ -227,7 +227,8 @@ function notificar_(asunto, cuerpo){ try { MailApp.sendEmail(Session.getEffectiv
 const NUEVOS = [
   ['macaron','Pink Macaron Pop',6000,10,true,'sweet','#EF97B1','Un macaron con tapitas rosa pastel y relleno blanco.',''],
   ['egg','Sensorial Egg',0,0,true,'fidget','#B9DCF2','Lo girás y se vuelve espiral.','https://nido3d.ar/fidgets/sensorial-egg.webp?v=3'],
-  ['donut','Donut Loop',0,0,true,'fidget','#F9E79A','Se estira, se retuerce y gira sin fin.','https://nido3d.ar/fidgets/donut-amarillo.webp']
+  ['donut','Donut Loop',0,0,true,'fidget','#F9E79A','Se estira, se retuerce y gira sin fin.','https://nido3d.ar/fidgets/donut-amarillo.webp'],
+  ['infinity','Infinity Q',0,0,true,'fidget','#CDBFF0','El cubo infinito: se abre, se pliega y no termina nunca.','https://nido3d.ar/fidgets/infinity-lavanda.webp']
 ];
 function sembrarProductos_(){
   const pr = PropertiesService.getScriptProperties();
