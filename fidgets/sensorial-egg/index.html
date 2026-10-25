@@ -168,7 +168,7 @@ footer a{color:var(--fg2);text-decoration:underline}
           <span class="tag">Fidget N.º 1 · Nuevo</span>
           <h2>Sensorial <em>Egg</em></h2>
           <p class="d">Un huevo que se transforma. Lo girás, las escamas se acomodan y se vuelve una espiral, con un sonido suave que te calma.</p>
-          <div class="price"><a class="btn" href="https://www.instagram.com/clickly_oficial/" target="_blank" rel="noopener">Avisame cuando salga</a><span class="soon">Próximamente</span></div>
+          <div class="price"><a class="btn" href="https://www.instagram.com/clickly_oficial/" target="_blank" rel="noopener">Avisame cuando salga</a><span class="soon" id="eggPrice">Próximamente</span></div>
         </div>
       </div>
     </div>
@@ -241,6 +241,14 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 const sw=[...document.querySelectorAll('.sw button')],im=document.getElementById('swImg');
 sw.forEach(b=>{const pre=new Image();pre.src=b.dataset.src;b.addEventListener('click',()=>{sw.forEach(x=>x.setAttribute('aria-pressed',x===b));im.src=b.dataset.src})});
+fetch('https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec?a=catalogo&t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{const e=(d.productos||[]).find(p=>p.id==='egg');if(!e)return;
+ document.getElementById('eggPrice').textContent=e.precio>0?(e.stock>0?'$'+Math.round(e.precio).toLocaleString('es-AR'):'Agotado'):'Próximamente'}).catch(()=>{});
+/* visitas anónimas */
+(function(){try{if(localStorage.getItem('nidoo.yo')==='1')return;var k='nidoo.vid',id=localStorage.getItem(k),nw=0;if(!id){id=Math.random().toString(36).slice(2,10)+Date.now().toString(36);localStorage.setItem(k,id);nw=1}
+var pg='fidgets',sk='nidoo.v.'+pg;if(sessionStorage.getItem(sk))return;sessionStorage.setItem(sk,'1');
+var q=new URLSearchParams(location.search),r=q.get('utm_source')||(q.get('fbclid')?'instagram':''),ref='';try{ref=document.referrer?new URL(document.referrer).hostname:''}catch(e){}
+if(!r)r=ref===location.hostname?'interno':ref;if(!r&&/Instagram|FBAN|FBAV/.test(navigator.userAgent))r='instagram';
+new Image().src='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec?a=v&id='+id+'&p='+pg+'&r='+encodeURIComponent(r)+'&m='+(/Mobi|Android|iPhone/i.test(navigator.userAgent)?1:0)+'&n='+nw+'&t='+Date.now()}catch(e){}})();
 </script>
 </body>
 </html>

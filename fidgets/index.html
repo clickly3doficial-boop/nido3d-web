@@ -217,22 +217,40 @@ footer a{color:var(--fg2);text-decoration:underline}
 <script>
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-/* Para sumar un fidget nuevo: agregá un objeto a FIDGETS */
-const FIDGETS=[
- {id:'egg',url:'sensorial-egg/',nombre:'Sensorial Egg',desc:'Lo girás y se vuelve espiral.',badge:'Nuevo',precio:'Próximamente',tint:'#e3f0fc',
+/* Fidgets: el catálogo sale de NiDoo Admin (línea "NiDoo · FIDGETS"). Acá solo van los extras de diseño (fotos por color y página propia). */
+const API='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec';
+const EXTRA={
+ egg:{url:'sensorial-egg/',badge:'Nuevo',tint:'#e3f0fc',
   colores:[['Celeste pastel','#b9dcf2','sensorial-egg.webp?v=3'],['Lavanda','#cdbff0','egg-lavanda.webp?v=2'],['Rosa pastel','#f4bfd6','egg-rosa.webp?v=2'],['Amarillo pastel','#f9e79a','egg-amarillo.webp?v=2']]}
-];
+};
+const BASE=[{id:'egg',nombre:'Sensorial Egg',descripcion:'Lo girás y se vuelve espiral.',precio:0,stock:0,color:'#b9dcf2',imagen:''}];
+const money=v=>'$'+Math.round(v).toLocaleString('es-AR');
 const G=document.getElementById('cgrid');
-G.innerHTML=FIDGETS.map(f=>`<article class="card rv" data-id="${f.id}" style="--tint:${f.tint}">
-  <a class="ph" href="${f.url}" aria-hidden="true" tabindex="-1">${f.badge?`<span class="badge">${f.badge}</span>`:''}<img src="${f.colores[0][2]}" alt="${f.nombre}, color ${f.colores[0][0]}" width="609" height="807" loading="lazy"></a>
-  <div class="bd"><h3><a class="lk" href="${f.url}">${f.nombre}</a></h3><p>${f.desc}</p>
-  <div class="row"><div class="dots" role="group" aria-label="Colores de ${f.nombre}">${f.colores.map((c,k)=>`<button aria-pressed="${k===0}" title="${c[0]}" aria-label="${c[0]}" data-k="${k}" style="background:${c[1]}"></button>`).join('')}</div><span class="pr">${f.precio}</span></div><a class="more" href="${f.url}">Ver más ›</a></div>
- </article>`).join('')+`<div class="card ghost rv"><svg viewBox="0 0 26 32" aria-hidden="true"><use href="#egg"/></svg><b style="color:var(--fg2)">Próximo fidget</b><span style="font-size:14px">Muy pronto</span></div>`;
-document.getElementById('catN').textContent=FIDGETS.length+(FIDGETS.length===1?' modelo':' modelos');
-G.querySelectorAll('.card[data-id]').forEach(card=>{const f=FIDGETS.find(x=>x.id===card.dataset.id),img=card.querySelector('img'),bs=[...card.querySelectorAll('.dots button')];
- f.colores.forEach(c=>{const p=new Image();p.src=c[2]});
- bs.forEach(b=>b.addEventListener('click',()=>{const c=f.colores[b.dataset.k];bs.forEach(x=>x.setAttribute('aria-pressed',x===b));img.src=c[2];img.alt=f.nombre+', color '+c[0]}))});
-G.querySelectorAll('.rv').forEach(el=>io.observe(el));
+function render(list){
+ const F=list.map(q=>{const x=EXTRA[q.id]||{};return{id:q.id,nombre:q.nombre,desc:q.descripcion||'',url:x.url||'',badge:x.badge||'',tint:x.tint||'#eef0fb',
+  precio:q.precio>0?(q.stock>0?money(q.precio):'Agotado'):'Próximamente',
+  colores:x.colores||[[q.nombre,q.color||'#cdbff0',q.imagen||'sensorial-egg.webp?v=3']]}});
+ G.innerHTML=F.map(f=>{const L=(a,b,c='')=>f.url?`<a ${c} href="${f.url}">${a}</a>`:`<span ${c}>${a}</span>`;
+  return `<article class="card rv in" data-id="${f.id}" style="--tint:${f.tint}">
+  ${f.url?`<a class="ph" href="${f.url}" aria-hidden="true" tabindex="-1">`:'<div class="ph">'}${f.badge?`<span class="badge">${f.badge}</span>`:''}<img src="${f.colores[0][2]}" alt="${f.nombre}, color ${f.colores[0][0]}" width="609" height="807" loading="lazy">${f.url?'</a>':'</div>'}
+  <div class="bd"><h3>${f.url?`<a class="lk" href="${f.url}">${f.nombre}</a>`:f.nombre}</h3><p>${f.desc}</p>
+  <div class="row"><div class="dots" role="group" aria-label="Colores de ${f.nombre}">${f.colores.length>1?f.colores.map((c,k)=>`<button aria-pressed="${k===0}" title="${c[0]}" aria-label="${c[0]}" data-k="${k}" style="background:${c[1]}"></button>`).join(''):''}</div><span class="pr">${f.precio}</span></div>${f.url?`<a class="more" href="${f.url}">Ver más ›</a>`:''}</div>
+ </article>`}).join('')+`<div class="card ghost rv in"><svg viewBox="0 0 26 32" aria-hidden="true"><use href="#egg"/></svg><b style="color:var(--fg2)">Próximo fidget</b><span style="font-size:14px">Muy pronto</span></div>`;
+ document.getElementById('catN').textContent=F.length+(F.length===1?' modelo':' modelos');
+ G.querySelectorAll('.card[data-id]').forEach(card=>{const f=F.find(x=>x.id===card.dataset.id),img=card.querySelector('img'),bs=[...card.querySelectorAll('.dots button')];
+  f.colores.forEach(c=>{const p=new Image();p.src=c[2]});
+  bs.forEach(b=>b.addEventListener('click',()=>{const c=f.colores[b.dataset.k];bs.forEach(x=>x.setAttribute('aria-pressed',x===b));img.src=c[2];img.alt=f.nombre+', color '+c[0]}))});
+}
+let cache=null;try{cache=JSON.parse(localStorage.getItem('nidoo.fidgets'))}catch(e){}
+render(cache&&cache.length?cache:BASE);
+fetch(API+'?a=catalogo&t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{if(!d||!Array.isArray(d.productos))return;
+ const L=d.productos.filter(p=>p.linea==='fidget');try{localStorage.setItem('nidoo.fidgets',JSON.stringify(L))}catch(e){}render(L)}).catch(()=>{});
+/* visitas anónimas */
+(function(){try{if(localStorage.getItem('nidoo.yo')==='1')return;var k='nidoo.vid',id=localStorage.getItem(k),nw=0;if(!id){id=Math.random().toString(36).slice(2,10)+Date.now().toString(36);localStorage.setItem(k,id);nw=1}
+var pg='fidgets',sk='nidoo.v.'+pg;if(sessionStorage.getItem(sk))return;sessionStorage.setItem(sk,'1');
+var q=new URLSearchParams(location.search),r=q.get('utm_source')||(q.get('fbclid')?'instagram':''),ref='';try{ref=document.referrer?new URL(document.referrer).hostname:''}catch(e){}
+if(!r)r=ref===location.hostname?'interno':ref;if(!r&&/Instagram|FBAN|FBAV/.test(navigator.userAgent))r='instagram';
+new Image().src='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec?a=v&id='+id+'&p='+pg+'&r='+encodeURIComponent(r)+'&m='+(/Mobi|Android|iPhone/i.test(navigator.userAgent)?1:0)+'&n='+nw+'&t='+Date.now()}catch(e){}})();
 </script>
 </body>
 </html>
