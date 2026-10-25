@@ -54,7 +54,7 @@ function doGet(e){
     const a = (e && e.parameter && e.parameter.a) || 'catalogo';
     if (a === 'v') { registrarVisita_(e.parameter); return out_({ok:true}); }
     if (a === 'catalogo') { try { sembrarProductos_(); } catch (err) {} }
-    if (a === 'catalogo') return out_({ok:true, sembrado:true, maxCajas:MAX_CAJAS, popsPorCaja:POPS_POR_CAJA, precioCaja:PRECIO_CAJA, precioPop:PRECIO_POP, cajasEnvioGratis:CAJAS_ENVIO_GRATIS, envios:ENVIOS, pago:!!mpToken_(), productos:productos_().filter(p => p.activo).map(p => { delete p._row; return p; })});
+    if (a === 'catalogo') return out_({ok:true, sembrado:true, maxCajas:MAX_CAJAS, popsPorCaja:POPS_POR_CAJA, precioCaja:PRECIO_CAJA, precioPop:PRECIO_POP, cajasEnvioGratis:CAJAS_ENVIO_GRATIS, envios:ENVIOS, pago:!!mpToken_(), fidgetIds:productos_().filter(p => p.linea === 'fidget').map(p => p.id), productos:productos_().filter(p => p.activo).map(p => { delete p._row; return p; })});
     return out_({ok:false, error:'Acción desconocida'});
   } catch (err) { return out_({ok:false, error:String(err.message || err)}); }
 }
