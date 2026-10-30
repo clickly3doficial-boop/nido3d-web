@@ -7,7 +7,7 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>Fidgets · NiDoo</title>
-<meta name="description" content="Fidgets de NiDoo: objetos sensoriales impresos en 3D en Argentina. Sensorial Egg, Donut Loop e Infinity Q, el cubo infinito, en colores pastel.">
+<meta name="description" content="Fidgets de NiDoo: objetos sensoriales impresos en 3D en Argentina. Sensorial Egg e Infinity Q, el cubo infinito, en colores pastel.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
@@ -222,15 +222,14 @@ const API='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkV
 const EXTRA={
  infinity:{url:'infinity-q/',badge:'Nuevo',tint:'#ece6fb',w:'74%',
   colores:[['Lavanda','#cdbff0','infinity-lavanda.webp'],['Celeste pastel','#b9dcf2','infinity-celeste.webp'],['Rosa pastel','#f4bfd6','infinity-rosa.webp'],['Amarillo pastel','#f9e79a','infinity-amarillo.webp']]},
- donut:{url:'donut-loop/',badge:'Nuevo',tint:'#fdf3d2',w:'78%',
-  colores:[['Amarillo pastel','#f9e79a','donut-amarillo.webp'],['Celeste pastel','#b9dcf2','donut-celeste.webp'],['Lavanda','#cdbff0','donut-lavanda.webp'],['Rosa pastel','#f4bfd6','donut-rosa.webp']]},
  egg:{url:'sensorial-egg/',badge:'Nuevo',tint:'#e3f0fc',
   colores:[['Celeste pastel','#b9dcf2','sensorial-egg.webp?v=3'],['Lavanda','#cdbff0','egg-lavanda.webp?v=2'],['Rosa pastel','#f4bfd6','egg-rosa.webp?v=2'],['Amarillo pastel','#f9e79a','egg-amarillo.webp?v=2']]}
 };
-const BASE=[{id:'egg',nombre:'Sensorial Egg',descripcion:'Lo girás y se vuelve espiral.',precio:0,stock:0,color:'#b9dcf2',imagen:''},{id:'donut',nombre:'Donut Loop',descripcion:'Se estira, se retuerce y gira sin fin.',precio:0,stock:0,color:'#f9e79a',imagen:''},{id:'infinity',nombre:'Infinity Q',descripcion:'El cubo infinito: se abre, se pliega y no termina nunca.',precio:0,stock:0,color:'#cdbff0',imagen:''}];
+const BASE=[{id:'egg',nombre:'Sensorial Egg',descripcion:'Lo girás y se vuelve espiral.',precio:0,stock:0,color:'#b9dcf2',imagen:''},{id:'infinity',nombre:'Infinity Q',descripcion:'El cubo infinito: se abre, se pliega y no termina nunca.',precio:0,stock:0,color:'#cdbff0',imagen:''}];
 const money=v=>'$'+Math.round(v).toLocaleString('es-AR');
 const G=document.getElementById('cgrid');
 function render(list){
+ list=list.filter(q=>q.id!=='donut');  /* Donut Loop discontinuada */
  const F=list.map(q=>{const x=EXTRA[q.id]||{};return{w:x.w||'',id:q.id,nombre:q.nombre,desc:q.descripcion||'',url:x.url||'',badge:x.badge||'',tint:x.tint||'#eef0fb',
   precio:q.precio>0?(q.stock>0?money(q.precio):'Agotado'):'Próximamente',
   colores:x.colores||[[q.nombre,q.color||'#cdbff0',q.imagen||'sensorial-egg.webp?v=3']]}});
