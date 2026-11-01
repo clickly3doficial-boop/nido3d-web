@@ -192,15 +192,15 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
           <p class="stepN">Paso 3</p><h3>Tu grabado</h3>
           <p class="desc">Una letra o tu propio ícono en el plato de arriba. Abajo va el nombre PENTA.</p>
           <div class="seg" role="tablist" aria-label="Tipo de grabado">
-            <button type="button" role="tab" aria-selected="true" data-eng="text">Letra</button>
+            <button type="button" role="tab" aria-selected="true" data-eng="text">Letra o emoji</button>
             <button type="button" role="tab" aria-selected="false" data-eng="image">Ícono</button>
             <button type="button" role="tab" aria-selected="false" data-eng="none">Sin grabado</button>
           </div>
           <div class="engr">
-            <label class="field" data-pane="text"><input id="engText" type="text" maxlength="2" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="A" aria-label="Letra o iniciales (hasta 2)" value="P"><small>hasta 2</small></label>
+            <label class="field" data-pane="text"><input id="engText" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="A o 😀" aria-label="Letra, iniciales o emoji (hasta 2)" value="P"><small>hasta 2</small></label>
             <div data-pane="image" class="hide"><label class="up" tabindex="0" id="upLabel"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg><span id="upText">Subir ícono (PNG, JPG o SVG)</span><input id="engFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" class="hide"></label></div>
           </div>
-          <p class="note" id="engNote">Es un adelanto: el grabado real es hundido y del mismo color que la pieza.</p>
+          <p class="note" id="engNote">Es un adelanto: el grabado real es hundido y de un solo color; en los emoji se marcan las formas y los detalles oscuros.</p>
         </section>
 
         <section class="step" data-focus="iso" id="stSum">
@@ -233,6 +233,9 @@ let PRICE = 4000;
 const fmt = n => '$' + n.toLocaleString('es-AR');
 const state = { z: 0, c: 0, eng: 'text', text: 'P', img: null };
 const lum = hex => { const c = new THREE.Color(hex); return .2126*c.r + .7152*c.g + .0722*c.b; };
+const seg = new Intl.Segmenter(undefined,{granularity:'grapheme'});
+const clip2 = t => [...seg.segment(t)].slice(0,2).map(x => x.segment).join('');
+const isEmoji = t => /\p{Extended_Pictographic}/u.test(t);
 const inkFor = hex => lum(hex) > .3 ? 'rgba(10,10,12,.6)' : 'rgba(255,255,255,.65)';
 
 /* ---------- geometría real (STL de PentaClick) ---------- */
@@ -315,7 +318,16 @@ class Rig {
     const mk = (cv, old) => { const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; if (old) old.dispose(); return t; };
     const ink = inkFor(hex);
     const top = document.createElement('canvas'); top.width = top.height = 512; const x = top.getContext('2d');
-    if (state.eng === 'text' && state.text.trim()){ const t = state.text.trim().toUpperCase().slice(0,2); x.fillStyle = ink; x.textAlign = 'center'; x.textBaseline = 'middle'; x.font = `800 ${t.length > 1 ? 260 : 340}px -apple-system,"SF Pro Display",Inter,Arial,sans-serif`; x.fillText(t, 256, 270); }
+    if (state.eng === 'text' && state.text.trim()){
+      const t = clip2(state.text.trim().toUpperCase());
+      if (isEmoji(t)){
+        const e = document.createElement('canvas'); e.width = e.height = 512; const ex = e.getContext('2d');
+        ex.textAlign = 'center'; ex.textBaseline = 'middle'; ex.font = `${[...seg.segment(t)].length > 1 ? 210 : 330}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`; ex.fillText(t, 256, 275);
+        const d = ex.getImageData(0,0,512,512), q = d.data, [ir,ig,ib] = [...new THREE.Color(hex).lerp(new THREE.Color(lum(hex) > .3 ? '#0a0a0c' : '#ffffff'), .85).toArray()].map(v => Math.round(v*255));
+        for (let i=0;i<q.length;i+=4){ const l = (q[i]*.299 + q[i+1]*.587 + q[i+2]*.114)/255, a = q[i+3]/255; q[i]=ir; q[i+1]=ig; q[i+2]=ib; q[i+3] = Math.round(255*a*(.9 - .55*l)); }
+        ex.putImageData(d,0,0); x.drawImage(e,0,0);
+      } else { x.fillStyle = ink; x.textAlign = 'center'; x.textBaseline = 'middle'; x.font = `800 ${t.length > 1 ? 260 : 340}px -apple-system,"SF Pro Display",Inter,Arial,sans-serif`; x.fillText(t, 256, 270); }
+    }
     else if (state.eng === 'image' && state.img){ const m = document.createElement('canvas'); m.width = m.height = 512; const mx = m.getContext('2d'); mx.drawImage(state.img,0,0,512,512); mx.globalCompositeOperation = 'source-in'; mx.fillStyle = ink; mx.fillRect(0,0,512,512); x.drawImage(m,0,0); }
     const bot = document.createElement('canvas'); bot.width = bot.height = 512; const y = bot.getContext('2d');
     y.fillStyle = ink; y.textAlign = 'center'; y.textBaseline = 'middle'; y.font = '800 120px -apple-system,"SF Pro Display",Inter,Arial,sans-serif'; y.fillText('PENTA', 256, 262);
@@ -376,7 +388,7 @@ COLORS.forEach(([n,h], i) => {
   b.addEventListener('click', () => { state.c = i; sync(); theme(); }); $('#sws').appendChild(b);
 });
 function pane(){ $$('[data-pane]').forEach(p => p.classList.toggle('hide', p.dataset.pane !== state.eng)); $('#engNote').classList.toggle('hide', state.eng === 'none'); }
-const engLabel = () => state.eng === 'text' ? (state.text.trim() ? `Letra "${state.text.trim().toUpperCase()}"` : 'Sin grabado') : state.eng === 'image' ? (state.img ? 'Ícono propio' : 'Ícono (falta subirlo)') : 'Sin grabado';
+const engLabel = () => state.eng === 'text' ? (state.text.trim() ? `${isEmoji(state.text) ? 'Emoji' : 'Letra'} "${clip2(state.text.trim().toUpperCase())}"` : 'Sin grabado') : state.eng === 'image' ? (state.img ? 'Ícono propio' : 'Ícono (falta subirlo)') : 'Sin grabado';
 function sizeUI(){
   PRICE = SIZES[state.z][1];
   $$('.sz').forEach(b => b.setAttribute('aria-checked', String(+b.dataset.i === state.z)));
@@ -393,7 +405,7 @@ function sync(){
   $('#sumList').innerHTML = `<div class="row"><dt>Modelo</dt><dd>PENTA ${SIZES[state.z][0]}</dd></div><div class="row"><dt>Color</dt><dd><i class="dot" style="background:${chex()}"></i>${COLORS[state.c][0]}</dd></div><div class="row"><dt>Grabado arriba</dt><dd>${engLabel()}</dd></div><div class="row"><dt>Grabado abajo</dt><dd>PENTA</dd></div>`;
 }
 $$('.seg button').forEach(b => b.addEventListener('click', () => { state.eng = b.dataset.eng; $$('.seg button').forEach(x => x.setAttribute('aria-selected', String(x === b))); pane(); sync(); cfg.view('top'); }));
-$('#engText').addEventListener('input', e => { state.text = e.target.value.replace(/[^\p{L}\p{N}&+!?#@%*.\-]/gu, '').slice(0,2); if (e.target.value !== state.text) e.target.value = state.text; sync(); });
+$('#engText').addEventListener('input', e => { state.text = clip2(e.target.value.replace(/[^\p{L}\p{N}\p{Extended_Pictographic}\u200d\ufe0f&+!?#@%*.\-]/gu, '')); if (e.target.value !== state.text) e.target.value = state.text; sync(); });
 $('#upLabel').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); $('#engFile').click(); } });
 $('#engFile').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f) return;
@@ -415,7 +427,7 @@ $('#engFile').addEventListener('change', e => {
 /* ---------- pedido ---------- */
 let tt = 0; function toast(m){ const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 3400); }
 function summary(){
-  const code = 'PN-' + 'PGX'[state.z] + '-' + state.c + '-' + (state.eng === 'text' ? state.text.trim().toUpperCase() || 'X' : state.eng === 'image' ? 'IMG' : 'X');
+  const code = 'PN-' + 'PGX'[state.z] + '-' + state.c + '-' + (state.eng === 'text' ? clip2(state.text.trim().toUpperCase()) || 'X' : state.eng === 'image' ? 'IMG' : 'X');
   return ['Hola! Quiero mi PENTA:', `• Modelo: PENTA ${SIZES[state.z][0]} (${fmt(PRICE)})`, `• Color: ${COLORS[state.c][0]}`, `• Grabado arriba: ${engLabel()}`, '• Nombre PENTA abajo', state.eng === 'image' ? '(Te mando el ícono por acá)' : '', `Código: ${code}`].filter(Boolean).join('\n');
 }
 async function copy(){ const t = summary(); try { await navigator.clipboard.writeText(t); return true; } catch { const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); let ok = false; try { ok = document.execCommand('copy'); } catch {} a.remove(); return ok; } }
