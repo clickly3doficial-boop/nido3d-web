@@ -381,7 +381,7 @@ const COLORS = [
 const PRICE = { rod: 6000, sin: 4000 };
 const state = {
   model: 'rod',
-  scale: 0, mech: 1, btn: 0,            // índices en COLORS
+  scale: 0, mech: 2, btn: 0,            // índices en COLORS
   eng: 'text', text: 'S', img: null     // img: canvas máscara
 };
 const fmt = n => '$' + n.toLocaleString('es-AR');
@@ -457,9 +457,9 @@ class Rig {
     const rim2 = this.rim2 = new THREE.PointLight(0x39ff14, 30, 0, 2); rim2.position.set(3, -1.5, -2.5); this.scene.add(rim2);
 
     const mk = hex => new THREE.MeshStandardMaterial({ color: hex, roughness: .48, metalness: 0, side: THREE.DoubleSide, emissive: new THREE.Color(hex), emissiveIntensity: 0 });
-    this.mat = { scale: mk('#17171a'), mech: mk('#39ff14'), btn: mk('#17171a') };
-    this.cur = { scale: new THREE.Color('#17171a'), mech: new THREE.Color('#39ff14'), btn: new THREE.Color('#17171a') };
-    this.tgt = { scale: new THREE.Color('#17171a'), mech: new THREE.Color('#39ff14'), btn: new THREE.Color('#17171a') };
+    this.mat = { scale: mk('#17171a'), mech: mk('#f2f2ee'), btn: mk('#17171a') };
+    this.cur = { scale: new THREE.Color('#17171a'), mech: new THREE.Color('#f2f2ee'), btn: new THREE.Color('#17171a') };
+    this.tgt = { scale: new THREE.Color('#17171a'), mech: new THREE.Color('#f2f2ee'), btn: new THREE.Color('#17171a') };
     this.flashT = { scale: 0, mech: 0, btn: 0 };
 
     this.tilt = new THREE.Group(); this.spin = new THREE.Group(); this.scene.add(this.tilt); this.tilt.add(this.spin);
