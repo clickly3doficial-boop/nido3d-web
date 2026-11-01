@@ -197,7 +197,7 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
             <button type="button" role="tab" aria-selected="false" data-eng="none">Sin grabado</button>
           </div>
           <div class="engr">
-            <label class="field" data-pane="text"><input id="engText" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="A o 😀" aria-label="Letra, iniciales o emoji (hasta 2)" value="P"><small>hasta 2</small></label>
+            <label class="field" data-pane="text"><input id="engText" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="A o 😀" aria-label="Hasta 2 letras o 1 emoji" value="P"><small>2 letras o 1 emoji</small></label>
             <div data-pane="image" class="hide"><label class="up" tabindex="0" id="upLabel"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg><span id="upText">Subir ícono (PNG, JPG o SVG)</span><input id="engFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" class="hide"></label></div>
           </div>
           <p class="note" id="engNote">Es un adelanto: el grabado real es hundido y de un solo color; en los emoji se marcan las formas y los detalles oscuros.</p>
@@ -234,7 +234,7 @@ const fmt = n => '$' + n.toLocaleString('es-AR');
 const state = { z: 0, c: 0, eng: 'text', text: 'P', img: null };
 const lum = hex => { const c = new THREE.Color(hex); return .2126*c.r + .7152*c.g + .0722*c.b; };
 const seg = new Intl.Segmenter(undefined,{granularity:'grapheme'});
-const clip2 = t => [...seg.segment(t)].slice(0,2).map(x => x.segment).join('');
+const clip2 = t => { const g = [...seg.segment(t)].map(x => x.segment), e = g.find(c => /\p{Extended_Pictographic}/u.test(c)); return e || g.slice(0,2).join(''); };
 const isEmoji = t => /\p{Extended_Pictographic}/u.test(t);
 const inkFor = hex => lum(hex) > .3 ? 'rgba(10,10,12,.6)' : 'rgba(255,255,255,.65)';
 
@@ -322,7 +322,7 @@ class Rig {
       const t = clip2(state.text.trim().toUpperCase());
       if (isEmoji(t)){
         const e = document.createElement('canvas'); e.width = e.height = 512; const ex = e.getContext('2d');
-        ex.textAlign = 'center'; ex.textBaseline = 'middle'; ex.font = `${[...seg.segment(t)].length > 1 ? 210 : 330}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`; ex.fillText(t, 256, 275);
+        ex.textAlign = 'center'; ex.textBaseline = 'middle'; ex.font = `${330}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`; ex.fillText(t, 256, 275);
         const d = ex.getImageData(0,0,512,512), q = d.data, [ir,ig,ib] = [...new THREE.Color(hex).lerp(new THREE.Color(lum(hex) > .3 ? '#0a0a0c' : '#ffffff'), .85).toArray()].map(v => Math.round(v*255));
         for (let i=0;i<q.length;i+=4){ const l = (q[i]*.299 + q[i+1]*.587 + q[i+2]*.114)/255, a = q[i+3]/255; q[i]=ir; q[i+1]=ig; q[i+2]=ib; q[i+3] = Math.round(255*a*(.9 - .55*l)); }
         ex.putImageData(d,0,0); x.drawImage(e,0,0);
