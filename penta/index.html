@@ -155,7 +155,7 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
   <div class="wrap">
     <h2 class="rv">Se aprieta. Se abre. Vuelve.</h2>
     <p class="sub rv">Dos platos pentagonales y diez paneles articulados. Al apretar, los cinco brazos se abren hacia afuera; al soltar, vuelven solos.</p>
-    <div class="facts rv"><span><b>1</b> solo color</span><span><b>10</b> paneles</span><span><b>Sin</b> rodamientos</span><span>Impresa en 3D en <b>Argentina</b></span></div>
+    <div class="facts rv"><span><b>1</b> solo color</span><span><b>10</b> paneles</span><span><b>Sin</b> piezas sueltas</span><span>Impresa en 3D en <b>Argentina</b></span></div>
   </div>
 </section>
 
@@ -164,7 +164,7 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
     <div class="cfgHead rv"><h2>Elegí la tuya</h2><p>Un color, una letra. Tocala, girala y apretala para ver cómo queda.</p></div>
     <div class="cfg">
       <div class="stageCol"><div class="stage">
-        <span class="badge">PENTA · sin rodamientos</span><span class="badge pr" id="bPrice">$4.000</span>
+        <span class="badge">PENTA</span><span class="badge pr" id="bPrice">$4.000</span>
         <canvas id="cCfg" aria-label="Vista previa 3D de tu PENTA"></canvas>
         <span class="hintS">Tocala para apretarla</span>
       </div></div>
@@ -198,7 +198,7 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
           <div class="sum"><dl id="sumList"></dl><div class="total"><span>Total</span><b id="sumTotal">$4.000</b></div>
             <div class="cta"><button class="pill big" id="btnOrder" type="button">Pedir mi PENTA</button><button class="pill big ghost" id="btnCopy" type="button">Copiar mi diseño</button></div>
             <p class="fine" id="fine">El pedido se coordina por mensaje directo.</p></div>
-          <div class="alt"><span>¿Preferís que gire con rodamientos?</span><a href="/spiball/">Ver SpiBall →</a></div>
+          <div class="alt"><span>¿Querés una que gire?</span><a href="/spiball/">Conocé SpiBall →</a></div>
         </section>
       </div>
     </div>
@@ -368,7 +368,7 @@ function sync(){
   $$('.sw').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === state.c)));
   $('#cname').innerHTML = `<b>${COLORS[state.c][0]}</b>`;
   cfg.setColor(chex()); hero.setColor(chex()); cfg.setEngraving(chex()); hero.setEngraving(chex());
-  $('#sumList').innerHTML = `<div class="row"><dt>Modelo</dt><dd>PENTA · sin rodamientos</dd></div><div class="row"><dt>Color</dt><dd><i class="dot" style="background:${chex()}"></i>${COLORS[state.c][0]}</dd></div><div class="row"><dt>Grabado arriba</dt><dd>${engLabel()}</dd></div><div class="row"><dt>Grabado abajo</dt><dd>PENTA</dd></div>`;
+  $('#sumList').innerHTML = `<div class="row"><dt>Modelo</dt><dd>PENTA</dd></div><div class="row"><dt>Color</dt><dd><i class="dot" style="background:${chex()}"></i>${COLORS[state.c][0]}</dd></div><div class="row"><dt>Grabado arriba</dt><dd>${engLabel()}</dd></div><div class="row"><dt>Grabado abajo</dt><dd>PENTA</dd></div>`;
 }
 $$('.seg button').forEach(b => b.addEventListener('click', () => { state.eng = b.dataset.eng; $$('.seg button').forEach(x => x.setAttribute('aria-selected', String(x === b))); pane(); sync(); cfg.view('top'); }));
 $('#engText').addEventListener('input', e => { state.text = e.target.value.replace(/[^\p{L}\p{N}&+!?#@%*.\-]/gu, '').slice(0,2); if (e.target.value !== state.text) e.target.value = state.text; sync(); });
@@ -394,7 +394,7 @@ $('#engFile').addEventListener('change', e => {
 let tt = 0; function toast(m){ const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 3400); }
 function summary(){
   const code = 'PN-' + state.c + '-' + (state.eng === 'text' ? state.text.trim().toUpperCase() || 'X' : state.eng === 'image' ? 'IMG' : 'X');
-  return ['Hola! Quiero mi PENTA:', `• Modelo: PENTA sin rodamientos (${fmt(PRICE)})`, `• Color: ${COLORS[state.c][0]}`, `• Grabado arriba: ${engLabel()}`, '• Nombre PENTA abajo', state.eng === 'image' ? '(Te mando el ícono por acá)' : '', `Código: ${code}`].filter(Boolean).join('\n');
+  return ['Hola! Quiero mi PENTA:', `• Modelo: PENTA (${fmt(PRICE)})`, `• Color: ${COLORS[state.c][0]}`, `• Grabado arriba: ${engLabel()}`, '• Nombre PENTA abajo', state.eng === 'image' ? '(Te mando el ícono por acá)' : '', `Código: ${code}`].filter(Boolean).join('\n');
 }
 async function copy(){ const t = summary(); try { await navigator.clipboard.writeText(t); return true; } catch { const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); let ok = false; try { ok = document.execCommand('copy'); } catch {} a.remove(); return ok; } }
 async function order(){

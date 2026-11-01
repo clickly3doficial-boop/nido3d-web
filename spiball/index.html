@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>SPIBALL · Diseñá la tuya | NiDoo</title>
-<meta name="description" content="SpiBall: la esfera que se aprieta y satisface. Elegí con o sin rodamientos, los colores de cada parte y tu grabado. Impresa en 3D en Argentina por NiDoo.">
+<meta name="description" content="SpiBall: la esfera que se aprieta y satisface. Elegí los colores de cada parte y tu grabado. Impresa en 3D en Argentina por NiDoo.">
 <meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
 <meta property="og:title" content="SPIBALL · Diseñá la tuya">
@@ -268,24 +268,9 @@ html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
     </div>
 
     <div class="steps">
-      <section class="step" data-focus="iso">
-        <p class="stepN">Paso 1</p>
-        <h3>Elegí cómo la querés</h3>
-        <p class="desc">Las dos se aprietan y satisfacen. La diferencia es qué pasa después.</p>
-        <div class="opts" role="radiogroup" aria-label="Modelo">
-          <button class="opt" role="radio" aria-checked="true" data-model="rod" type="button">
-            <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v4h-4"/></svg></span>
-            <span class="tx"><span class="tt">Con rodamientos</span><br><span class="ss">La apretás y gira.</span></span><span class="pr">$6.000</span>
-          </button>
-          <button class="opt" role="radio" aria-checked="false" data-model="sin" type="button">
-            <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14" opacity=".0"/><circle cx="12" cy="12" r="8"/></svg></span>
-            <span class="tx"><span class="tt">Sin rodamientos</span><br><span class="ss">Es PENTA: más simple, un solo color →</span></span><span class="pr">$4.000</span>
-          </button>
-        </div>
-      </section>
 
       <section class="step" data-focus="iso" data-zone="scale">
-        <p class="stepN">Paso 2</p>
+        <p class="stepN">Paso 1</p>
         <h3>Escamas</h3>
         <p class="desc">Las 10 piezas que forman la esfera. Es lo que más se ve.</p>
         <div class="swatches" data-sw="scale" role="group" aria-label="Color de las escamas"></div>
@@ -293,7 +278,7 @@ html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
       </section>
 
       <section class="step" data-focus="iso" data-zone="mech">
-        <p class="stepN">Paso 3</p>
+        <p class="stepN">Paso 2</p>
         <h3>Mecanismo</h3>
         <p class="desc">Las flechas de arriba y de abajo y las ventanas del centro. El corazón de la esfera.</p>
         <div class="swatches" data-sw="mech" role="group" aria-label="Color del mecanismo"></div>
@@ -301,7 +286,7 @@ html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
       </section>
 
       <section class="step" data-focus="top" data-zone="btn">
-        <p class="stepN">Paso 4</p>
+        <p class="stepN">Paso 3</p>
         <h3>Botones</h3>
         <p class="desc">Los dos discos donde apoyás el dedo: el de arriba y el de abajo.</p>
         <div class="swatches" data-sw="btn" role="group" aria-label="Color de los botones"></div>
@@ -309,7 +294,7 @@ html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
       </section>
 
       <section class="step" data-focus="top" id="stEngr">
-        <p class="stepN">Paso 5</p>
+        <p class="stepN">Paso 4</p>
         <h3>Tu grabado</h3>
         <p class="desc">Una letra, dos iniciales o un ícono tuyo, grabado arriba. Abajo siempre va el logo SpiBall.</p>
         <div class="seg" role="tablist" aria-label="Tipo de grabado">
@@ -327,7 +312,7 @@ html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
       </section>
 
       <section class="step" data-focus="iso" id="stSum">
-        <p class="stepN">Paso 6</p>
+        <p class="stepN">Paso 5</p>
         <h3>Tu SpiBall</h3>
         <p class="desc">Revisala y pedila. Te respondemos por Instagram para coordinar.</p>
         <div class="sum">
@@ -379,7 +364,7 @@ const COLORS = [
   ['Negro','#17171a'],['Verde neón','#39ff14'],['Blanco','#f2f2ee'],['Gris','#8d9096'],['Naranja','#ff6a13'],['Amarillo','#ffd60a'],
   ['Rojo','#f0342b'],['Rosa','#ff5fa2'],['Violeta','#a03cf7'],['Azul','#2850e0'],['Celeste','#62cdfa'],['Beige','#e6d6b2']
 ];
-const PRICE = { rod: 6000, sin: 4000 };
+const PRICE = { rod: 6000 };
 const state = {
   model: 'rod',
   scale: 0, mech: 2, btn: 0,            // índices en COLORS
@@ -683,7 +668,7 @@ function sync(zone){
   setPrice(PRICE[state.model]);
   const dot = z => `<i class="dot" style="background:${chex(z)}"></i>`;
   $('#sumList').innerHTML = `
-    <div class="row"><dt>Modelo</dt><dd>${state.model === 'rod' ? 'Con rodamientos' : 'Sin rodamientos'}</dd></div>
+    <div class="row"><dt>Modelo</dt><dd>SpiBall con rodamientos</dd></div>
     <div class="row"><dt>Escamas</dt><dd>${dot('scale')}${cname('scale')}</dd></div>
     <div class="row"><dt>Mecanismo</dt><dd>${dot('mech')}${cname('mech')}</dd></div>
     <div class="row"><dt>Botones</dt><dd>${dot('btn')}${cname('btn')}</dd></div>
@@ -693,7 +678,7 @@ function sync(zone){
 }
 function summaryText(){
   const code = 'SB-' + [state.model === 'rod' ? 'R' : 'S', state.scale, state.mech, state.btn].map(x => String(x).toUpperCase()).join('') + '-' + (state.eng === 'text' ? (state.text.trim().toUpperCase().slice(0,2) || 'X') : state.eng === 'image' ? 'IMG' : 'NG');
-  return `Hola NiDoo! Quiero mi SpiBall:\n• Modelo: ${state.model === 'rod' ? 'Con rodamientos' : 'Sin rodamientos'} (${fmt(PRICE[state.model])})\n• Escamas: ${cname('scale')}\n• Mecanismo: ${cname('mech')}\n• Botones: ${cname('btn')}\n• Grabado arriba: ${engLabel().replace(/[“”]/g,'"')}${state.eng === 'image' ? ' (te mando el ícono por acá)' : ''}\n• Logo SpiBall abajo\nCódigo: ${code}`;
+  return `Hola NiDoo! Quiero mi SpiBall:\n• Modelo: con rodamientos (${fmt(PRICE[state.model])})\n• Escamas: ${cname('scale')}\n• Mecanismo: ${cname('mech')}\n• Botones: ${cname('btn')}\n• Grabado arriba: ${engLabel().replace(/[“”]/g,'"')}${state.eng === 'image' ? ' (te mando el ícono por acá)' : ''}\n• Logo SpiBall abajo\nCódigo: ${code}`;
 }
 let toastT = 0;
 function toast(msg){ const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 3800); }
@@ -710,7 +695,7 @@ function order(){
 $('#btnOrder').addEventListener('click', order); $('#barBtn').addEventListener('click', order);
 $('#btnCopy').addEventListener('click', async () => toast((await copyText(summaryText())) ? 'Diseño copiado.' : 'No se pudo copiar.'));
 
-$$('.opt').forEach(o => o.addEventListener('click', () => { if (o.dataset.model === 'sin'){ location.href = '/penta/'; return; } state.model = o.dataset.model; sync(); }));
+
 $$('.views button').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
 function setView(v){ cfgRig.view(v); $$('.views button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.view === v))); }
 
