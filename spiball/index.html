@@ -199,11 +199,12 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--g)}
 }
 @media (prefers-reduced-transparency:reduce){.gn,.bar,.badge,.views button,.toast{backdrop-filter:none;-webkit-backdrop-filter:none;background:#0b0b0c}}
 
-.gn img,footer img{filter:grayscale(1) brightness(1.7)}
+.logoM{display:block;background:var(--a2);-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat;transition:background .3s}
 .tone{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1s var(--ease);
-  background:radial-gradient(60% 50% at 0% 20%,rgba(var(--a1r),.26),transparent 70%),radial-gradient(60% 50% at 100% 55%,rgba(var(--a3r),.24),transparent 70%),radial-gradient(70% 45% at 50% 100%,rgba(var(--a2r),.22),transparent 70%)}
-html.all .tone{opacity:1}
-html.all .aur{filter:saturate(1.25) brightness(1.1)}
+  background:linear-gradient(180deg,rgba(var(--a2r),.10),rgba(var(--a2r),.03) 45%,rgba(var(--a3r),.10)),radial-gradient(60% 50% at 0% 20%,rgba(var(--a1r),.32),transparent 70%),radial-gradient(60% 50% at 100% 55%,rgba(var(--a3r),.30),transparent 70%),radial-gradient(70% 45% at 50% 100%,rgba(var(--a2r),.28),transparent 70%)}
+html.tinted .tone{opacity:1}
+html.tinted .aur,html.tinted .blob{opacity:1}
+html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
 .bl3{background:rgba(var(--a3r),.5)}
 </style>
 </head>
@@ -212,7 +213,7 @@ html.all .aur{filter:saturate(1.25) brightness(1.1)}
 
 <nav class="gn" aria-label="SpiBall">
   <div class="wrap">
-    <a href="/spiball/" aria-label="SpiBall"><img src="logo-full.png" alt="SpiBall" width="52" height="20"></a>
+    <a href="/spiball/" aria-label="SpiBall"><span class="logoM" role="img" aria-label="SpiBall" style="--m:url(logo-full.png);width:52px;height:20px"></span></a>
     <span class="sp"></span>
     <a class="k" href="#como">Cómo funciona</a>
     <a class="k" href="#seasons">Seasons</a>
@@ -358,7 +359,7 @@ html.all .aur{filter:saturate(1.25) brightness(1.1)}
 
 <footer>
   <div class="wrap">
-    <img src="logo-icon.png" alt="SpiBall" width="32" height="31">
+    <span class="logoM" role="img" aria-label="SpiBall" style="--m:url(logo-icon.png);width:32px;height:31px;margin:0 auto 16px"></span>
     <p>SpiBall es una marca de <a href="/">NiDoo</a> · Hecho en Argentina</p>
     <p style="margin-top:6px"><a href="https://www.instagram.com/clickly_oficial/" target="_blank" rel="noopener">Instagram</a></p>
   </div>
@@ -641,7 +642,9 @@ const hexOf = c => '#' + c.getHexString();
 const rgbOf = c => { const o = {}; c.getRGB(o, THREE.SRGBColorSpace); return [o.r, o.g, o.b].map(v => Math.round(v*255)).join(','); };
 let themeCur = null, themeAnim = 0;
 function themeTarget(){
-  const pick = z => touched[z] ? vivid(chex(z)) : new THREE.Color(NEUT[z]);
+  const on = ['scale','mech','btn'].filter(z => touched[z]);
+  if (!on.length) return { a1: new THREE.Color(NEUT.scale), a2: new THREE.Color(NEUT.mech), a3: new THREE.Color(NEUT.btn) };
+  let k = 0; const pick = z => vivid(chex(touched[z] ? z : on[k++ % on.length]));
   return { a1: pick('scale'), a2: pick('mech'), a3: pick('btn') };
 }
 function paintTheme(t){
@@ -653,7 +656,7 @@ function paintTheme(t){
   cfgRig.setTheme(hexOf(t.a2), hexOf(t.a3)); heroRig.setTheme(hexOf(t.a2), hexOf(t.a3));
 }
 function applyTheme(){
-  document.documentElement.classList.toggle('all', touched.scale && touched.mech && touched.btn);
+  document.documentElement.classList.toggle('tinted', touched.scale || touched.mech || touched.btn);
   const to = themeTarget();
   if (!themeCur){ themeCur = { a1: to.a1.clone(), a2: to.a2.clone(), a3: to.a3.clone() }; paintTheme(themeCur); return; }
   const from = { a1: themeCur.a1.clone(), a2: themeCur.a2.clone(), a3: themeCur.a3.clone() };
