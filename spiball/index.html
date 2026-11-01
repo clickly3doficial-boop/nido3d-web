@@ -279,7 +279,7 @@ html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
           </button>
           <button class="opt" role="radio" aria-checked="false" data-model="sin" type="button">
             <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14" opacity=".0"/><circle cx="12" cy="12" r="8"/></svg></span>
-            <span class="tx"><span class="tt">Sin rodamientos</span><br><span class="ss">La apretás y satisface.</span></span><span class="pr">$4.000</span>
+            <span class="tx"><span class="tt">Sin rodamientos</span><br><span class="ss">Es PENTA: más simple, un solo color →</span></span><span class="pr">$4.000</span>
           </button>
         </div>
       </section>
@@ -710,7 +710,7 @@ function order(){
 $('#btnOrder').addEventListener('click', order); $('#barBtn').addEventListener('click', order);
 $('#btnCopy').addEventListener('click', async () => toast((await copyText(summaryText())) ? 'Diseño copiado.' : 'No se pudo copiar.'));
 
-$$('.opt').forEach(o => o.addEventListener('click', () => { state.model = o.dataset.model; sync(); }));
+$$('.opt').forEach(o => o.addEventListener('click', () => { if (o.dataset.model === 'sin'){ location.href = '/penta/'; return; } state.model = o.dataset.model; sync(); }));
 $$('.views button').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
 function setView(v){ cfgRig.view(v); $$('.views button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.view === v))); }
 
