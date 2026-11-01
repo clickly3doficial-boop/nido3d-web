@@ -417,7 +417,7 @@ function logoCanvas(hex){
   return c;
 }
 
-const PIV = { rp: 12.0, yp: 24.9, L: Math.hypot(15.3, 24.6), t0: Math.atan2(15.3, 24.6), max: .56, sink: 7.5, btn: 4 };
+const PIV = { rp: 12.0, yp: 24.9, L: Math.hypot(15.3, 24.6), t0: Math.atan2(15.3, 24.6), max: .56, sink: 7.5, btn: 2 };
 let modelP = null;
 function loadModel(){
   return modelP || (modelP = Promise.all([fetch('model/spiball.json').then(r => r.json()), fetch('model/spiball.bin').then(r => r.arrayBuffer())]).then(([meta, buf]) => {
@@ -483,7 +483,9 @@ class Rig {
       this.topA = new THREE.Group(); this.botA = new THREE.Group();
       this.bT = new THREE.Group(); this.bT.position.y = PIV.btn; this.bB = new THREE.Group(); this.bB.position.y = -PIV.btn;
       this.topA.add(new THREE.Mesh(G.topb, m.mech), this.bT); this.bT.add(new THREE.Mesh(G.screw, m.btn));
-      this.botA.add(new THREE.Mesh(G.btmb, m.mech), this.bB); this.bB.add(new THREE.Mesh(G.knob, m.btn));
+      const nk = (c) => { const g = new THREE.CylinderGeometry(6, 6, 2 + PIV.btn, 28); const q = new THREE.Mesh(g, m.btn); q.position.y = c*((31 - PIV.btn + 33)/2); return q; };
+      this.bT.add(nk(1));
+      this.botA.add(new THREE.Mesh(G.btmb, m.mech), this.bB); this.bB.add(new THREE.Mesh(G.knob, m.btn)); this.bB.add(nk(-1));
       const dt = new THREE.Mesh(new THREE.CircleGeometry(10.6, 48), this.decTop); dt.rotation.x = -Math.PI/2; dt.position.y = 36.3 + .08; this.bT.add(dt);
       const db = new THREE.Mesh(new THREE.CircleGeometry(10.6, 48), this.decBot); db.rotation.x = Math.PI/2; db.rotation.z = Math.PI; db.position.y = -35.8 - .08; this.bB.add(db);
       M.add(this.topA, this.botA); this.ready = true; this.pose(0);
