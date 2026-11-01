@@ -78,6 +78,11 @@ button{font:inherit;color:inherit;letter-spacing:inherit;cursor:pointer;border:0
 .sw{position:relative;aspect-ratio:1;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14),inset 0 -6px 10px rgba(0,0,0,.14),inset 0 5px 8px rgba(255,255,255,.35);transition:transform .45s var(--spring),box-shadow .3s}
 .sw:hover{transform:scale(1.08)}.sw:active{transform:scale(.92);transition-duration:.08s}
 .sw[aria-pressed=true]{transform:scale(1.08);box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--fg),inset 0 -6px 10px rgba(0,0,0,.14),inset 0 5px 8px rgba(255,255,255,.35)}
+.sizes{display:grid;gap:10px;margin-top:26px;max-width:420px}
+.sz{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-radius:22px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line);text-align:left;transition:transform .4s var(--spring),box-shadow .3s}
+.sz:active{transform:scale(.985);transition-duration:.08s}
+.sz b{font-size:19px;font-weight:700;letter-spacing:-.03em}.sz span{font-size:19px;font-weight:600}
+.sz[aria-checked=true]{box-shadow:inset 0 0 0 2px var(--ac),0 8px 28px rgba(var(--acr),.14)}
 .cname{margin-top:16px;font-size:15px;color:var(--fg2)}.cname b{color:var(--fg);font-weight:600}
 .seg{display:inline-flex;padding:4px;border-radius:980px;background:var(--soft);margin-top:26px}
 .seg button{padding:9px 18px;border-radius:980px;font-size:15px;font-weight:600;color:var(--fg2);transition:all .25s}
@@ -171,14 +176,20 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
 
       <div class="steps">
         <section class="step" data-focus="iso">
-          <p class="stepN">Paso 1</p><h3>Elegí tu color</h3>
+          <p class="stepN">Paso 1</p><h3>Elegí el tamaño</h3>
+          <p class="desc">Misma PENTA, tres tamaños.</p>
+          <div class="sizes" id="sizes" role="radiogroup" aria-label="Tamaño"></div>
+        </section>
+
+        <section class="step" data-focus="iso">
+          <p class="stepN">Paso 2</p><h3>Elegí tu color</h3>
           <p class="desc">Toda la PENTA es de un solo color: platos y paneles.</p>
           <div class="swatches" id="sws"></div>
           <p class="cname" id="cname"></p>
         </section>
 
         <section class="step" data-focus="top">
-          <p class="stepN">Paso 2</p><h3>Tu grabado</h3>
+          <p class="stepN">Paso 3</p><h3>Tu grabado</h3>
           <p class="desc">Una letra o tu propio ícono en el plato de arriba. Abajo va el nombre PENTA.</p>
           <div class="seg" role="tablist" aria-label="Tipo de grabado">
             <button type="button" role="tab" aria-selected="true" data-eng="text">Letra</button>
@@ -193,7 +204,7 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
         </section>
 
         <section class="step" data-focus="iso" id="stSum">
-          <p class="stepN">Paso 3</p><h3>Tu PENTA</h3>
+          <p class="stepN">Paso 4</p><h3>Tu PENTA</h3>
           <p class="desc">Revisala y pedila. Te respondemos por Instagram para coordinar.</p>
           <div class="sum"><dl id="sumList"></dl><div class="total"><span>Total</span><b id="sumTotal">$4.000</b></div>
             <div class="cta"><button class="pill big" id="btnOrder" type="button">Pedir mi PENTA</button><button class="pill big ghost" id="btnCopy" type="button">Copiar mi diseño</button></div>
@@ -217,8 +228,10 @@ const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s, r=document) => r.querySelector(s), $$ = (s, r=document) => [...r.querySelectorAll(s)];
 
 const COLORS = [['Negro','#1d1d1f'],['Verde neón','#39ff14'],['Blanco','#f2f2ee'],['Gris','#8d9096'],['Naranja','#ff6a13'],['Amarillo','#ffd60a'],['Rojo','#f0342b'],['Rosa','#ff5fa2'],['Violeta','#a03cf7'],['Azul','#2850e0'],['Celeste','#62cdfa'],['Beige','#e6d6b2']];
-const PRICE = 4000, fmt = n => '$' + n.toLocaleString('es-AR');
-const state = { c: 0, eng: 'text', text: 'P', img: null };
+const SIZES = [['Pequeño',4000,.84],['Grande',6000,1],['XL',10000,1.12]];
+let PRICE = 4000;
+const fmt = n => '$' + n.toLocaleString('es-AR');
+const state = { z: 0, c: 0, eng: 'text', text: 'P', img: null };
 const lum = hex => { const c = new THREE.Color(hex); return .2126*c.r + .7152*c.g + .0722*c.b; };
 const inkFor = hex => lum(hex) > .3 ? 'rgba(10,10,12,.6)' : 'rgba(255,255,255,.65)';
 
@@ -294,7 +307,7 @@ class Rig {
     const c = Math.max(-.08, Math.min(1.08, s)), H = P.h0 - c*P.travel;
     for (const a of this.arms) armMatrix(a.psi, H, a.side, a.m.matrix);
     this.top.position.y = H; this.bot.position.y = -H;
-    this.M.scale.setScalar((1/20) * (1 - .1*Math.max(0, Math.min(1, s))));
+    this.M.scale.setScalar((this.sz||1) * (1/20) * (1 - .1*Math.max(0, Math.min(1, s))));
   }
   setColor(hex){ this.tgt.set(hex); }
   snap(){ this.cur.copy(this.tgt); this.mat.color.copy(this.cur); }
@@ -364,11 +377,20 @@ COLORS.forEach(([n,h], i) => {
 });
 function pane(){ $$('[data-pane]').forEach(p => p.classList.toggle('hide', p.dataset.pane !== state.eng)); $('#engNote').classList.toggle('hide', state.eng === 'none'); }
 const engLabel = () => state.eng === 'text' ? (state.text.trim() ? `Letra "${state.text.trim().toUpperCase()}"` : 'Sin grabado') : state.eng === 'image' ? (state.img ? 'Ícono propio' : 'Ícono (falta subirlo)') : 'Sin grabado';
+function sizeUI(){
+  PRICE = SIZES[state.z][1];
+  $$('.sz').forEach(b => b.setAttribute('aria-checked', String(+b.dataset.i === state.z)));
+  cfg.sz = hero.sz = SIZES[state.z][2];
+  ['#bPrice','#sumTotal','#barPrice'].forEach(q => $(q).textContent = fmt(PRICE));
+}
+$('#sizes').innerHTML = SIZES.map(([n,p],i) => `<button type="button" class="sz" role="radio" data-i="${i}"><b>${n}</b><span>${fmt(p)}</span></button>`).join('');
+$$('.sz').forEach(b => b.addEventListener('click', () => { state.z = +b.dataset.i; sync(); }));
 function sync(){
+  sizeUI();
   $$('.sw').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === state.c)));
   $('#cname').innerHTML = `<b>${COLORS[state.c][0]}</b>`;
   cfg.setColor(chex()); hero.setColor(chex()); cfg.setEngraving(chex()); hero.setEngraving(chex());
-  $('#sumList').innerHTML = `<div class="row"><dt>Modelo</dt><dd>PENTA</dd></div><div class="row"><dt>Color</dt><dd><i class="dot" style="background:${chex()}"></i>${COLORS[state.c][0]}</dd></div><div class="row"><dt>Grabado arriba</dt><dd>${engLabel()}</dd></div><div class="row"><dt>Grabado abajo</dt><dd>PENTA</dd></div>`;
+  $('#sumList').innerHTML = `<div class="row"><dt>Modelo</dt><dd>PENTA ${SIZES[state.z][0]}</dd></div><div class="row"><dt>Color</dt><dd><i class="dot" style="background:${chex()}"></i>${COLORS[state.c][0]}</dd></div><div class="row"><dt>Grabado arriba</dt><dd>${engLabel()}</dd></div><div class="row"><dt>Grabado abajo</dt><dd>PENTA</dd></div>`;
 }
 $$('.seg button').forEach(b => b.addEventListener('click', () => { state.eng = b.dataset.eng; $$('.seg button').forEach(x => x.setAttribute('aria-selected', String(x === b))); pane(); sync(); cfg.view('top'); }));
 $('#engText').addEventListener('input', e => { state.text = e.target.value.replace(/[^\p{L}\p{N}&+!?#@%*.\-]/gu, '').slice(0,2); if (e.target.value !== state.text) e.target.value = state.text; sync(); });
@@ -393,8 +415,8 @@ $('#engFile').addEventListener('change', e => {
 /* ---------- pedido ---------- */
 let tt = 0; function toast(m){ const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 3400); }
 function summary(){
-  const code = 'PN-' + state.c + '-' + (state.eng === 'text' ? state.text.trim().toUpperCase() || 'X' : state.eng === 'image' ? 'IMG' : 'X');
-  return ['Hola! Quiero mi PENTA:', `• Modelo: PENTA (${fmt(PRICE)})`, `• Color: ${COLORS[state.c][0]}`, `• Grabado arriba: ${engLabel()}`, '• Nombre PENTA abajo', state.eng === 'image' ? '(Te mando el ícono por acá)' : '', `Código: ${code}`].filter(Boolean).join('\n');
+  const code = 'PN-' + 'PGX'[state.z] + '-' + state.c + '-' + (state.eng === 'text' ? state.text.trim().toUpperCase() || 'X' : state.eng === 'image' ? 'IMG' : 'X');
+  return ['Hola! Quiero mi PENTA:', `• Modelo: PENTA ${SIZES[state.z][0]} (${fmt(PRICE)})`, `• Color: ${COLORS[state.c][0]}`, `• Grabado arriba: ${engLabel()}`, '• Nombre PENTA abajo', state.eng === 'image' ? '(Te mando el ícono por acá)' : '', `Código: ${code}`].filter(Boolean).join('\n');
 }
 async function copy(){ const t = summary(); try { await navigator.clipboard.writeText(t); return true; } catch { const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); let ok = false; try { ok = document.execCommand('copy'); } catch {} a.remove(); return ok; } }
 async function order(){
