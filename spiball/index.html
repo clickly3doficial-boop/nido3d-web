@@ -417,7 +417,7 @@ function logoCanvas(hex){
   return c;
 }
 
-const PIV = { rp: 26, max: 1.02, travel: 8.5, t0: Math.atan2(14.1, 24.9), len: Math.hypot(14.1, 24.9), y0: 24.9 };
+const PIV = { rp: 12.0, yp: 24.9, L: Math.hypot(15.3, 24.6), t0: Math.atan2(15.3, 24.6), max: .56, sink: 7.5, btn: 4 };
 let modelP = null;
 function loadModel(){
   return modelP || (modelP = Promise.all([fetch('model/spiball.json').then(r => r.json()), fetch('model/spiball.bin').then(r => r.arrayBuffer())]).then(([meta, buf]) => {
@@ -471,29 +471,32 @@ class Rig {
     this.decTop = decMat(); this.decBot = decMat();
     this.k = { s: 0 }; this.pan = []; this.ready = false;
     loadModel().then(G => {
-      const m = this.mat, RP = PIV.rp;
+      const m = this.mat;
       for (let h=0; h<2; h++) for (let i=0; i<5; i++){
         const az = new THREE.Group(); az.rotation.y = i*Math.PI*2/5;
         const fl = new THREE.Group(); if (h) fl.rotation.x = Math.PI;
-        const pv = new THREE.Group(); pv.position.set(-RP, 0, 0);
-        pv.add(new THREE.Mesh(G.panel, m.scale)); fl.add(pv); az.add(fl); M.add(az); this.pan.push(pv);
+        const pv = new THREE.Group(); pv.position.set(-PIV.rp, PIV.yp, 0);
+        const pm = new THREE.Mesh(G.panel, m.scale); pm.position.set(-26 + PIV.rp, -PIV.yp, 0); pv.add(pm); fl.add(pv); az.add(fl); M.add(az); this.pan.push(pv);
       }
-      for (let i=0; i<5; i++){ const hg = new THREE.Mesh(G.hinge, m.mech); hg.rotation.y = i*Math.PI*2/5; M.add(hg); }
+      this.hing = [];
+      for (let i=0; i<5; i++){ const w = new THREE.Group(); w.rotation.y = i*Math.PI*2/5; const hg = new THREE.Mesh(G.hinge, m.mech); w.add(hg); M.add(w); this.hing.push(hg); }
       this.topA = new THREE.Group(); this.botA = new THREE.Group();
-      this.topA.add(new THREE.Mesh(G.topb, m.mech), new THREE.Mesh(G.screw, m.btn));
-      this.botA.add(new THREE.Mesh(G.btmb, m.mech), new THREE.Mesh(G.knob, m.btn));
-      const dt = new THREE.Mesh(new THREE.CircleGeometry(10.6, 48), this.decTop); dt.rotation.x = -Math.PI/2; dt.position.y = 36.3 + .08; this.topA.add(dt);
-      const db = new THREE.Mesh(new THREE.CircleGeometry(10.6, 48), this.decBot); db.rotation.x = Math.PI/2; db.rotation.z = Math.PI; db.position.y = -35.8 - .08; this.botA.add(db);
+      this.bT = new THREE.Group(); this.bT.position.y = PIV.btn; this.bB = new THREE.Group(); this.bB.position.y = -PIV.btn;
+      this.topA.add(new THREE.Mesh(G.topb, m.mech), this.bT); this.bT.add(new THREE.Mesh(G.screw, m.btn));
+      this.botA.add(new THREE.Mesh(G.btmb, m.mech), this.bB); this.bB.add(new THREE.Mesh(G.knob, m.btn));
+      const dt = new THREE.Mesh(new THREE.CircleGeometry(10.6, 48), this.decTop); dt.rotation.x = -Math.PI/2; dt.position.y = 36.3 + .08; this.bT.add(dt);
+      const db = new THREE.Mesh(new THREE.CircleGeometry(10.6, 48), this.decBot); db.rotation.x = Math.PI/2; db.rotation.z = Math.PI; db.position.y = -35.8 - .08; this.bB.add(db);
       M.add(this.topA, this.botA); this.ready = true; this.pose(0);
     });
   }
   pose(s){
     if (!this.ready) return;
-    const b = Math.max(-.06, Math.min(1.08, s)) * PIV.max;
-    for (const p of this.pan) p.rotation.z = b;
-    const d = Math.max(-1, Math.min(1.08, s)) * PIV.travel;
-    this.topA.position.y = -d; this.botA.position.y = d;
-    this.model.scale.setScalar((1/29.14) * (1 - .12*Math.max(0, Math.min(1, s))));
+    const c = Math.max(-.06, Math.min(1.08, s)), b = c*PIV.max, tilt = PIV.t0 - 0 + b;
+    for (const p of this.pan) p.rotation.z = -b;
+    const d = (PIV.yp - .3) - PIV.L*Math.cos(tilt), out = PIV.L*(Math.sin(tilt) - Math.sin(PIV.t0));
+    this.topA.position.y = -(PIV.sink + d); this.botA.position.y = PIV.sink + d;
+    for (const h of this.hing) h.position.x = -out;
+    this.model.scale.setScalar((1/29.14) * (1 - .1*Math.max(0, Math.min(1, s))));
   }
   glow(){
     const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d');
