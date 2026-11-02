@@ -289,11 +289,86 @@ section{padding:clamp(4.5rem,9vw,8rem) 0}
 #ac-ft{padding-bottom:110px}
 </style>
 
+<style id="paraCss">
+/* Líneas: botones en el inicio + paraíso de cada línea */
+.lines{padding:2.4rem 0 1rem}
+.ltiles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.ltile{position:relative;overflow:hidden;text-align:left;border-radius:28px;padding:1rem 1rem 1.1rem;min-height:190px;color:var(--ti);background:var(--tb);display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate;box-shadow:0 10px 26px rgba(58,36,24,.14);transition:transform .35s var(--spring),box-shadow .3s}
+.ltile:hover{transform:translateY(-4px) rotate(-.6deg);box-shadow:0 16px 34px rgba(58,36,24,.2)}
+.ltile::before{content:"";position:absolute;inset:auto -20% -40% -20%;height:70%;background:var(--tb2);border-radius:50%;z-index:-1;opacity:.55}
+.ltile .li{position:absolute;right:6px;top:6px;display:flex;z-index:1}
+.ltile .li img{width:clamp(64px,17vw,104px);aspect-ratio:1;object-fit:contain;margin-left:-26px;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18));animation:bob 3.4s ease-in-out infinite}
+.ltile .li.one img{width:clamp(92px,25vw,126px);margin:0}.ltile small,.ltile b,.ltile em{position:relative;z-index:2}.ltile .li img:nth-child(2){animation-delay:-1.1s}.ltile .li img:nth-child(3){animation-delay:-2.2s}
+.ltile small{font-weight:600;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.ltile b{font-size:clamp(1.5rem,6vw,2.4rem);line-height:1;letter-spacing:-.035em;font-weight:700;margin-top:.15rem}
+.ltile em{font-style:normal;font-weight:500;font-size:.9rem;opacity:.9;margin-top:.25rem}
+@media (min-width:760px){.ltiles{grid-template-columns:repeat(5,1fr)}.ltile{min-height:260px}.ltile .li img{width:clamp(70px,8vw,100px)}}
+.ltile:last-child:nth-child(odd){grid-column:1/-1}
+@media (min-width:760px){.ltile:last-child:nth-child(odd){grid-column:auto}}
+
+#para{position:fixed;inset:0;z-index:44;overflow-y:auto;overflow-x:hidden;background:var(--pb);color:var(--pi);display:none;-webkit-overflow-scrolling:touch}
+#para.on{display:block}
+#para .fx{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+#para .fx *{position:absolute;will-change:transform}
+#para .pin{position:relative;z-index:1;width:min(1120px,100% - 32px);margin-inline:auto;padding:1rem 0 7rem}
+#para .top{display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+#para .back{display:inline-flex;align-items:center;gap:.4rem;height:44px;padding:0 1.1rem 0 .8rem;border-radius:999px;background:var(--pi);color:var(--pb);font-weight:600}
+#para .wm{font-weight:700;font-size:1.5rem;letter-spacing:-.03em;color:var(--pi);opacity:.9}
+#para h2{margin:2.2rem 0 .3rem;font-size:clamp(3rem,15vw,8rem);line-height:.86;letter-spacing:-.05em;font-weight:700}
+#para .tg{font-size:clamp(1.05rem,3vw,1.5rem);font-weight:500;opacity:.92;max-width:26ch}
+#para .tg i{display:inline-block;font-style:normal;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;background:var(--pa);color:var(--pc);padding:.2rem .7rem;border-radius:999px;margin-right:.5rem;vertical-align:middle}
+#para .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px;margin-top:2rem}
+#para .pcard{background:var(--pcard);border-radius:32px;padding:1.2rem;text-align:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;transform:translateY(40px) scale(.94);animation:pin .7s var(--spring) forwards;animation-delay:calc(.25s + var(--i)*.1s)}
+@keyframes pin{to{opacity:1;transform:none}}
+#para .ph{position:relative;display:grid;place-items:center;width:min(78%,300px);aspect-ratio:1;margin:0 auto;border-radius:50%;background:var(--pring)}
+#para .ph img{width:90%;height:90%;object-fit:contain;filter:drop-shadow(0 14px 14px rgba(0,0,0,.22));animation:pbob 3.8s ease-in-out infinite;animation-delay:calc(var(--i)*-.9s)}
+@keyframes pbob{50%{transform:translateY(-7%) rotate(-5deg)}}
+#para .ph .n{position:absolute;top:2%;right:2%;min-width:36px;height:36px;border-radius:999px;background:var(--pi);color:var(--pb);font-weight:700;display:grid;place-items:center;transform:scale(0);transition:transform .4s var(--spring)}
+#para .ph .n.on{transform:scale(1)}
+#para h3{font-size:clamp(1.5rem,5vw,2rem);letter-spacing:-.03em;line-height:1;margin:.9rem 0 .3rem;font-weight:700}
+#para .d{font-size:.98rem;opacity:.92;margin:0 auto;max-width:30ch}
+#para .ft{display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;margin-top:.9rem}
+#para .pr{font-weight:600}
+#para .pill{background:var(--pi);color:var(--pb)}
+#para .stepper{background:var(--pi);color:var(--pb)}
+#para .hop{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:2.4rem}
+#para .hop button{height:44px;padding:0 1.1rem;border-radius:999px;font-weight:600;background:var(--hb);color:var(--hi);box-shadow:0 0 0 2px var(--pi) inset;transition:transform .3s var(--spring)}
+#para .hop button:hover{transform:translateY(-3px)}
+#para .hop button.cur{box-shadow:none;outline:3px solid var(--pi);outline-offset:2px}
+
+/* BASE: cubos que suben y ondas de clic */
+.fx-base .c{border-radius:22%;background:rgba(255,255,255,.14);animation:cubeUp linear infinite}
+@keyframes cubeUp{from{transform:translateY(0) rotate(0)}to{transform:translateY(-130vh) rotate(200deg)}}
+.fx-base .r{left:50%;top:38%;width:40px;height:40px;margin:-20px;border-radius:50%;border:3px solid rgba(255,255,255,.35);animation:ripple 3.2s ease-out infinite}
+@keyframes ripple{from{transform:scale(.2);opacity:1}to{transform:scale(14);opacity:0}}
+/* ARGENTINA: franjas que ondulan y sol que gira */
+.fx-ar .s{left:-10%;width:120%;border-radius:50%;animation:wave 9s ease-in-out infinite alternate}
+@keyframes wave{from{transform:translateX(-4%) scaleY(1)}to{transform:translateX(4%) scaleY(1.18)}}
+.fx-ar .sun{right:-90px;top:-90px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,#F6B40E 0 38%,transparent 39%),repeating-conic-gradient(#F6B40E 0 6deg,transparent 6deg 15deg);animation:spin 40s linear infinite}
+.fx-ar .sun::after{content:"";position:absolute;inset:28%;border-radius:50%;background:#F6B40E;box-shadow:0 0 60px 20px rgba(246,180,14,.5);animation:glow 3s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glow{50%{transform:scale(1.12)}}
+/* BREAKFAST: vapor que sube y almíbar que gotea */
+.fx-bf .v{bottom:-60px;border-radius:50%;background:rgba(255,246,228,.5);filter:blur(10px);animation:steam ease-in infinite}
+@keyframes steam{from{transform:translate(0,0) scale(.6);opacity:0}15%{opacity:.8}to{transform:translate(var(--dx),-115vh) scale(1.8);opacity:0}}
+.fx-bf .dr{top:0;width:46px;background:#B5712C;border-radius:0 0 40px 40px;transform-origin:top;animation:drip ease-in-out infinite alternate}
+@keyframes drip{from{transform:scaleY(.25)}to{transform:scaleY(1)}}
+/* SWEET: granas que caen */
+.fx-sweet .g{top:-30px;border-radius:99px;animation:fall linear infinite}
+@keyframes fall{to{transform:translate(var(--dx),115vh) rotate(var(--rot))}}
+/* MILKABLE: burbujas de leche que suben y ola abajo */
+.fx-milk .b{bottom:-80px;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:inset -6px -8px 14px rgba(246,220,130,.5);animation:bub ease-in infinite}
+@keyframes bub{from{transform:translate(0,0)}50%{transform:translate(var(--dx),-60vh)}to{transform:translate(0,-130vh)}}
+.fx-milk .w{left:-10%;bottom:-30px;width:120%;height:120px;border-radius:50%;background:rgba(255,255,255,.7);animation:wave 6s ease-in-out infinite alternate}
+@media (prefers-reduced-motion:reduce){#para .pcard{opacity:1;transform:none}}
+</style>
+
+
 <nav id="ac-gn"></nav>
 <div class="ann">Preventa abierta · <b>Envío gratis</b> a sucursal desde 2 cajas</div>
 <header class="nav" id="nav"><div class="wrap">
   <a class="word" href="#top" aria-label="Clickly, inicio">clickly</a>
-  <nav class="lk" aria-label="Secciones"><a href="#pops">Pops</a><a href="#cajas">Cajas</a><a href="#preguntas">Preguntas</a></nav>
+  <nav class="lk" aria-label="Secciones"><a href="#lineas">Líneas</a><a href="#pops">Pops</a><a href="#cajas">Cajas</a><a href="#preguntas">Preguntas</a></nav>
   <div class="r"><button class="bag" id="bag" data-press data-open="1" aria-label="Pedir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>Pedir<span class="n tab" id="bagn"></span></button></div>
 </div></header>
 
@@ -306,6 +381,11 @@ section{padding:clamp(4.5rem,9vw,8rem) 0}
 </div>
 <div class="parade" id="parade" aria-label="Los pops"></div>
 </section>
+
+<section class="lines" id="lineas"><div class="wrap">
+  <div class="hd rv"><small>Cada línea es su propio mundo</small><h2>Elegí tu línea</h2><p>Tocá una y entrá.</p></div>
+  <div class="ltiles" id="ltiles"></div>
+</div></section>
 
 <section id="pops"><div class="wrap">
   <div class="hd rv"><small>Esta temporada</small><h2>La línea de pops</h2><p>Tocá cualquiera para escuchar el clic.</p></div>
@@ -339,6 +419,7 @@ section{padding:clamp(4.5rem,9vw,8rem) 0}
   <details><summary>¿Cómo funciona la preventa?</summary><p>Armás tus cajas, completás tus datos y reservás. No se cobra nada ahora: te escribimos para coordinar el pago y el envío. Por ahora enviamos solo dentro de Argentina.</p></details>
 </div></section>
 </main>
+<div id="para" role="dialog" aria-modal="true" aria-label="Línea" hidden><div class="fx" id="parafx" aria-hidden="true"></div><div class="pin" id="parain"></div></div>
 
 <footer id="ac-ft" data-page="Clickly" data-note="<p>Clickers impresos en 3D. No son comida. Preventa: reservás sin pagar ahora. Tus cajas y tu reserva quedan guardadas en este dispositivo. Envíos solo dentro de Argentina.</p><p>Clickly es una marca de NiDoo.</p>"></footer>
 <script src="/apple/ac.js"></script>
@@ -493,14 +574,14 @@ function drawFab(){const T=totals(),cur=T.n?T.bx[T.bx.length-1]:[];
   $('#fabs').textContent=!T.n?'':T.rest?`faltan ${MAX-T.rest} · ${money(T.sub)}`:(T.full>=FREE?'Envío gratis · ':'')+money(T.sub);
   $('#fabb').textContent=T.n&&!T.rest?'Reservar':'Ver caja';
   const n=$('#bagn');n.textContent=T.n||'';n.classList.toggle('on',!!T.n);$('#bag').setAttribute('aria-label',`Pedir, ${T.n} pops en tu caja`)}
-function ui(){clean();drawFab();updLineup();if(dOpen()){if(STEP===3)drawBuilder($('#dbody'));drawFoot();$('#dfoot').hidden=STEP<3&&!total()}onScroll()}
+function ui(){clean();drawFab();updLineup();if(typeof updPara==="function")updPara();if(dOpen()){if(STEP===3)drawBuilder($('#dbody'));drawFoot();$('#dfoot').hidden=STEP<3&&!total()}onScroll()}
 
 function add(id,src){const p=pop(id);if(!p)return;if(avail(id)<=0){toast(`${p.n}: sin stock por ahora`);return}if(room()<=0){toast('Llegaste al máximo de 5 cajas');return}
   Q[id]=(Q[id]||0)+1;save();click();fly(id,src);ui();const T=totals();
   toast(T.rest?`Sumaste ${short(p.n)} · caja ${T.full+1}: ${T.rest} de 5`:`¡Caja ${T.full} lista! 🎉`)}
 function rem(id){if(!Q[id])return;Q[id]--;if(!Q[id])delete Q[id];save();ui()}
 function fly(id,src){if(dOpen())return;const b=$('#bag');const bump=()=>{b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump')};
-  const sec=src&&src.closest&&src.closest('.it'),im0=sec&&sec.querySelector('.ph img');if(RM.matches||!im0){bump();return}
+  const sec=src&&src.closest&&src.closest('.it,.pcard'),im0=sec&&sec.querySelector('.ph img');if(RM.matches||!im0){bump();return}
   const s=im0.getBoundingClientRect(),t=b.getBoundingClientRect(),w=Math.min(s.width,150),im=new Image();im.src=IMG[id];im.className='fly';im.style.width=im.style.height=w+'px';document.body.appendChild(im);
   const x0=s.left+s.width/2-w/2,y0=s.top+s.height/2-w/2,x1=t.left+t.width/2-w/2,y1=t.top+t.height/2-w/2;
   im.animate([{transform:`translate(${x0}px,${y0}px)`},{transform:`translate(${(x0+x1)/2}px,${Math.min(y0,y1)-70}px) rotate(-20deg) scale(.6)`,offset:.45},{transform:`translate(${x1}px,${y1}px) rotate(-40deg) scale(${24/w})`,opacity:.5}],{duration:650,easing:'cubic-bezier(.45,0,.2,1)'}).onfinish=()=>{im.remove();bump()}}
@@ -598,8 +679,57 @@ document.addEventListener('click',e=>{const t=e.target;
   if(t.id==='showres'){showRes();return}
   const op=t.closest('[data-open]');if(op){const T=totals();if(op.id==='fab'&&T.n&&!T.rest){openRes();return}openD(T.n?3:+op.dataset.open===3?3:undefined);return}});
 
-function drawAll(){drawParade();drawLineup();drawPacks();ui()}
+
+/* Líneas: botones y paraíso de cada una */
+const TH={
+ base:{b:'#2F6FE0',b2:'#1F4FB0',i:'#FFFFFF',a:'#FEDFA2',ac:'#3A2418',card:'rgba(255,255,255,.16)',ring:'rgba(255,255,255,.22)',fx:'base',tg:'El modelo de siempre.'},
+ ar:{b:'#74ACDF',b2:'#FFFFFF',i:'#12304F',a:'#F6B40E',ac:'#12304F',card:'rgba(255,255,255,.55)',ring:'rgba(255,255,255,.8)',fx:'ar',tg:'Sabores de acá, hechos pop.'},
+ bf:{b:'#F6884C',b2:'#FFB77A',i:'#3A2418',a:'#FFF6E4',ac:'#3A2418',card:'rgba(255,246,228,.5)',ring:'rgba(255,246,228,.75)',fx:'bf',tg:'Arrancá el día haciendo clic.'},
+ sweet:{b:'#F06A8C',b2:'#FFA3BC',i:'#3A1020',a:'#FFF6E4',ac:'#3A1020',card:'rgba(255,246,228,.5)',ring:'rgba(255,246,228,.75)',fx:'sweet',tg:'Lo dulce también hace clic.'},
+ milk:{b:'#FFEFB0',b2:'#F6DC82',i:'#3A2418',a:'#3A2418',ac:'#FFF6E4',card:'rgba(255,255,255,.6)',ring:'rgba(246,220,130,.6)',fx:'milk',tg:'Suave, cremoso y para apretar.'}};
+const LORDER=['base','ar','bf','sweet','milk'];
+const lineIds=()=>LORDER.filter(k=>LINES[k]&&POPS.some(p=>p.line===k));
+function drawLines(){const el=$('#ltiles');if(!el)return;el.innerHTML=lineIds().map(k=>{const L=LINES[k],t=TH[k]||TH.base,ps=POPS.filter(p=>p.line===k);
+  return`<button class="ltile rv" data-press data-line="${k}" style="--tb:${t.b};--tb2:${t.b2};--ti:${t.i}" aria-label="Entrar a ${esc(L.n)}"><span class="li${ps.length===1?' one':''}">${ps.slice(0,3).map(p=>`<img src="${timg(p.id)}" alt="" width="104" height="104" loading="lazy" decoding="async">`).join('')}</span><small>${esc(L.tag)}</small><b>${esc(L.n.replace('Línea ',''))}</b><em>${ps.length} ${ps.length===1?'pop':'pops'}</em></button>`}).join('');observe()}
+const rnd=(a,b)=>a+Math.random()*(b-a);
+function buildFx(k){const f=$('#parafx');let h='';const N=(n,fn)=>{for(let i=0;i<n;i++)h+=fn(i)};
+ if(k==='base'){N(14,i=>{const s=rnd(26,80);return`<i class="c" style="left:${rnd(0,100)}%;bottom:-100px;width:${s}px;height:${s}px;animation-duration:${rnd(9,18)}s;animation-delay:${-rnd(0,18)}s"></i>`});N(3,i=>`<i class="r" style="animation-delay:${i*1.06}s"></i>`)}
+ if(k==='ar'){h+=`<i class="s" style="top:8%;height:26%;background:#fff;opacity:.55"></i><i class="s" style="top:62%;height:26%;background:#fff;opacity:.5;animation-delay:-3s"></i><i class="sun"></i>`}
+ if(k==='bf'){N(12,i=>{const s=rnd(60,140);return`<i class="v" style="left:${rnd(0,95)}%;width:${s}px;height:${s}px;--dx:${rnd(-60,60)}px;animation-duration:${rnd(6,12)}s;animation-delay:${-rnd(0,12)}s"></i>`});N(8,i=>`<i class="dr" style="left:${6+i*12.5}%;height:${rnd(60,110)}px;animation-duration:${rnd(2.4,4.4)}s;animation-delay:${-rnd(0,4)}s"></i>`)}
+ if(k==='sweet'){const C=['#FFF6E4','#FFFFFF','#C9A7F0','#FEDFA2','#FF4F7B','#8FD3E8'];N(46,i=>`<i class="g" style="left:${rnd(0,100)}%;width:${rnd(8,12)}px;height:${rnd(22,34)}px;background:${C[i%C.length]};--dx:${rnd(-80,80)}px;--rot:${rnd(-540,540)}deg;animation-duration:${rnd(5,11)}s;animation-delay:${-rnd(0,11)}s"></i>`)}
+ if(k==='milk'){N(18,i=>{const s=rnd(20,90);return`<i class="b" style="left:${rnd(0,98)}%;width:${s}px;height:${s}px;--dx:${rnd(-40,40)}px;animation-duration:${rnd(7,15)}s;animation-delay:${-rnd(0,15)}s"></i>`});h+=`<i class="w"></i><i class="w" style="bottom:-60px;opacity:.5;animation-delay:-2s"></i>`}
+ f.className='fx fx-'+k;f.innerHTML=h}
+function drawParaCard(p,i){const[sc,stx]=stockOf(p);return`<article class="pcard" id="pa-${p.id}" style="--i:${i}"><button class="ph" data-press data-pclick aria-label="Hacer clic en ${esc(p.n)}"><img src="${IMG[p.id]}" alt="${esc(p.n)}" width="560" height="560" decoding="async"><span class="n tab ${Q[p.id]?'on':''}">${Q[p.id]||''}</span></button>
+  <h3>${esc(p.n)}</h3><p class="d">${esc(p.d)} ${esc(p.ct)}.</p><div class="ft"><span class="ctl">${popCtrl(p)}</span>${stx?`<span class="st ${sc}">${stx}</span>`:`<span class="pr tab">${p.xp?money(p.xp)+' c/u':money(PBOX/MAX)+' en caja'}</span>`}</div></article>`}
+function updPara(){POPS.forEach(p=>{const s=$('#pa-'+p.id);if(!s)return;s.querySelector('.ctl').innerHTML=popCtrl(p);const n=s.querySelector('.ph .n');n.textContent=Q[p.id]||'';n.classList.toggle('on',!!Q[p.id])})}
+let PL=null;
+function fillPara(k){const L=LINES[k],t=TH[k]||TH.base,P=$('#para');PL=k;
+  P.style.cssText=`--pb:${t.b};--pi:${t.i};--pa:${t.a};--pc:${t.ac};--pcard:${t.card};--pring:${t.ring};--hb:${t.b};--hi:${t.i}`;
+  const ps=POPS.filter(p=>p.line===k);
+  $('#parain').innerHTML=`<div class="top"><button class="back" data-pclose><span aria-hidden="true">‹</span> Todas las líneas</button><span class="wm">clickly</span></div>
+   <h2>${esc(L.n.replace('Línea ',''))}</h2><p class="tg"><i>${esc(L.tag)}</i>${esc(t.tg)}</p>
+   <div class="grid">${ps.map(drawParaCard).join('')}</div>
+   <div class="hop">${lineIds().map(x=>`<button data-line="${x}" class="${x===k?'cur':''}" style="--hb:${(TH[x]||TH.base).b};--hi:${(TH[x]||TH.base).i}">${esc(LINES[x].n.replace('Línea ',''))}</button>`).join('')}</div>`;
+  buildFx(t.fx);P.scrollTop=0;
+  document.querySelector('meta[name=theme-color]').setAttribute('content',t.b)}
+function openPara(k,src,push){const P=$('#para');if(!LINES[k])return;const was=P.classList.contains('on');fillPara(k);P.hidden=false;P.classList.add('on');document.body.style.overflow='hidden';
+  if(push!==false)try{history[was?'replaceState':'pushState']({para:k},'','#linea-'+k)}catch(e){}
+  if(!RM.matches&&!was){const r=src&&src.getBoundingClientRect?src.getBoundingClientRect():null,x=r?r.left+r.width/2:innerWidth/2,y=r?r.top+r.height/2:innerHeight/2;
+    P.animate([{clipPath:`circle(0px at ${x}px ${y}px)`},{clipPath:`circle(${Math.hypot(innerWidth,innerHeight)}px at ${x}px ${y}px)`}],{duration:650,easing:'cubic-bezier(.3,.7,.2,1)'})}
+  else if(!RM.matches)P.animate([{opacity:.3},{opacity:1}],{duration:350});
+  click()}
+function closePara(back){const P=$('#para');if(!P.classList.contains('on'))return;P.classList.remove('on');P.hidden=true;document.body.style.overflow='';PL=null;$('#parafx').innerHTML='';
+  document.querySelector('meta[name=theme-color]').setAttribute('content','#FFF6E4');
+  if(back!==false&&/^#linea-/.test(location.hash))try{history.back()}catch(e){}}
+document.addEventListener('click',e=>{const t=e.target;
+  const ln=t.closest('[data-line]');if(ln){openPara(ln.dataset.line,ln);return}
+  if(t.closest('[data-pclose]')){closePara();return}});
+addEventListener('popstate',()=>{const m=location.hash.match(/^#linea-(\w+)/);if(m&&LINES[m[1]])openPara(m[1],null,false);else closePara(false)});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&PL&&!dOpen()&&$('#modal').hidden)closePara()});
+
+function drawAll(){drawParade();drawLines();drawLineup();drawPacks();ui()}
 drawAll();
+{const m=location.hash.match(/^#linea-(\w+)/);if(m&&LINES[m[1]])openPara(m[1],null,false)}
 function loadCat(){if(!API)return;fetch(API+'?a=catalogo',{cache:'no-store'}).then(x=>x.json()).then(cat=>{if(!cat||!cat.ok)return;try{localStorage.setItem(CATKEY,JSON.stringify(cat))}catch(e){}const ch=applyCat(cat);if(ch)drawAll();else{drawLineup();ui()}}).catch(()=>{})}
 loadCat();
 /* vuelta desde Mercado Pago */
