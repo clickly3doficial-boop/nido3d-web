@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es-AR" data-gn="dark" data-ft="dark">
+<html lang="es-AR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -207,12 +207,10 @@ html.tinted .aur,html.tinted .blob{opacity:1}
 html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
 .bl3{background:rgba(var(--a3r),.5)}
 </style>
-<link rel="stylesheet" href="/apple/ac.css">
 </head>
 <body>
 <div class="tone" aria-hidden="true"></div>
 
-<nav id="ac-gn"></nav>
 <nav class="gn" aria-label="SpiBall">
   <div class="wrap">
     <a href="/spiball/" aria-label="SpiBall"><span class="logoM" role="img" aria-label="SpiBall" style="--m:url(logo-full.png);width:52px;height:20px"></span></a>
@@ -344,8 +342,13 @@ html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
 </section>
 </main>
 
-<footer id="ac-ft" data-page="SpiBall" data-note="<p>SpiBall es una marca de NiDoo. Diseñado e impreso en 3D en Argentina. Te respondemos por Instagram para coordinar el pago y el envío.</p>"></footer>
-<script src="/apple/ac.js"></script>
+<footer>
+  <div class="wrap">
+    <span class="logoM" role="img" aria-label="SpiBall" style="--m:url(logo-icon.png);width:32px;height:31px;margin:0 auto 16px"></span>
+    <p>SpiBall es una marca de <a href="/">NiDoo</a> · Hecho en Argentina</p>
+    <p style="margin-top:6px"><a href="https://www.instagram.com/clickly_oficial/" target="_blank" rel="noopener">Instagram</a></p>
+  </div>
+</footer>
 
 <div class="bar" id="bar"><div><span class="pr" id="barPrice">$6.000</span><small>Tu SpiBall</small></div><button class="pill" id="barBtn" type="button">Pedir</button></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
