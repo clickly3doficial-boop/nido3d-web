@@ -96,6 +96,20 @@ h1,h2,h3,p{margin:0}h1,h2,h3{text-wrap:balance}
 .p-pnt .ey{color:#6e6e73}
 .p-pnt .btn{--c:#1d1d1f;--t:#fff}
 .p-pnt .art img{width:clamp(280px,32vw,420px);bottom:-6%;-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 52%,transparent 71%);mask-image:radial-gradient(circle at 50% 50%,#000 52%,transparent 71%)}
+.mk{text-align:center;padding:clamp(100px,12vw,160px) 22px clamp(90px,11vw,140px);background:var(--bg)}
+.mk .ey{font-size:clamp(17px,1.8vw,21px);font-weight:600;color:var(--fg3)}
+.mk h2{font-size:clamp(52px,8vw,108px);font-weight:600;letter-spacing:-.055em;line-height:1;margin-top:8px}
+.mk .lead{font-size:clamp(19px,2.2vw,26px);color:var(--fg2);max-width:720px;margin:18px auto 0;letter-spacing:-.02em;line-height:1.35}
+.mk .ctas{margin-top:30px}
+.mk .parade{display:flex;justify-content:center;gap:clamp(10px,2vw,22px);margin:clamp(56px,7vw,84px) auto 0;max-width:1000px}
+.mk .parade span{flex:1;max-width:180px;aspect-ratio:1;border-radius:28%;background:var(--b);display:grid;place-items:center;overflow:hidden;transition:transform .5s var(--ease)}
+.mk .parade span:nth-child(odd){transform:translateY(18px)}
+.mk .parade:hover span{transform:translateY(-6px)}
+.mk .parade img{width:78%;height:78%;object-fit:contain}
+.mk .parade img.cv{width:100%;height:100%;object-fit:cover}
+.mk .parade span:last-child{box-shadow:inset 0 0 0 1px #e8e8ed}
+.mk .parade img.bl{width:100%;height:100%;object-fit:cover;-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 50%,transparent 72%);mask-image:radial-gradient(circle at 50% 50%,#000 50%,transparent 72%)}
+@media (max-width:600px){.mk .parade{gap:8px}.mk .parade span{border-radius:24%}.mk .parade span:nth-child(odd){transform:translateY(10px)}}
 /* 3 · grilla de dos */
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px}
 .tile{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;overflow:hidden;min-height:clamp(500px,48vw,620px);padding:clamp(44px,5vw,60px) 22px 0}
@@ -215,43 +229,20 @@ h1,h2,h3,p{margin:0}h1,h2,h3{text-wrap:balance}
     <span class="cue" aria-hidden="true">Capa por capa</span>
   </section>
 
-  <!-- 2 · una marca por bloque -->
-  <div class="stack" id="marcas">
-    <header class="mh">
-      <h2 data-r>Conocé las marcas.</h2>
-      <p data-r="d1">Todo lo que hacemos en NiDoo, marca por marca. Cada una con su estilo, todas impresas capa por capa en Argentina.</p>
-      <nav class="mchips" aria-label="Marcas" data-r="d2"><a href="#pClkS">Clickly</a><a href="#pSpbS">SpiBall</a><a href="#pPntS">PENTA</a></nav>
-    </header>
-    <section class="promo p-clk" id="pClkS" aria-labelledby="pClk">
-      <div class="logo" role="img" aria-label="Clickly" data-r></div>
-      <p class="ey" data-r="d1">Novedad</p>
-      <h2 id="pClk" data-r="d1">Pink Macaron Pop</h2>
-      <p class="sub" data-r="d2">Tapitas rosa pastel. Relleno blanco. Y un clic de verdad adentro.</p>
-      <div class="ctas" data-r="d3"><a class="btn" href="/clickly/">Armá tu caja</a><a class="btn o" href="/clickly/#pops">Ver los pops</a></div>
-      <p class="price" data-r="d3">Caja de 5 pops · $14.500</p>
-      <div class="art" aria-hidden="true"><img class="l" src="/clickly/img/medialuna.webp" alt="" data-z><img class="m" src="/clickly/img/macaron.webp" alt="" data-z><img class="r" src="/clickly/img/alfajor.webp" alt="" data-z></div>
-    </section>
-
-
-    <section class="promo p-spb" id="pSpbS" aria-labelledby="pSpb">
-      <h2 id="pSpb" class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">SpiBall</h2>
-      <span class="wm" role="img" aria-label="SpiBall" data-r></span>
-      <p class="sub" data-r="d1" style="margin-top:14px">Se aprieta. Satisface. Y es tuya.</p>
-      <p class="ey" data-r="d2" style="margin-top:6px">Elegí cada color y poné tu marca arriba.</p>
-      <div class="ctas" data-r="d3"><a class="btn" href="/spiball/#disena">Diseñá la tuya</a><a class="btn o" href="/spiball/">Más información</a></div>
-      <p class="price" data-r="d3">$6.000</p>
-      <div class="art" aria-hidden="true"><img src="/media/marca-spiball.webp" alt="" loading="lazy" data-z></div>
-    </section>
-
-    <section class="promo p-pnt" id="pPntS" aria-labelledby="pPnt">
-      <p class="ey" data-r>Por NiDoo</p>
-      <h2 id="pPnt" data-r="d1">PENTA</h2>
-      <p class="sub" data-r="d2">Cinco lados. Un solo clic. Elegí tu color y poné tu letra.</p>
-      <div class="ctas" data-r="d3"><a class="btn" href="/penta/#disena">Elegí tu color</a><a class="btn o" href="/penta/">Más información</a></div>
-      <p class="price" data-r="d3">Desde $4.000</p>
-      <div class="art" aria-hidden="true"><img src="/media/marca-penta.webp" alt="" loading="lazy" data-z></div>
-    </section>
-  </div>
+  <!-- 2 · conocé las marcas -->
+  <section class="mk" id="marcas" aria-labelledby="mkT">
+    <p class="ey" data-r>Las marcas NiDoo</p>
+    <h2 id="mkT" data-r="d1">Conocé las marcas.</h2>
+    <p class="lead" data-r="d2">Clickly, SpiBall, PENTA, Fidgets y todo el catálogo. Cada una con su estilo, todas impresas capa por capa en Argentina.</p>
+    <div class="ctas" data-r="d3"><a class="btn" href="/marcas/">Ver todas las marcas</a></div>
+    <a class="parade" href="/marcas/" aria-label="Ver todas las marcas" data-r>
+      <span style="--b:#FEDFA2"><img src="/clickly/img/macaron.webp" alt="" loading="lazy"></span>
+      <span style="--b:#1d1d1f"><img class="bl" src="/media/marca-spiball.webp" alt="" loading="lazy"></span>
+      <span style="--b:#ececef"><img class="bl" src="/media/marca-penta.webp" alt="" loading="lazy"></span>
+      <span style="--b:#dcecfb"><img src="/fidgets/sensorial-egg.webp?v=4" alt="" loading="lazy"></span>
+      <span style="--b:#fff"><img class="cv" src="/catalogo/img/capibara.webp" alt="" loading="lazy"></span>
+    </a>
+  </section>
 
 
   <!-- 4 · por qué NiDoo -->

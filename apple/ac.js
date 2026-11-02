@@ -1,7 +1,7 @@
 /* NiDoo · nav global, footer y apariciones al hacer scroll (estilo apple.com). */
 (function(){
 var EGG='<svg viewBox="0 0 26 32" aria-hidden="true"><path fill="currentColor" d="M12.2 1C5.6 1.4 1 10.6 1 19.4 1 26.6 6.2 31 13.4 31 20.5 31 25 26.3 25 19.6 25 10.1 19.5.6 12.2 1Z"/></svg>';
-var LINKS=[['Clickly','/clickly/'],['Fidgets','/fidgets/'],['SpiBall','/spiball/'],['PENTA','/penta/'],['Catálogo','/catalogo/'],['Bolsas','/#bolsas'],['Ayuda','https://ig.me/m/clickly_oficial']];
+var LINKS=[['Marcas','/marcas/'],['Clickly','/clickly/'],['Fidgets','/fidgets/'],['SpiBall','/spiball/'],['PENTA','/penta/'],['Catálogo','/catalogo/'],['Bolsas','/#bolsas'],['Ayuda','https://ig.me/m/clickly_oficial']];
 var path=location.pathname;
 function ext(h){return h.indexOf('http')===0?' target="_blank" rel="noopener"':''}
 function cur(h){return h!=='/'&&h.charAt(0)==='/'&&h.indexOf('#')<0&&path.indexOf(h)===0}
@@ -27,7 +27,7 @@ if(ft){
   var note=ft.getAttribute('data-note')||'';
   var page=ft.getAttribute('data-page');
   var cols=[
-    ['Marcas',[['Clickly','/clickly/'],['SpiBall','/spiball/'],['PENTA','/penta/'],['Fidgets','/fidgets/'],['Catálogo','/catalogo/']]],
+    ['Marcas',[['Todas las marcas','/marcas/'],['Clickly','/clickly/'],['SpiBall','/spiball/'],['PENTA','/penta/'],['Fidgets','/fidgets/'],['Catálogo','/catalogo/']]],
     ['Comprar',[['Armá tu caja Clickly','/clickly/'],['Diseñá tu SpiBall','/spiball/#disena'],['Elegí tu PENTA','/penta/#disena'],['Pedí por Instagram','https://ig.me/m/clickly_oficial']]],
     ['NiDoo',[['Por qué NiDoo','/#por-que'],['Bolsas NiDoo','/#bolsas'],['Sensorial Egg','/fidgets/sensorial-egg/'],['Infinity Q','/fidgets/infinity-q/']]],
     ['Seguinos',[['Instagram','https://www.instagram.com/clickly_oficial/'],['Mensaje directo','https://ig.me/m/clickly_oficial']]]];
