@@ -223,7 +223,7 @@ const EXTRA={
  infinity:{url:'infinity-q/',badge:'Nuevo',tint:'#ece6fb',w:'74%',
   colores:[['Lavanda','#cdbff0','infinity-lavanda.webp'],['Celeste pastel','#b9dcf2','infinity-celeste.webp'],['Rosa pastel','#f4bfd6','infinity-rosa.webp'],['Amarillo pastel','#f9e79a','infinity-amarillo.webp']]},
  egg:{url:'sensorial-egg/',badge:'Nuevo',tint:'#e3f0fc',
-  colores:[['Celeste pastel','#b9dcf2','sensorial-egg.webp?v=3'],['Lavanda','#cdbff0','egg-lavanda.webp?v=2'],['Rosa pastel','#f4bfd6','egg-rosa.webp?v=2'],['Amarillo pastel','#f9e79a','egg-amarillo.webp?v=2']]}
+  colores:[['Celeste pastel','#b9dcf2','sensorial-egg.webp?v=4'],['Lavanda','#cdbff0','egg-lavanda.webp?v=2'],['Rosa pastel','#f4bfd6','egg-rosa.webp?v=2'],['Amarillo pastel','#f9e79a','egg-amarillo.webp?v=2']]}
 };
 const BASE=[{id:'egg',nombre:'Sensorial Egg',descripcion:'Lo girás y se vuelve espiral.',precio:0,stock:0,color:'#b9dcf2',imagen:''},{id:'infinity',nombre:'Infinity Q',descripcion:'El cubo infinito: se abre, se pliega y no termina nunca.',precio:0,stock:0,color:'#cdbff0',imagen:''}];
 const money=v=>'$'+Math.round(v).toLocaleString('es-AR');
@@ -232,7 +232,7 @@ function render(list){
  list=list.filter(q=>q.id!=='donut');  /* Donut Loop discontinuada */
  const F=list.map(q=>{const x=EXTRA[q.id]||{};return{w:x.w||'',id:q.id,nombre:q.nombre,desc:q.descripcion||'',url:x.url||'',badge:x.badge||'',tint:x.tint||'#eef0fb',
   precio:q.precio>0?(q.stock>0?money(q.precio):'Agotado'):'Próximamente',
-  colores:x.colores||[[q.nombre,q.color||'#cdbff0',q.imagen||'sensorial-egg.webp?v=3']]}});
+  colores:x.colores||[[q.nombre,q.color||'#cdbff0',q.imagen||'sensorial-egg.webp?v=4']]}});
  G.innerHTML=F.map(f=>{const L=(a,b,c='')=>f.url?`<a ${c} href="${f.url}">${a}</a>`:`<span ${c}>${a}</span>`;
   return `<article class="card rv in" data-id="${f.id}" style="--tint:${f.tint}">
   ${f.url?`<a class="ph" href="${f.url}" aria-hidden="true" tabindex="-1">`:'<div class="ph">'}${f.badge?`<span class="badge">${f.badge}</span>`:''}<img src="${f.colores[0][2]}" alt="${f.nombre}, color ${f.colores[0][0]}" loading="lazy"${f.w?` style="width:${f.w}"`:''}>${f.url?'</a>':'</div>'}

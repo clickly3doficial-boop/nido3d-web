@@ -1,0 +1,80 @@
+/* NiDoo · capa estilo Apple compartida por todas las páginas.
+   Nav global (44px, translúcida), menú móvil a pantalla completa, footer tipo apple.com y apariciones suaves al hacer scroll. */
+:root{
+  --ac-sf:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Inter,"Segoe UI",Roboto,Arial,sans-serif;
+  --ac-gn-bg:rgba(250,250,252,.8);--ac-gn-solid:#fafafc;--ac-gn-fg:rgba(0,0,0,.8);--ac-gn-fg2:rgba(0,0,0,.56);--ac-gn-line:rgba(0,0,0,.08);
+  --ac-ft-bg:#f5f5f7;--ac-ft-fg:#6e6e73;--ac-ft-fg1:#1d1d1f;--ac-ft-line:#d2d2d7;
+  --ac-ease:cubic-bezier(.16,1,.3,1);
+}
+html[data-gn="dark"]{--ac-gn-bg:rgba(22,22,23,.8);--ac-gn-solid:#161617;--ac-gn-fg:rgba(255,255,255,.82);--ac-gn-fg2:rgba(255,255,255,.56);--ac-gn-line:rgba(255,255,255,.1)}
+html[data-gn="clickly"]{--ac-gn-bg:rgba(255,246,228,.82);--ac-gn-solid:#FFF6E4;--ac-gn-fg:#3A2418;--ac-gn-fg2:rgba(58,36,24,.62);--ac-gn-line:rgba(58,36,24,.12)}
+html[data-ft="clickly"]{--ac-ft-bg:#FEDFA2;--ac-ft-fg:rgba(58,36,24,.72);--ac-ft-fg1:#3A2418;--ac-ft-line:rgba(58,36,24,.18)}
+html[data-ft="dark"]{--ac-ft-bg:#161617;--ac-ft-fg:#86868b;--ac-ft-fg1:#f5f5f7;--ac-ft-line:#424245}
+@media (prefers-color-scheme:dark){html[data-gn="auto"]{--ac-gn-bg:rgba(22,22,23,.8);--ac-gn-solid:#161617;--ac-gn-fg:rgba(255,255,255,.82);--ac-gn-fg2:rgba(255,255,255,.56);--ac-gn-line:rgba(255,255,255,.1);
+  --ac-ft-bg:#161617;--ac-ft-fg:#86868b;--ac-ft-fg1:#f5f5f7;--ac-ft-line:#424245}}
+
+/* nav global */
+#ac-gn{position:relative;z-index:30;height:44px;font-family:var(--ac-sf)}
+html[data-gn-sticky] #ac-gn{position:sticky;top:0;z-index:9990}
+#ac-gn.open{z-index:9990}
+#ac-gn .ac-bar{position:absolute;inset:0;background:var(--ac-gn-bg);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);transition:background .3s}
+#ac-gn ul{position:relative;list-style:none;margin:0 auto;padding:0 22px;max-width:1024px;height:44px;display:flex;align-items:center;justify-content:space-between}
+#ac-gn li{display:flex}
+#ac-gn a{display:flex;align-items:center;height:44px;padding:0 8px;font-size:12px;letter-spacing:-.01em;color:var(--ac-gn-fg);text-decoration:none;opacity:.88;transition:opacity .2s}
+#ac-gn a:hover{opacity:1}
+#ac-gn a[aria-current]{opacity:1;font-weight:600}
+#ac-gn .ac-egg svg{width:14px;height:17px;display:block}
+#ac-gn .ac-burger{display:none;width:44px;height:44px;margin-right:-12px;border:0;background:none;cursor:pointer;color:var(--ac-gn-fg);position:relative;-webkit-tap-highlight-color:transparent}
+#ac-gn .ac-burger i{position:absolute;left:15px;width:17px;height:1.2px;border-radius:1px;background:currentColor;transition:transform .35s var(--ac-ease),top .35s var(--ac-ease)}
+#ac-gn .ac-burger i:first-child{top:18px}#ac-gn .ac-burger i:last-child{top:25px}
+#ac-gn.open .ac-burger i:first-child{top:21.5px;transform:rotate(45deg)}
+#ac-gn.open .ac-burger i:last-child{top:21.5px;transform:rotate(-45deg)}
+#ac-gn .ac-sheet{display:none}
+@media (max-width:833px){
+  #ac-gn ul{padding:0 16px}
+  #ac-gn li.ac-it{display:none}
+  #ac-gn .ac-burger{display:block}
+  #ac-gn .ac-sheet{display:block;position:fixed;left:0;right:0;top:44px;height:0;overflow:hidden;background:var(--ac-gn-solid);transition:height .5s var(--ac-ease)}
+  #ac-gn.open .ac-sheet{height:calc(100dvh - 44px);overflow:auto}
+  #ac-gn.open .ac-bar{background:var(--ac-gn-solid)}
+  #ac-gn .ac-sheet a{display:block;height:auto;padding:8px 32px;font-size:28px;font-weight:600;letter-spacing:-.02em;opacity:0;transform:translateY(-8px);transition:opacity .3s,transform .4s var(--ac-ease)}
+  #ac-gn .ac-sheet a.ac-sm{font-size:14px;font-weight:400;color:var(--ac-gn-fg2);padding:6px 32px}
+  #ac-gn .ac-sheet .ac-h{display:block;padding:26px 32px 6px;font-size:12px;color:var(--ac-gn-fg2)}
+  #ac-gn.open .ac-sheet a{opacity:1;transform:none}
+  html.ac-lock,html.ac-lock body{overflow:hidden}
+}
+
+/* footer tipo apple.com */
+#ac-ft{text-align:left;background:var(--ac-ft-bg);color:var(--ac-ft-fg);font:12px/1.33 var(--ac-sf);letter-spacing:-.01em;padding:17px 0 21px;position:relative;z-index:3}
+#ac-ft .ac-w{max-width:980px;margin:0 auto;padding:0 max(22px,env(safe-area-inset-left,0px))}
+#ac-ft a{color:var(--ac-ft-fg1);text-decoration:none}
+#ac-ft a:hover{text-decoration:underline}
+#ac-ft .ac-note{padding-bottom:11px;border-bottom:1px solid var(--ac-ft-line)}
+#ac-ft .ac-note p{margin:0 0 8px}
+#ac-ft .ac-crumb{display:flex;align-items:center;gap:8px;padding:12px 0 2px;color:var(--ac-ft-fg1)}
+#ac-ft .ac-crumb svg{width:11px;height:13px}
+#ac-ft .ac-crumb span{opacity:.5}
+#ac-ft .ac-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:18px 0 4px}
+#ac-ft h3{margin:0 0 8px;font-size:12px;font-weight:600;color:var(--ac-ft-fg1)}
+#ac-ft ul{list-style:none;margin:0;padding:0}
+#ac-ft li{margin-bottom:8px}
+#ac-ft .ac-cols a{color:var(--ac-ft-fg)}
+#ac-ft .ac-cols a:hover{color:var(--ac-ft-fg1)}
+#ac-ft .ac-legal{display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between;margin-top:18px;padding-top:12px;border-top:1px solid var(--ac-ft-line)}
+@media (max-width:833px){
+  #ac-ft .ac-cols{grid-template-columns:1fr;gap:0;padding:6px 0}
+  #ac-ft .ac-col{border-bottom:1px solid var(--ac-ft-line)}
+  #ac-ft h3{margin:0;padding:12px 0;cursor:pointer;display:flex;justify-content:space-between;font-weight:400}
+  #ac-ft h3::after{content:"+";font-size:16px;line-height:12px;transition:transform .3s var(--ac-ease)}
+  #ac-ft .ac-col.open h3::after{transform:rotate(45deg)}
+  #ac-ft .ac-col ul{display:none;padding:0 0 10px 12px}
+  #ac-ft .ac-col.open ul{display:block}
+  #ac-ft .ac-legal{border-top:0;margin-top:6px}
+}
+
+/* aparición al hacer scroll */
+.ac-r{opacity:0;transform:translateY(36px);transition:opacity 1s cubic-bezier(.25,.1,.25,1),transform 1.1s var(--ac-ease)}
+.ac-r.in{opacity:1;transform:none}
+.ac-r.d1{transition-delay:.08s}.ac-r.d2{transition-delay:.16s}.ac-r.d3{transition-delay:.24s}
+@media (prefers-reduced-motion:reduce){.ac-r{opacity:1;transform:none;transition:none}#ac-gn *{transition:none!important}}
+@media (prefers-reduced-transparency:reduce){#ac-gn .ac-bar{background:var(--ac-gn-solid);backdrop-filter:none;-webkit-backdrop-filter:none}}
