@@ -365,10 +365,12 @@ const POPS=[
  {id:'mate',n:'Mate Pop',line:'ar',c:'#6F9140',ct:'Click en la yerba',d:'Un mate de calabaza con su virola y la yerba arriba, con palitos. Apretás la yerba y hace clic.'},
  {id:'pancake',n:'Pancake Pop',line:'bf',c:'#E8A33D',ct:'Click en el panqueque de arriba',d:'Una pila de panqueques con almíbar y una pastillita de manteca arriba.'},
  {id:'macaron',n:'Pink Macaron Pop',line:'sweet',c:'#EF97B1',ct:'Click en la tapita de arriba',d:'Un macaron con tapitas rosa pastel y relleno blanco.'},
- {id:'muffin',n:'Muffin Pop',line:'bf',c:'#F7A8C4',ct:'Click en la crema',d:'Un muffin con pirotín marrón, bizcocho y mucha crema batida rosa.',local:1}];
+ {id:'muffin',n:'Muffin Pop',line:'bf',c:'#F7A8C4',ct:'Click en la crema',d:'Un muffin con pirotín marrón, bizcocho y mucha crema batida rosa.',local:1},
+ {id:'pan',n:'Pan Pop',line:'bf',c:'#B5712C',ct:'Click en la miga',d:'Una rebanada de pan de molde, con la miga a ras de la corteza. Apretás la miga y hace clic.',local:1},
+ {id:'butter',n:'Butter Pop',line:'milk',c:'#F6DC82',ct:'Click en la manteca',d:'Una pastilla de manteca con dos switches: apretás un lado o el centro y hace clic.',xp:6000,local:1}];
 POPS.forEach(p=>{IMG[p.id]=IMGDIR+p.id+'.webp';IMGT[p.id]=IMGDIR+p.id+'-top.webp'});
 const timg=id=>IMGT[id]||IMG[id];
-const LINES={base:{n:'Línea BASE',tag:'Para siempre',c:'#2F6FE0'},ar:{n:'Línea ARGENTINA',tag:'Nuevo',c:'#74ACDF'},bf:{n:'Línea BREAKFAST',tag:'Tiempo limitado',c:'#F6884C'},sweet:{n:'Línea SWEET',tag:'Nuevo',c:'#F06A8C'}};
+const LINES={base:{n:'Línea BASE',tag:'Para siempre',c:'#2F6FE0'},ar:{n:'Línea ARGENTINA',tag:'Nuevo',c:'#74ACDF'},bf:{n:'Línea BREAKFAST',tag:'Tiempo limitado',c:'#F6884C'},sweet:{n:'Línea SWEET',tag:'Nuevo',c:'#F06A8C'},milk:{n:'Línea MILKABLE',tag:'Nuevo',c:'#F6DC82'}};
 const PRICE=3000,PBOX=14500,FREE=2,MAX=5,MAXB=5,KEY='clickly.pedido',OLDKEY='clickly.caja5',RKEY='clickly.reservas';
 /* Catálogo en vivo (Clickly Admin): stock y pops visibles */
 const API='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec',CATKEY='clickly.catalogo';
@@ -405,7 +407,8 @@ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({q:Q}))}catch(e){}};
 const total=()=>Object.values(Q).reduce((a,c)=>a+c,0);
 const ordered=()=>{const o=[];POPS.forEach(p=>{for(let i=0;i<(Q[p.id]||0);i++)o.push(p.id)});return o};
 const boxesOf=()=>{const l=ordered(),b=[];for(let i=0;i<l.length;i+=MAX)b.push(l.slice(i,i+MAX));return b};
-const boxPrice=ids=>ids.length===MAX?PBOX:ids.length*PRICE;
+const xpOf=id=>{const p=POPS.find(x=>x.id===id);return p&&p.xp?p.xp:PRICE};
+const boxPrice=ids=>(ids.length===MAX?PBOX:ids.length*PRICE)+ids.reduce((a,id)=>a+Math.max(0,xpOf(id)-PRICE),0);
 function totals(){const n=total(),bx=boxesOf(),full=Math.floor(n/MAX),rest=n%MAX;return{n,bx,full,rest,sub:bx.reduce((a,b)=>a+boxPrice(b),0),ok:n>0}}
 /* envío: sin caja llena = solo retiro; 1 caja = $2.990 sucursal / $5.990 domicilio; desde 2 cajas = gratis a sucursal (domicilio $4.000) */
 const ENVR={retiro:[0,0,0],sucursal:[0,2990,0],domicilio:[0,5990,4000]};
@@ -436,7 +439,7 @@ function popCtrl(p){const q=Q[p.id]||0,a=avail(p.id),r=room();
 function drawLineup(){$('#lineup').innerHTML=POPS.map(p=>{const L=LINES[p.line],[sc,stx]=stockOf(p);return`<article class="it rv" id="pop-${p.id}">
    <button class="ph" data-press data-pclick aria-label="Hacer clic en ${esc(p.n)}"><img src="${IMG[p.id]}" alt="${esc(p.n)}" width="560" height="560" loading="lazy" decoding="async"><span class="n tab ${Q[p.id]?'on':''}">${Q[p.id]||''}</span></button>
    <div><span class="chip" style="--lc:${L.c}"><i></i>${L.n.replace('Línea ','')} · ${L.tag}</span><h3>${esc(p.n)}</h3><p class="d">${esc(p.d)} ${esc(p.ct)}.</p>
-   <div class="ft"><span class="ctl">${popCtrl(p)}</span>${stx?`<span class="st ${sc}">${stx}</span>`:`<span class="pr tab">${money(PBOX/MAX)} en caja</span>`}</div></div></article>`}).join('');observe()}
+   <div class="ft"><span class="ctl">${popCtrl(p)}</span>${stx?`<span class="st ${sc}">${stx}</span>`:`<span class="pr tab">${p.xp?money(p.xp)+' c/u':money(PBOX/MAX)+' en caja'}</span>`}</div></div></article>`}).join('');observe()}
 function updLineup(){POPS.forEach(p=>{const s=$('#pop-'+p.id);if(!s)return;s.querySelector('.ctl').innerHTML=popCtrl(p);const n=s.querySelector('.ph .n');n.textContent=Q[p.id]||'';n.classList.toggle('on',!!Q[p.id])})}
 
 /* Cajas */
