@@ -55,7 +55,7 @@ img{display:block;max-width:100%}
 .pill.ghost:hover{box-shadow:inset 0 0 0 1px rgba(var(--a2r),.6),0 0 24px rgba(var(--a2r),.18)}
 
 /* ---------- hero ---------- */
-.hero{position:relative;overflow:hidden;text-align:center;padding:72px 0 0;isolation:isolate}
+.hero{position:relative;overflow:hidden;text-align:center;padding:72px 0 64px;isolation:isolate}
 .aur{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.6;
   background:radial-gradient(70% 55% at 50% 0%,rgba(var(--a2r),.30),rgba(0,0,0,0) 70%),
              radial-gradient(50% 40% at 100% 40%,rgba(var(--a1r),.22),rgba(0,0,0,0) 70%),
@@ -232,7 +232,6 @@ html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
       <a class="pill big ghost" href="#como">Cómo funciona</a>
     </div>
   </div>
-  <div class="heroStage"><canvas id="cHero" aria-label="SpiBall en 3D. Tocá para apretar, arrastrá para girar." role="img"></canvas><p class="hint">Tocá para apretar · Arrastrá para girar</p></div>
 </header>
 
 <main>
@@ -586,7 +585,7 @@ class Rig {
 
 /* ===================== UI ===================== */
 const cfgRig = new Rig($('#cCfg'));
-const heroRig = new Rig($('#cHero'), { auto: !RM });
+const heroRig = new Proxy({}, { get: (t, k) => k in t ? t[k] : () => {} }); /* un solo 3D en la página: el del diseñador */
 window.__rigs = { cfgRig, heroRig };
 
 function palette(){ return { scale: chex('scale'), mech: chex('mech'), btn: chex('btn') }; }

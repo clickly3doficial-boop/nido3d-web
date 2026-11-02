@@ -42,7 +42,7 @@ button{font:inherit;color:inherit;letter-spacing:inherit;cursor:pointer;border:0
 .pill.ghost{background:var(--soft);color:var(--fg)}
 .pill.ghost:hover{box-shadow:inset 0 0 0 1px var(--line)}
 
-.hero{text-align:center;padding:76px 0 0;overflow:hidden}
+.hero{text-align:center;padding:76px 0 64px;overflow:hidden}
 .eye{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2)}
 .hero h1{font-size:clamp(64px,17vw,210px);line-height:.9;font-weight:800;letter-spacing:-.05em;margin-top:12px;padding-bottom:.04em;
   background:linear-gradient(100deg,var(--fg) 0%,var(--ac) 55%,var(--fg) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:sheen 9s ease-in-out infinite alternate}
@@ -152,7 +152,6 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
     <p class="lead rv">Cinco lados. <b>Un solo clic.</b> Elegí tu color y poné tu letra arriba.</p>
     <div class="heroCta rv"><a class="pill big" href="#disena">Diseñá la tuya</a><a class="pill big ghost" href="#como">Cómo funciona</a></div>
   </div>
-  <div class="heroStage"><canvas id="cHero" aria-label="PENTA en 3D, tocala para apretarla"></canvas></div>
 </header>
 
 <main>
@@ -365,7 +364,7 @@ class Rig {
   }
 }
 
-const cfg = new Rig($('#cCfg')), hero = new Rig($('#cHero'), { auto: !RM });
+const cfg = new Rig($('#cCfg')), hero = new Proxy({}, { get: (t, k) => k in t ? t[k] : () => {} }); /* un solo 3D en la página: el del diseñador */
 window.__rigs = { cfg, hero }; window.__state = state;
 
 /* ---------- UI ---------- */
