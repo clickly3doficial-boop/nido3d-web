@@ -206,6 +206,19 @@ html.tinted .tone{opacity:1}
 html.tinted .aur,html.tinted .blob{opacity:1}
 html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
 .bl3{background:rgba(var(--a3r),.5)}
+
+/* Más simple: portada corta, diseñador primero y pasos más juntos */
+.hero{padding:36px 0 22px}
+.hero h1{font-size:clamp(48px,11vw,120px)}
+.hero .lead{font-size:clamp(17px,2.2vw,22px)}
+.hero .eye{display:none}
+.cfgHead{padding:18px 0 10px}
+.cfgHead h2{font-size:clamp(28px,4.5vw,48px)!important}
+.step{padding:28px 0 6px}
+.step:first-child{padding-top:16px}
+.how{padding:50px 0 20px}
+.sec{padding-top:50px}
+@media (max-width:760px){.hero{padding:26px 0 18px}.heroCta .pill.ghost{display:none}.cfgHead p{display:none}.step{padding:22px 0 4px}}
 </style>
 </head>
 <body>
@@ -235,18 +248,7 @@ html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
 </header>
 
 <main>
-<section class="how" id="como">
-  <div class="wrap">
-    <h2 class="disp grad rv">Un gesto.<br>Mil vueltas.</h2>
-    <p class="sub rv">Una esfera de escamas que se aplasta bajo tu dedo y vuelve a su forma. Con rodamientos, además, gira.</p>
-    <div class="cards">
-      <article class="card rv"><div class="n">01</div><h3>Apretás</h3><p>Un solo movimiento. La esfera se aplasta y vuelve a su forma.</p></article>
-      <article class="card rv" style="transition-delay:.08s"><div class="n">02</div><h3>Gira</h3><p>Con rodamientos, el impulso la hace girar mucho más tiempo.</p></article>
-      <article class="card rv" style="transition-delay:.16s"><div class="n">03</div><h3>Es tuya</h3><p>Tres partes en el color que quieras y tu letra o ícono grabado arriba.</p></article>
-    </div>
-    <div class="facts rv"><span><b>10</b> escamas</span><span><b>3</b> tandas de color</span><span><b>1</b> grabado tuyo</span><span>Impresa en 3D en <b>Argentina</b></span></div>
-  </div>
-</section>
+
 
 <section id="disena">
   <div class="wrap cfgHead">
@@ -325,6 +327,19 @@ html.tinted .aur{filter:saturate(1.2) brightness(1.1)}
         </div>
       </section>
     </div>
+  </div>
+</section>
+
+<section class="how" id="como">
+  <div class="wrap">
+    <h2 class="disp grad rv">Un gesto.<br>Mil vueltas.</h2>
+    <p class="sub rv">Una esfera de escamas que se aplasta bajo tu dedo y vuelve a su forma. Con rodamientos, además, gira.</p>
+    <div class="cards">
+      <article class="card rv"><div class="n">01</div><h3>Apretás</h3><p>Un solo movimiento. La esfera se aplasta y vuelve a su forma.</p></article>
+      <article class="card rv" style="transition-delay:.08s"><div class="n">02</div><h3>Gira</h3><p>Con rodamientos, el impulso la hace girar mucho más tiempo.</p></article>
+      <article class="card rv" style="transition-delay:.16s"><div class="n">03</div><h3>Es tuya</h3><p>Tres partes en el color que quieras y tu letra o ícono grabado arriba.</p></article>
+    </div>
+    <div class="facts rv"><span><b>10</b> escamas</span><span><b>3</b> tandas de color</span><span><b>1</b> grabado tuyo</span><span>Impresa en 3D en <b>Argentina</b></span></div>
   </div>
 </section>
 
