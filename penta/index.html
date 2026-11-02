@@ -130,6 +130,19 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
 @media (max-width:560px){.gn .k{display:none}.swatches{gap:10px}.alt{flex-direction:column;align-items:flex-start}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
 @media (prefers-reduced-transparency:reduce){.gn,.bar,.badge,.toast{backdrop-filter:none;-webkit-backdrop-filter:none;background:#fff}}
+
+/* Más simple: portada corta, diseñador primero y pasos más juntos */
+.hero{padding:36px 0 22px}
+.hero h1{font-size:clamp(48px,11vw,120px)}
+.hero .lead{font-size:clamp(17px,2.2vw,22px)}
+.hero .eye{display:none}
+.cfgHead{padding:18px 0 10px}
+.cfgHead h2{font-size:clamp(28px,4.5vw,48px)!important}
+.step{padding:28px 0 6px}
+.step:first-child{padding-top:16px}
+.how{padding:50px 0 20px}
+.sec{padding-top:50px}
+@media (max-width:760px){.hero{padding:26px 0 18px}.heroCta .pill.ghost{display:none}.cfgHead p{display:none}.step{padding:22px 0 4px}}
 </style>
 </head>
 <body>
@@ -155,13 +168,7 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
 </header>
 
 <main>
-<section class="how" id="como">
-  <div class="wrap">
-    <h2 class="rv">Se aprieta. Se abre. Vuelve.</h2>
-    <p class="sub rv">Dos platos pentagonales y diez paneles articulados. Al apretar, los cinco brazos se abren hacia afuera; al soltar, vuelven solos.</p>
-    <div class="facts rv"><span><b>1</b> solo color</span><span><b>10</b> paneles</span><span><b>Sin</b> piezas sueltas</span><span>Impresa en 3D en <b>Argentina</b></span></div>
-  </div>
-</section>
+
 
 <section id="disena">
   <div class="wrap">
@@ -212,6 +219,14 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
         </section>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="how" id="como">
+  <div class="wrap">
+    <h2 class="rv">Se aprieta. Se abre. Vuelve.</h2>
+    <p class="sub rv">Dos platos pentagonales y diez paneles articulados. Al apretar, los cinco brazos se abren hacia afuera; al soltar, vuelven solos.</p>
+    <div class="facts rv"><span><b>1</b> solo color</span><span><b>10</b> paneles</span><span><b>Sin</b> piezas sueltas</span><span>Impresa en 3D en <b>Argentina</b></span></div>
   </div>
 </section>
 </main>
