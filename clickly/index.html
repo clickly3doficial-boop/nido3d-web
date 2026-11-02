@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es-AR">
+<html lang="es-AR" data-gn="clickly" data-ft="clickly">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="icon" href="/clickly/favicon.svg" type="image/svg+xml">
@@ -265,11 +265,35 @@ legend{font-weight:600;margin-bottom:.5rem;padding:0;font-size:1.05rem}
   .rv,.hero h1 span{opacity:1;transform:none}
 }
 </style>
+<link rel="stylesheet" href="/apple/ac.css">
+<style>
+/* Estilo Apple con la paleta de Clickly: nav global arriba, nav local con la marca a la izquierda, tipografía más grande y más aire. */
+.nav{background:rgba(255,246,228,.8);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);box-shadow:0 1px 0 var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:1.6rem;height:56px}
+.nav .word{font-size:1.6rem;margin-right:auto}
+.nav .lk{gap:1.6rem}.nav .lk a{font-weight:500;font-size:.92rem;color:var(--ink2);transition:color .2s}.nav .lk a:hover{color:var(--ink)}
+.nav .lk a:not(:first-child){display:inline}
+.bag{height:34px;padding:0 .95rem 0 .8rem;font-size:.92rem}.bag svg{width:16px;height:16px}
+@media (max-width:600px){.nav .lk{display:none}}
+.ann{font-size:.82rem;padding:.55rem 16px}
+.hero{padding:clamp(3.6rem,8vw,6.5rem) 0 0}
+.hero h1{font-size:clamp(3.3rem,11vw,8.2rem);line-height:.92;letter-spacing:-.045em;max-width:13ch}
+.hero .sub{font-size:clamp(1.2rem,2.2vw,1.6rem);line-height:1.3;max-width:30ch;margin-bottom:1.8rem}
+.parade{margin-top:clamp(2.4rem,5vw,4rem)}
+section{padding:clamp(4.5rem,9vw,8rem) 0}
+.hd{margin-bottom:clamp(2rem,4vw,3.4rem)}
+.hd h2{font-size:clamp(2.7rem,9vw,5.6rem);letter-spacing:-.045em}
+.hd p{font-size:clamp(1.1rem,1.8vw,1.35rem)}
+.it h3{font-size:clamp(1.7rem,6.4vw,3.6rem)}
+@media (min-width:760px){.it .ph{width:clamp(220px,30vw,340px)}.it .d{font-size:1.1rem}}
+#ac-ft{padding-bottom:110px}
+</style>
 
+<nav id="ac-gn"></nav>
 <div class="ann">Preventa abierta · <b>Envío gratis</b> a sucursal desde 2 cajas</div>
 <header class="nav" id="nav"><div class="wrap">
-  <nav class="lk" aria-label="Secciones"><a href="#pops">Pops</a><a href="#cajas">Cajas</a><a href="#preguntas">Preguntas</a></nav>
   <a class="word" href="#top" aria-label="Clickly, inicio">clickly</a>
+  <nav class="lk" aria-label="Secciones"><a href="#pops">Pops</a><a href="#cajas">Cajas</a><a href="#preguntas">Preguntas</a></nav>
   <div class="r"><button class="bag" id="bag" data-press data-open="1" aria-label="Pedir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>Pedir<span class="n tab" id="bagn"></span></button></div>
 </div></header>
 
@@ -316,12 +340,8 @@ legend{font-weight:600;margin-bottom:.5rem;padding:0;font-size:1.05rem}
 </div></section>
 </main>
 
-<footer class="foot"><div class="wrap">
-  <span class="word">clickly</span>
-  <div class="lk"><a href="#pops">Pops</a><a href="#cajas">Cajas</a><a href="#como">Cómo funciona</a><a href="#preguntas">Preguntas</a><a href="https://ig.me/m/clickly_oficial" target="_blank" rel="noopener">Instagram</a></div>
-  <p>Clickers impresos en 3D. No son comida. Preventa: reservás sin pagar ahora. Tus cajas y tu reserva quedan guardadas en este dispositivo. Envíos solo dentro de Argentina.</p>
-  <p>Clickly es una marca de <a href="../" style="color:inherit;text-decoration:underline">NiDoo</a>. ©&nbsp;2026.</p>
-</div></footer>
+<footer id="ac-ft" data-page="Clickly" data-note="<p>Clickers impresos en 3D. No son comida. Preventa: reservás sin pagar ahora. Tus cajas y tu reserva quedan guardadas en este dispositivo. Envíos solo dentro de Argentina.</p><p>Clickly es una marca de NiDoo.</p>"></footer>
+<script src="/apple/ac.js"></script>
 
 <button class="fab hide" id="fab" data-press data-open="3" aria-label="Ver tu caja"><span class="slots" id="mini" aria-hidden="true"></span><span class="tx"><b id="fabt">Tu caja</b><span id="fabs"></span></span><span class="pill" id="fabb">Ver caja</span></button>
 

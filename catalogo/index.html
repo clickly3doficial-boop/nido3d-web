@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es-AR">
+<html lang="es-AR" data-gn="auto" data-ft="auto">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -105,18 +105,31 @@ footer a{color:var(--fg2);text-decoration:underline}
 .card .ph img.soft{padding:0}
 .card .btn{width:100%}
 </style>
+<link rel="stylesheet" href="/apple/ac.css">
+<style>
+/* estilo Apple: nav local con el nombre de la página, más aire y títulos más grandes */
+body{font-family:var(--ac-sf)}
+.gn.ln{position:sticky;top:0;z-index:50;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid color-mix(in srgb,var(--line) 70%,transparent)}
+.ln .wrap{height:52px;display:flex;align-items:center;gap:24px;font-size:12px}
+.ln .t{font-size:21px;font-weight:600;letter-spacing:-.02em;color:var(--fg);margin-right:auto}
+.ln a.k{color:var(--fg2);transition:color .2s}.ln a.k:hover{color:var(--fg)}
+.ln .cta{font-size:12px;font-weight:400;padding:4px 12px;border-radius:980px;background:var(--fg);color:var(--bg);white-space:nowrap}
+@media (max-width:640px){.ln a.k{display:none}.ln .t{font-size:19px}}
+main h2{letter-spacing:-.04em}
+#ac-ft .ac-crumb span{opacity:1}#ac-ft .ac-crumb > span{opacity:.5}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="egg" viewBox="0 0 26 32"><path fill="currentColor" d="M12.2 1C5.6 1.4 1 10.6 1 19.4 1 26.6 6.2 31 13.4 31 20.5 31 25 26.3 25 19.6 25 10.1 19.5.6 12.2 1Z"/></symbol>
 </defs></svg>
-<nav class="gn" aria-label="NiDoo">
+<nav id="ac-gn"></nav>
+<nav class="gn ln" aria-label="Catálogo">
   <div class="wrap">
-    <a class="logo" href="/" aria-label="NiDoo, inicio"><svg aria-hidden="true"><use href="#egg"/></svg>NiDoo</a>
+    <a class="t" href="/catalogo/">Catálogo</a>
     <a class="k" href="/fidgets/">Fidgets</a>
     <a class="k" href="/clickly/">Clickly</a>
-    <a class="k on" href="/catalogo/">Catálogo</a>
-    <span class="sp"></span>
+    <a class="cta" href="https://ig.me/m/clickly_oficial" target="_blank" rel="noopener">Pedí por Instagram</a>
   </div>
 </nav>
 <main>
@@ -145,7 +158,8 @@ footer a{color:var(--fg2);text-decoration:underline}
     </div></div>
   </section>
 </main>
-<footer><div class="wrap">Copyright © 2026 NiDoo. Argentina. · <a href="/">Volver a NiDoo</a><br>Objetos impresos en 3D con piezas pequeñas: no aptos para menores de 3 años.</div></footer>
+<footer id="ac-ft" data-page='Catálogo' data-note="<p>Objetos impresos en 3D con piezas pequeñas: no aptos para menores de 3 años.</p>"></footer>
+<script src="/apple/ac.js"></script>
 <script>
 const P=[{"id": "hexagono", "n": "Hexágono infinito", "d": "Hexágonos que se hunden en espiral. Un fidget que hipnotiza.", "c": "Fidgets", "p": 6000, "i": "hexagono.webp", "k": [["Dorado", "#c9a24a"]]}, {"id": "queso", "n": "Cuñas de queso", "d": "Quesos con agujeros, para jugar y para apilar.", "c": "Comiditas", "p": 5500, "i": "queso.webp", "k": [["Amarillo", "#f7cf1f"]]}, {"id": "capibara", "n": "Capibara", "d": "Capibara sentada, redonda y con carita. De adorno o de compañera de escritorio.", "c": "Figuras", "p": 10000, "i": "capibara.webp", "k": [["Beige", "#f0c7a8"], ["Marrón", "#7a5233"], ["Negro", "#2b2b2b"]]}, {"id": "choclo", "n": "Choclo", "d": "Un choclo con todos sus granos en relieve.", "c": "Comiditas", "p": 8500, "i": "choclo.webp", "k": [["Amarillo", "#f7cf1f"]]}, {"id": "ravioli", "n": "Llavero ravioli", "d": "Ravioli con carita para colgar donde quieras.", "c": "Llaveros", "p": 2500, "i": "ravioli.webp", "k": [["Durazno", "#f7c9a3"], ["Negro", "#222222"]]}, {"id": "torre", "n": "Torre espiral", "d": "Torre en espiral de dos colores, con huecos que dejan ver el interior.", "c": "Fidgets", "p": 6500, "i": "torre.webp", "k": [["Celeste", "#9fd5f0"], ["Amarillo", "#f6c80f"]]}, {"id": "mando", "n": "Mando fidget", "d": "Mando mini con botones y palanquitas para apretar y girar.", "c": "Fidgets", "p": 7000, "i": "mando.webp", "k": [["Blanco", "#f1f1ee"]]}, {"id": "cajarueda", "n": "Cajita con rueda", "d": "Cajita celeste de esquinas redondeadas con una ruedita dentada arriba.", "c": "Fidgets", "p": 5000, "i": "cajarueda.webp", "k": [["Celeste", "#9fd5f0"], ["Amarillo", "#f6c80f"]]}, {"id": "dragon", "n": "Dragón articulado", "d": "Dragón flexible que se mueve como uno de verdad. Se imprime de una sola vez.", "c": "Articulados", "p": 14500, "i": "dragon.webp", "k": [["Dorado", "#c9a24a"]]}, {"id": "tomate", "n": "Tomate", "d": "Tomate rojo brillante con su hojita verde en espiral.", "c": "Comiditas", "p": 6000, "i": "tomate.webp", "k": [["Rojo", "#d42a1c"], ["Verde", "#3aa83a"]]}, {"id": "estrella", "n": "Estrella articulada", "d": "Estrella flexible hecha de bloquecitos, se dobla y se arruga.", "c": "Articulados", "p": 4500, "i": "estrella.webp", "k": [["Rosa", "#f4a9c7"]]}, {"id": "rana", "n": "Ranita", "d": "Ranita verde con ojos grandes, sentada y lista para acompañarte.", "c": "Figuras", "p": 3500, "i": "rana.webp", "k": [["Verde", "#46c13a"], ["Negro", "#2b2b2b"]]}, {"id": "bloque", "n": "Bloque de encastre", "d": "Bloque rojo con tachas, para apilar y para tener en la mano.", "c": "Objetos", "p": 3000, "i": "bloque.webp", "k": [["Rojo", "#d42a1c"]]}, {"id": "benchy", "n": "Barquito Benchy", "d": "El barquito clásico de la impresión 3D, en dorado.", "c": "Figuras", "p": 3000, "i": "benchy.webp", "k": [["Dorado", "#c9a24a"]]}, {"id": "sesenta7", "n": "Número 67 articulado", "d": "El 6 y el 7 sentados, con piernas que se mueven.", "c": "Articulados", "p": 4000, "i": "sesenta7.webp", "k": [["Marrón", "#7a5233"]]}, {"id": "cubo", "n": "Cubo a cuadros", "d": "Cubo de columnitas rojas y negras con patrón de tablero.", "c": "Fidgets", "p": 3500, "i": "cubo.webp", "k": [["Rojo", "#d42a1c"], ["Negro", "#2b2b2b"]]}, {"id": "ballena", "n": "Ballenita", "d": "Ballena chiquita con ojo, lisa y fácil de llevar.", "c": "Figuras", "p": 2500, "i": "ballena.webp", "k": [["Azul", "#2f6fe0"]]}];
 const money=v=>'$'+Math.round(v).toLocaleString('es-AR');

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es-AR">
+<html lang="es-AR" data-gn="light" data-ft="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -131,10 +131,12 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
 @media (prefers-reduced-transparency:reduce){.gn,.bar,.badge,.toast{backdrop-filter:none;-webkit-backdrop-filter:none;background:#fff}}
 </style>
+<link rel="stylesheet" href="/apple/ac.css">
 </head>
 <body>
 <div class="tone" aria-hidden="true"></div>
 
+<nav id="ac-gn"></nav>
 <nav class="gn" aria-label="PENTA">
   <div class="wrap">
     <a class="logo" href="/penta/" aria-label="PENTA">PENTA</a>
@@ -217,7 +219,8 @@ footer a{color:var(--fg2)}footer a:hover{color:var(--fg)}
 </section>
 </main>
 
-<footer><div class="wrap"><p>PENTA es una marca de <a href="/">NiDoo</a> · Hecho en Argentina</p><p style="margin-top:6px"><a href="https://www.instagram.com/clickly_oficial/" target="_blank" rel="noopener">Instagram</a> · <a href="/spiball/">SpiBall</a></p></div></footer>
+<footer id="ac-ft" data-page="PENTA" data-note="<p>PENTA es una marca de NiDoo. Diseñado e impreso en 3D en Argentina. Te respondemos por Instagram para coordinar el pago y el envío.</p>"></footer>
+<script src="/apple/ac.js"></script>
 
 <div class="bar" id="bar"><div><span class="p" id="barPrice">$4.000</span><small>Tu PENTA</small></div><button class="pill" id="barBtn" type="button">Pedir</button></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
