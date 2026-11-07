@@ -367,34 +367,32 @@ const IMG={},IMGT={};
 const POPS=[
  {id:'base',n:'Clickly Box',line:'base',c:'#2F6FE0',ct:'Click en la tapa',d:'Una cajita cuya tapa es el clicker. El modelo base, el que siempre está.'},
  {id:'medialuna',n:'Medialuna Pop',line:'ar',c:'#5E9FDC',ct:'Click en el rollito del medio',d:'Una medialuna gordita, con sus rollitos y sus cuernos.'},
- {id:'alfajor',n:'Alfajor Pop',line:'ar',c:'#8A4B2A',ct:'Click en la tapa de chocolate',d:'Un alfajor de chocolate, con su baño y sus ondas. Apretás la tapa y hace clic.'},
  {id:'mate',n:'Mate Pop',line:'ar',c:'#6F9140',ct:'Click en la yerba',d:'Un mate de calabaza con su virola y la yerba arriba, con palitos. Apretás la yerba y hace clic.'},
  {id:'pancake',n:'Pancake Pop',line:'bf',c:'#E8A33D',ct:'Click en el panqueque de arriba',d:'Una pila de panqueques con almíbar y una pastillita de manteca arriba.'},
  {id:'macaron',n:'Pink Macaron Pop',line:'sweet',c:'#EF97B1',ct:'Click en la tapita de arriba',d:'Un macaron con tapitas rosa pastel y relleno blanco.'},
  {id:'muffin',n:'Muffin Pop',line:'bf',c:'#F7A8C4',ct:'Click en la crema',d:'Un muffin con pirotín marrón, bizcocho y mucha crema batida rosa.',local:1},
  {id:'pan',n:'Pan Pop',line:'bf',c:'#B5712C',ct:'Click en la miga',d:'Una rebanada de pan de molde, con la miga a ras de la corteza. Apretás la miga y hace clic.',local:1},
- {id:'butter',n:'Butter Pop',line:'milk',c:'#F6DC82',ct:'Click en la manteca',d:'Una pastilla de manteca con dos switches: apretás un lado o el centro y hace clic.',xp:6000,local:1}];
+];
 POPS.forEach(p=>{IMG[p.id]=IMGDIR+p.id+'.webp';IMGT[p.id]=IMGDIR+p.id+'-top.webp'});
 const timg=id=>IMGT[id]||IMG[id];
 const THEME={all:{bg:'#FFF6E4',pink:'#FEDFA2',acc:'#F6884C',accd:'#E06D32',ink:'#3A2418',ink2:'#7A5E4C'},
  base:{bg:'#EEF4FF',pink:'#CFE0FB',acc:'#2F6FE0',accd:'#1F55B8',ink:'#14264A',ink2:'#51638A'},
  ar:{bg:'#F3FAFF',pink:'#CDE5F7',acc:'#3F8FD0',accd:'#2B6FA8',ink:'#17324A',ink2:'#4F6D88'},
  bf:{bg:'#FFF6E4',pink:'#FEDFA2',acc:'#F6884C',accd:'#E06D32',ink:'#3A2418',ink2:'#7A5E4C'},
- sweet:{bg:'#FFF1F5',pink:'#FFD3E0',acc:'#F06A8C',accd:'#D14670',ink:'#4A1F2D',ink2:'#8A5A69'},
- milk:{bg:'#FFFBEA',pink:'#FBEDB0',acc:'#E0A81A',accd:'#B8820A',ink:'#3E3010',ink2:'#7A6A3A'}};
+ sweet:{bg:'#FFF1F5',pink:'#FFD3E0',acc:'#F06A8C',accd:'#D14670',ink:'#4A1F2D',ink2:'#8A5A69'}};
 let LINE='all';
 function setLine(k){LINE=k;const t=THEME[k]||THEME.all,r=document.documentElement.style;
  r.setProperty('--bg',t.bg);r.setProperty('--paper',t.bg);r.setProperty('--pink',t.pink);r.setProperty('--pink2',t.acc);r.setProperty('--accent',t.acc);r.setProperty('--rose',t.accd);r.setProperty('--accent-d',t.accd);r.setProperty('--good',t.accd);r.setProperty('--bad',t.accd);r.setProperty('--ink',t.ink);r.setProperty('--ink2',t.ink2);r.setProperty('--line',t.ink+'20');
  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=t.bg;drawLines();drawLineup()}
 function drawLines(){const ks=Object.keys(LINES).filter(k=>POPS.some(p=>p.line===k));
  $('#lines').innerHTML=[['all','Todas','#F6884C'],...ks.map(k=>[k,LINES[k].n.replace('Línea ',''),LINES[k].c])].map(([k,n,c])=>`<button data-line="${k}" style="--lc:${c}" aria-pressed="${LINE===k}">${k==='all'?'':'<i></i>'}${esc(n)}</button>`).join('')}
-const LINES={base:{n:'Línea BASE',tag:'Para siempre',c:'#2F6FE0'},ar:{n:'Línea ARGENTINA',tag:'Nuevo',c:'#74ACDF'},bf:{n:'Línea BREAKFAST',tag:'Tiempo limitado',c:'#F6884C'},sweet:{n:'Línea SWEET',tag:'Nuevo',c:'#F06A8C'},milk:{n:'Línea MILKABLE',tag:'Nuevo',c:'#F6DC82'}};
+const LINES={base:{n:'Línea BASE',tag:'Para siempre',c:'#2F6FE0'},ar:{n:'Línea ARGENTINA',tag:'Nuevo',c:'#74ACDF'},bf:{n:'Línea BREAKFAST',tag:'Tiempo limitado',c:'#F6884C'},sweet:{n:'Línea SWEET',tag:'Nuevo',c:'#F06A8C'}};
 const PRICE=3000,PBOX=14500,FREE=2,MAX=5,MAXB=5,KEY='clickly.pedido',OLDKEY='clickly.caja5',RKEY='clickly.reservas';
 /* Catálogo en vivo (Clickly Admin): stock y pops visibles */
 const API='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec',CATKEY='clickly.catalogo';
 const ENV={retiro:{n:'Retiro en persona',s:'Sin cargo. Coordinamos por mensaje.'},sucursal:{n:'Correo Argentino a sucursal',s:'Retirás en la sucursal más cercana.'},domicilio:{n:'Correo Argentino a domicilio',s:'Te lo llevan a tu casa.'}};
 let PAGO=false;
-function applyCat(cat){if(!cat||!Array.isArray(cat.productos))return false;PAGO=!!cat.pago;const byId={};cat.productos=cat.productos.filter(q=>q.linea!=='fidget');cat.productos.forEach(q=>byId[q.id]=q);let changed=false;
+function applyCat(cat){if(!cat||!Array.isArray(cat.productos))return false;PAGO=!!cat.pago;const byId={};cat.productos=cat.productos.filter(q=>q.linea!=='fidget'&&q.linea!=='milk'&&q.id!=='alfajor');cat.productos.forEach(q=>byId[q.id]=q);let changed=false;
   for(let i=POPS.length-1;i>=0;i--)if(!byId[POPS[i].id]&&!POPS[i].local&&!(POPS[i].id==='macaron'&&!cat.sembrado)){POPS.splice(i,1);changed=true}
   cat.productos.forEach(q=>{let p=POPS.find(x=>x.id===q.id);if(q.imagen&&!IMG[q.id])IMG[q.id]=q.imagen;
     if(!p){if(!IMG[q.id])return;p={id:q.id,n:q.nombre,line:LINES[q.linea]?q.linea:'base',c:q.color||'#F6884C',ct:'Hace clic arriba',d:q.descripcion||''};POPS.push(p);changed=true}
