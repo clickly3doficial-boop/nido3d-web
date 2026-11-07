@@ -302,11 +302,11 @@ section{padding:clamp(4.5rem,9vw,8rem) 0}
 .pds dt{font-weight:600;color:var(--accent-d)}.pds dd{margin:0}.pds .pill{width:100%}.pds .pill[disabled]{opacity:.45}
 
 .it .ph .pl{position:relative;display:block;width:88%;height:88%;filter:drop-shadow(0 12px 12px rgba(58,36,24,.18))}
-.it .ph .pl img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:none;transition:none;transform:none}
-.it .ph .pl .pm{will-change:transform}
+.it .ph .pl img,.it .ph .pl canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:none;transition:none;transform:none}
+.pl canvas{display:none;pointer-events:none}.pl.ani canvas{display:block}
 .it.rv .ph .pl{transform:rotate(-30deg) scale(.6)}.it.rv.in .ph .pl{transform:none;transition:transform .9s var(--spring)}
 .pds .pi{cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-.pds .pi .pl{position:relative;display:block;width:92%;aspect-ratio:1}.pds .pi .pl img{position:absolute;inset:0;width:100%;height:100%}
+.pds .pi .pl{position:relative;display:block;width:92%;aspect-ratio:1}.pds .pi .pl img,.pds .pi .pl canvas{position:absolute;inset:0;width:100%;height:100%}
 </style>
 
 <nav id="ac-gn"></nav>
@@ -617,7 +617,7 @@ addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!$('#pdm').hidden){
 
 let POPID=null;
 const LAYERS={"alfajor": 8.0, "candy": 4.8, "macaron": 8.28, "medialuna": 7.89, "mate": 9.14, "pancake": 8.58, "pan": 7.2, "muffin": 8.17};
-const pimg=(p,lazy)=>LAYERS[p.id]?`<span class="pl" data-ty="${LAYERS[p.id]}"><img class="pb" src="${IMGDIR+p.id}-b.webp" alt="${esc(p.n)}" width="560" height="560" ${lazy?'loading="lazy" decoding="async"':''}><img class="pm" src="${IMGDIR+p.id}-m.webp" alt="" width="560" height="560"></span>`:`<img src="${IMG[p.id]}" alt="${esc(p.n)}" width="560" height="560" ${lazy?'loading="lazy" decoding="async"':''}>`;
+const pimg=(p,lazy)=>LAYERS[p.id]?`<span class="pl" data-id="${p.id}"><img src="${IMGDIR+p.id}-f0.webp" alt="${esc(p.n)}" width="560" height="560" ${lazy?'loading="lazy" decoding="async"':''}><canvas width="560" height="560"></canvas></span>`:`<img src="${IMG[p.id]}" alt="${esc(p.n)}" width="560" height="560" ${lazy?'loading="lazy" decoding="async"':''}>`;
 function drawPop(){const p=POPS.find(x=>x.id===POPID);if(!p)return;const L=LINES[p.line],[sc,stx]=stockOf(p),a=avail(p.id),can=a>0&&room()>0;
  $('#pdc').innerHTML=`<button class="ib x" data-pdclose aria-label="Cerrar">×</button>
  <div class="pi" data-press data-ppress role="button" tabindex="0" aria-label="Hacer clic en ${esc(p.n)}">${pimg(p)}</div>
@@ -633,11 +633,18 @@ function drawPop(){const p=POPS.find(x=>x.id===POPID);if(!p)return;const L=LINES
 function openPop(id){POPID=id;drawPop();$('#pdm').hidden=false;document.body.style.overflow='hidden'}
 function closePop(){$('#pdm').hidden=true;POPID=null;if(!dOpen())document.body.style.overflow=''}
 
-let PRESS=null;
-function pressDown(el){const pl=el.querySelector('.pl');if(!pl||RM.matches)return false;const pm=pl.querySelector('.pm'),ty=pl.dataset.ty;pm.getAnimations().forEach(a=>a.cancel());PRESS={pm,ty};
- pm.animate([{transform:'translateY(0)'},{transform:`translateY(${ty}%)`}],{duration:70,easing:'cubic-bezier(.2,.7,.3,1)',fill:'forwards'});return true}
-function pressUp(){if(!PRESS)return;const {pm,ty}=PRESS;PRESS=null;const cur=getComputedStyle(pm).transform;pm.getAnimations().forEach(a=>a.cancel());
- pm.animate([{transform:cur==='none'?'translateY(0)':cur},{transform:'translateY(-1.2%)',offset:.6},{transform:'translateY(0)'}],{duration:240,easing:'cubic-bezier(.3,.6,.3,1)'})}
+const FR={};const NF=6;
+function frames(id){if(FR[id])return FR[id];const a=[];for(let k=0;k<=NF;k++){const im=new Image();im.decoding='async';im.src=IMGDIR+id+'-f'+k+'.webp';a.push(im)}return FR[id]=a}
+const ST={};let PRESS=null;
+function draw(S){const cx=S.cv.getContext('2d'),f=S.pos,a=Math.floor(f),b=Math.min(NF,a+1),t=f-a;cx.clearRect(0,0,560,560);cx.globalAlpha=1;cx.drawImage(S.fr[a],0,0);if(t>.02){cx.globalAlpha=t;cx.drawImage(S.fr[b],0,0)}}
+function loop(S){cancelAnimationFrame(S.raf);let t0=performance.now();const step=t=>{const dt=Math.min(40,t-t0);t0=t;
+  if(S.dir>0)S.pos=Math.min(NF,S.pos+dt*NF/70);else{S.pos=Math.max(0,S.pos-Math.max(dt*NF/260,S.pos*dt/75))}
+  draw(S);if((S.dir>0&&S.pos<NF)||(S.dir<0&&S.pos>0))S.raf=requestAnimationFrame(step);else if(S.dir<0){S.pl.classList.remove('ani')}};S.raf=requestAnimationFrame(step)}
+function pressDown(el){const pl=el.querySelector('.pl');if(!pl||RM.matches)return false;const id=pl.dataset.id,fr=frames(id);if(!fr.every(i=>i.complete&&i.naturalWidth))return false;
+  const S=ST[id]=ST[id]&&ST[id].pl===pl?ST[id]:{pl,cv:pl.querySelector('canvas'),fr,pos:0};S.fr=fr;S.dir=1;pl.classList.add('ani');draw(S);PRESS=S;loop(S);return true}
+function pressUp(){if(!PRESS)return;const S=PRESS;PRESS=null;S.dir=-1;loop(S)}
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){frames(e.target.dataset.id);io.unobserve(e.target)}}),{rootMargin:'300px'});window.obsPl=()=>document.querySelectorAll('.pl:not([data-o])').forEach(p=>{p.dataset.o=1;io.observe(p)})}else window.obsPl=()=>{};
+let _mo;new MutationObserver(()=>{clearTimeout(_mo);_mo=setTimeout(()=>window.obsPl(),60)}).observe(document.body,{childList:true,subtree:true});setTimeout(()=>window.obsPl(),300);
 addEventListener('pointerdown',e=>{const el=e.target.closest&&e.target.closest('[data-pclick],[data-ppress]');if(el)pressDown(el)},{capture:true,passive:true});
 addEventListener('pointerup',pressUp,true);addEventListener('pointercancel',pressUp,true);addEventListener('blur',pressUp);
 function wob(el){if(el.querySelector('.pl'))return;const im=el.querySelector('img');if(!im||RM.matches)return;im.animate([{transform:'none'},{transform:'scale(1.08,.86)'},{transform:'scale(.96,1.05)'},{transform:'none'}],{duration:380,easing:'cubic-bezier(.34,1.56,.64,1)'})}
