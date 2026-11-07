@@ -288,240 +288,12 @@ section{padding:clamp(4.5rem,9vw,8rem) 0}
 @media (min-width:760px){.it .ph{width:clamp(220px,30vw,340px)}.it .d{font-size:1.1rem}}
 #ac-ft{padding-bottom:110px}
 </style>
-<style id="paraCss">
-/* Líneas: botones en el inicio + paraíso de cada línea + historia de cada pop */
-.lines{padding:2.4rem 0 1rem}
-.ltiles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.ltile{position:relative;overflow:hidden;text-align:left;border-radius:28px;padding:.9rem 1rem 1.1rem;color:var(--ti);background:var(--tb);display:grid;grid-template-rows:112px auto;gap:.5rem;isolation:isolate;box-shadow:0 10px 26px rgba(58,36,24,.14);transition:transform .35s var(--spring),box-shadow .3s}
-.ltile:hover{transform:translateY(-4px) rotate(-.6deg);box-shadow:0 16px 34px rgba(58,36,24,.2)}
-.ltile::before{content:"";position:absolute;inset:auto -20% -45% -20%;height:55%;background:var(--tb2);border-radius:50%;z-index:-1;opacity:.5;transition:transform .6s var(--ease)}
-.ltile:hover::before{transform:translateY(-12px) scale(1.06)}
-.ltile .li{display:flex;justify-content:center;align-items:center;gap:4px;min-height:0}
-.ltile .li img{width:min(31%,96px);aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18));animation:bob 3.4s ease-in-out infinite}
-.ltile .li img:nth-child(2){animation-delay:-1.1s}.ltile .li img:nth-child(3){animation-delay:-2.2s}
-.ltile .li.one img{width:min(70%,112px)}
-.ltile .tx{display:flex;flex-direction:column}
-.ltile small{font-weight:600;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
-.ltile b{font-size:clamp(1.4rem,5.6vw,2.3rem);line-height:1;letter-spacing:-.035em;font-weight:700;margin-top:.15rem}
-.ltile em{font-style:normal;font-weight:500;font-size:.9rem;opacity:.9;margin-top:.25rem}
-.ltile:last-child:nth-child(odd){grid-column:1/-1}
-@media (min-width:760px){.ltiles{grid-template-columns:repeat(5,1fr)}.ltile{grid-template-rows:130px auto}.ltile:last-child:nth-child(odd){grid-column:auto}}
-
-/* Paraíso */
-#para,#story{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;display:none;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-#para{z-index:44;background:var(--pb);color:var(--pi)}
-#story{z-index:46;background:var(--pb);color:var(--pi)}
-#para.on,#story.on{display:block}
-.fx{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.fx *{position:absolute;will-change:transform}
-.pin,.sin{position:relative;z-index:1;width:min(1120px,100% - 32px);margin-inline:auto;padding:0 0 8rem}
-.strip{position:relative;height:60px;margin:0 -16px;overflow:hidden;pointer-events:none}
-.strip *{position:absolute}
-.top{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-top:.4rem}
-.back{display:inline-flex;align-items:center;gap:.4rem;height:44px;padding:0 1.1rem 0 .8rem;border-radius:999px;background:var(--pi);color:var(--pb);font-weight:600;transition:transform .3s var(--spring)}
-.back:hover{transform:translateX(-3px)}
-.wm{font-weight:700;font-size:1.5rem;letter-spacing:-.03em;color:var(--pi);opacity:.9}
-.phero{margin-top:1.4rem}.prow{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:.4rem}
-.phero h2{margin:0;white-space:nowrap;font-size:clamp(2.4rem,12.4vw,7.5rem);line-height:.88;letter-spacing:-.05em;font-weight:700}
-.phero h2 span{display:inline-block;opacity:0;transform:translateY(60%) rotate(6deg);animation:rise .8s var(--spring) forwards;animation-delay:calc(.25s + var(--i)*.05s)}
-.tg{flex:1;font-size:clamp(1.05rem,3vw,1.5rem);font-weight:500;margin-top:.8rem;max-width:26ch;opacity:0;animation:rise .8s var(--spring) .6s forwards}
-.tg i{display:inline-block;font-style:normal;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;background:var(--pa);color:var(--pc);padding:.22rem .7rem;border-radius:999px;margin:0 .5rem .3rem 0}
-.deco{flex:none;width:clamp(96px,26vw,190px);aspect-ratio:1}
-.deco svg{width:100%;height:100%;overflow:visible}
-.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:18px;margin-top:2rem}
-.pcard{display:flex;flex-direction:column;align-items:center;background:var(--pcard);border-radius:32px;padding:1.3rem 1.2rem 1.4rem;text-align:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;transform:translateY(60px) scale(.92) rotate(var(--rt,0deg))}
-.pcard.show{animation:pin .8s var(--spring) forwards;animation-delay:calc(var(--i)*.08s)}
-@keyframes pin{to{opacity:1;transform:none}}
-.pcard .ph{position:relative;display:grid;place-items:center;width:min(78%,290px);aspect-ratio:1;border-radius:50%;background:var(--pring)}
-.pcard .ph::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px dashed var(--pi);opacity:.25;animation:spin 24s linear infinite}
-.pcard .ph img{width:90%;height:90%;object-fit:contain;filter:drop-shadow(0 14px 14px rgba(0,0,0,.22));animation:pbob 3.8s ease-in-out infinite;animation-delay:calc(var(--i)*-.9s)}
-@keyframes pbob{50%{transform:translateY(-7%) rotate(-5deg)}}
-.pcard .ph .n{position:absolute;top:2%;right:2%;z-index:2;min-width:36px;height:36px;border-radius:999px;background:var(--pi);color:var(--pb);font-weight:700;display:grid;place-items:center;transform:scale(0);transition:transform .4s var(--spring)}
-.pcard .ph .n.on{transform:scale(1)}
-.pcard h3{font-size:clamp(1.5rem,5vw,2rem);letter-spacing:-.03em;line-height:1;margin:1rem 0 .4rem;font-weight:700}
-.pcard .d{font-size:.98rem;opacity:.92;max-width:30ch;margin:0}
-.pcard .ft{display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;margin-top:1rem}
-.pcard .pr{font-weight:600}
-.pcard .pill,.pcard .stepper,.sctl .pill,.sctl .stepper{background:var(--pi);color:var(--pb)}
-.more{margin-top:.8rem;display:inline-flex;align-items:center;gap:.4rem;height:42px;padding:0 1.1rem;border-radius:999px;font-weight:600;color:var(--pi);box-shadow:inset 0 0 0 2px var(--pi);transition:transform .3s var(--spring),background .2s,color .2s}
-.more:hover{background:var(--pi);color:var(--pb);transform:translateY(-2px)}
-.more span{transition:transform .3s var(--spring)}.more:hover span{transform:translateX(4px)}
-.hop{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:2.4rem}
-.hop button{height:44px;padding:0 1.1rem;border-radius:999px;font-weight:600;background:var(--hb);color:var(--hi);box-shadow:0 0 0 2px var(--pi) inset;transition:transform .3s var(--spring)}
-.hop button:hover{transform:translateY(-3px)}
-.hop button.cur{box-shadow:none;outline:3px solid var(--pi);outline-offset:2px}
-
-@keyframes spin{to{transform:rotate(360deg)}}
-/* franjas de arriba */
-.k{width:34px;height:34px;top:14px;border-radius:9px;background:rgba(255,255,255,.9);box-shadow:0 5px 0 rgba(255,255,255,.45);animation:key 1.8s ease-in-out infinite}
-@keyframes key{0%,60%,100%{transform:translateY(0)}25%{transform:translateY(6px);box-shadow:0 0 0 rgba(255,255,255,.45)}}
-.bn{top:-2px;width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-top:44px solid var(--c);transform-origin:50% 0;animation:sway 2.6s ease-in-out infinite alternate}
-@keyframes sway{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
-.bw{top:0;left:0;width:100%;height:3px;background:rgba(18,48,79,.5)}
-.drp{top:0;border-radius:0 0 40px 40px;transform-origin:top;animation:drip ease-in-out infinite alternate}
-@keyframes drip{from{transform:scaleY(.3)}to{transform:scaleY(1)}}
-.drp::after{content:"";position:absolute;left:25%;bottom:-8px;width:50%;aspect-ratio:1;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:inherit;opacity:0;animation:dropl 2.8s ease-in infinite;animation-delay:inherit}
-@keyframes dropl{0%,55%{opacity:0;transform:translateY(0)}60%{opacity:1}100%{opacity:0;transform:translateY(40px)}}
-
-/* fondos */
-.fx-base .c{border-radius:22%;background:rgba(255,255,255,.12);animation:cubeUp linear infinite}
-@keyframes cubeUp{from{transform:translateY(0) rotate(0)}to{transform:translateY(-130vh) rotate(200deg)}}
-.fx-base .rp{left:50%;top:50%;width:40px;height:40px;margin:-20px;border-radius:50%;border:3px solid rgba(255,255,255,.3);animation:ripple 3.6s ease-out infinite}
-@keyframes ripple{from{transform:scale(.2);opacity:1}to{transform:scale(16);opacity:0}}
-.fx-base .t{font-weight:700;color:rgba(255,255,255,.3);animation:clic 3.6s ease-out infinite;white-space:nowrap}
-@keyframes clic{0%{transform:scale(.3) rotate(var(--r));opacity:0}12%{transform:scale(1.15) rotate(var(--r));opacity:1}30%{transform:scale(1) rotate(var(--r))}60%,100%{transform:scale(1) rotate(var(--r));opacity:0}}
-.fx-ar .sb{left:-10%;width:120%;border-radius:50%;background:#fff;opacity:.4;animation:wave 9s ease-in-out infinite alternate}
-@keyframes wave{from{transform:translateX(-4%) scaleY(1)}to{transform:translateX(4%) scaleY(1.18)}}
-.fx-ar .cl{height:34px;border-radius:99px;background:rgba(255,255,255,.7);animation:drift linear infinite}
-.fx-ar .cl::before,.fx-ar .cl::after{content:"";position:absolute;background:inherit;border-radius:50%}
-.fx-ar .cl::before{width:44%;height:150%;left:14%;bottom:30%}.fx-ar .cl::after{width:34%;height:120%;left:50%;bottom:30%}
-@keyframes drift{from{transform:translateX(-30vw)}to{transform:translateX(130vw)}}
-.fx-ar .rb{top:-30px;width:8px;height:26px;border-radius:3px;animation:fall linear infinite}
-@keyframes fall{to{transform:translate(var(--dx),115vh) rotate(var(--rot))}}
-.fx-bf .v{bottom:-60px;border-radius:50%;background:rgba(255,246,228,.4);filter:blur(10px);animation:steam ease-in infinite}
-@keyframes steam{from{transform:translate(0,0) scale(.6);opacity:0}15%{opacity:.8}to{transform:translate(var(--dx),-115vh) scale(1.8);opacity:0}}
-.fx-bf .cr{top:-20px;border-radius:50%;background:rgba(138,75,26,.4);animation:fall linear infinite}
-.fx-bf .pc{bottom:-120px;border-radius:50%;background:rgba(255,246,228,.25);border:4px solid rgba(255,246,228,.4);animation:cubeUp linear infinite}
-.fx-bf .pc::after{content:"";position:absolute;left:34%;top:34%;width:30%;height:30%;border-radius:22%;background:rgba(255,246,228,.5)}
-.fx-sweet .g{top:-30px;border-radius:99px;animation:fall linear infinite}
-.fx-sweet .stw{width:22px;height:22px;background:rgba(255,255,255,.75);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:twk 2.4s ease-in-out infinite}
-@keyframes twk{0%,100%{transform:scale(.3) rotate(0);opacity:.2}50%{transform:scale(1.2) rotate(90deg);opacity:1}}
-.fx-sweet .sw{bottom:-160px;border-radius:50%;background:repeating-conic-gradient(rgba(255,255,255,.28) 0 14deg,rgba(255,255,255,.08) 14deg 28deg);animation:cubeUp linear infinite}
-.fx-milk .b{bottom:-80px;border-radius:50%;background:rgba(255,255,255,.6);box-shadow:inset -6px -8px 14px rgba(246,220,130,.5);animation:bub ease-in infinite}
-@keyframes bub{from{transform:translate(0,0)}50%{transform:translate(var(--dx),-60vh)}to{transform:translate(0,-130vh)}}
-.fx-milk .w{left:-10%;bottom:-30px;width:120%;height:120px;border-radius:50%;background:rgba(255,255,255,.75);animation:wave 6s ease-in-out infinite alternate}
-.fx-milk .dr{top:-30px;width:14px;height:22px;background:rgba(255,255,255,.85);border-radius:50% 50% 50% 50%/65% 65% 35% 35%;animation:fall linear infinite}
-.fx-milk .bl{background:rgba(246,220,130,.45);animation:morph 9s ease-in-out infinite alternate}
-@keyframes morph{0%{border-radius:60% 40% 55% 45%/50% 60% 40% 50%;transform:translate(0,0) rotate(0)}100%{border-radius:40% 60% 45% 55%/60% 40% 60% 40%;transform:translate(30px,-40px) rotate(60deg)}}
-
-/* decoraciones del titulo */
-.dsvg *{transform-box:fill-box;transform-origin:center}
-.d-press{animation:dpress 1.8s ease-in-out infinite}
-@keyframes dpress{0%,55%,100%{transform:translateY(0)}20%{transform:translateY(14px)}}
-.d-ring{animation:ripple2 1.8s ease-out infinite;transform-origin:center}
-@keyframes ripple2{from{transform:scale(.4);opacity:.9}to{transform:scale(1.6);opacity:0}}
-.d-spin{animation:spin 18s linear infinite}
-.d-pulse{animation:glow 2.4s ease-in-out infinite}
-@keyframes glow{50%{transform:scale(1.1)}}
-.d-steam{animation:dsteam 2.6s ease-in infinite;opacity:0}
-@keyframes dsteam{0%{transform:translateY(8px);opacity:0}30%{opacity:.9}100%{transform:translateY(-22px);opacity:0}}
-.d-swirl{animation:spin 6s linear infinite}
-.d-fill{animation:dfill 4s ease-in-out infinite;transform-origin:bottom}
-@keyframes dfill{0%{transform:scaleY(.1)}70%,100%{transform:scaleY(1)}}
-.d-bob{animation:bob 2.6s ease-in-out infinite}
-
-/* historia */
-.sin{padding-bottom:9rem}
-.sh{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-top:1.4rem}
-.sh h2{margin:0;font-size:clamp(2.4rem,11vw,5.4rem);line-height:.9;letter-spacing:-.045em;font-weight:700}
-.sh h2 span{display:inline-block;opacity:0;transform:translateY(60%) rotate(6deg);animation:rise .8s var(--spring) forwards;animation-delay:calc(.2s + var(--i)*.04s)}
-.sub2{font-size:clamp(1.05rem,3vw,1.4rem);font-weight:500;margin-top:.7rem;opacity:0;animation:rise .8s var(--spring) .5s forwards;max-width:30ch}
-.duo{display:grid;grid-template-columns:1fr;gap:16px;margin-top:1.6rem}
-@media (min-width:760px){.duo{grid-template-columns:1fr 1fr}}
-.pane{position:relative;border-radius:32px;background:var(--pcard);padding:1rem;overflow:hidden;opacity:0;transform:translateY(40px);animation:pin .8s var(--spring) forwards}
-.pane:nth-child(2){animation-delay:.15s}
-.pane>b{display:block;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;margin:0 0 .6rem .4rem;opacity:.85}
-.pane svg.sv{display:block;width:100%;aspect-ratio:4/3;border-radius:22px;background:#FFF6E4;overflow:hidden}
-.pane .rend{position:relative;aspect-ratio:4/3;border-radius:22px;background:var(--pring);display:grid;place-items:center}
-.pane .rend img{height:92%;width:auto;max-width:92%;object-fit:contain;filter:drop-shadow(0 14px 14px rgba(0,0,0,.22));animation:pbob 4s ease-in-out infinite}
-.hs{position:absolute;width:22px;height:22px;margin:-11px;border-radius:50%;background:var(--pi);box-shadow:0 0 0 4px var(--pb);animation:hsp 1.8s ease-in-out infinite;z-index:2}
-.hs::after{content:"";position:absolute;inset:-10px;border-radius:50%;border:3px solid var(--pi);animation:ripple2 1.8s ease-out infinite}
-@keyframes hsp{50%{transform:scale(1.2)}}
-.hl{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:3;background:var(--pi);color:var(--pb);font-weight:600;font-size:.9rem;padding:.35rem .9rem;border-radius:999px;white-space:nowrap}
-.chs{display:grid;gap:14px;margin-top:16px}
-@media (min-width:760px){.chs{grid-template-columns:1fr 1fr}}
-.chp{display:grid;grid-template-columns:auto 1fr;gap:.9rem;align-items:start;background:var(--pcard);border-radius:28px;padding:1.1rem 1.2rem;opacity:0;transform:translateX(-40px)}
-.chp:nth-child(even){transform:translateX(40px)}
-.chp.show{animation:pin .8s var(--spring) forwards}
-.chp .no{width:46px;height:46px;border-radius:50%;background:var(--pi);color:var(--pb);display:grid;place-items:center;font-weight:700;font-size:1.2rem}
-.chp h4{margin:.1rem 0 .3rem;font-size:1.25rem;letter-spacing:-.02em}
-.chp p{margin:0;font-size:1rem;opacity:.94}
-.sctl{display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;margin-top:1.4rem}
-.sctl .pr{font-weight:600}
-.snav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.4rem}
-.snav button{display:inline-flex;align-items:center;gap:.4rem;height:44px;padding:0 1.1rem;border-radius:999px;font-weight:600;box-shadow:inset 0 0 0 2px var(--pi);color:var(--pi)}
-.snav button:hover{background:var(--pi);color:var(--pb)}
-
-/* escenas */
-svg.sv *{transform-box:fill-box;transform-origin:center}
-svg.sv text{font-family:var(--f);font-weight:600;fill:#3A2418}
-.cap{opacity:0;font-size:15px}
-.a2_1{animation:a21 var(--d) infinite}.a2_2{animation:a22 var(--d) infinite}
-@keyframes a21{0%{opacity:0;transform:scale(.7)}8%,42%{opacity:1;transform:none}50%,100%{opacity:0;transform:scale(.7)}}
-@keyframes a22{0%,48%{opacity:0;transform:scale(.7)}58%,94%{opacity:1;transform:none}100%{opacity:0;transform:scale(.7)}}
-.a3_1{animation:a31 var(--d) infinite}.a3_2{animation:a32 var(--d) infinite}.a3_3{animation:a33 var(--d) infinite}
-@keyframes a31{0%{opacity:0;transform:scale(.7)}6%,28%{opacity:1;transform:none}34%,100%{opacity:0;transform:scale(.7)}}
-@keyframes a32{0%,32%{opacity:0;transform:scale(.7)}38%,62%{opacity:1;transform:none}68%,100%{opacity:0;transform:scale(.7)}}
-@keyframes a33{0%,66%{opacity:0;transform:scale(.7)}72%,94%{opacity:1;transform:none}100%{opacity:0;transform:scale(.7)}}
-.lid{animation:lid 2.4s ease-in-out infinite}.plg{animation:lid 2.4s ease-in-out infinite}
-@keyframes lid{0%,55%,100%{transform:translateY(0)}20%{transform:translateY(14px)}}
-.rg{animation:ripple2 2.4s ease-out infinite;opacity:0}
-.pop{animation:popt 2.4s ease-out infinite;opacity:0}
-@keyframes popt{0%,15%{opacity:0;transform:scale(.3)}25%{opacity:1;transform:scale(1.2)}50%{opacity:1;transform:scale(1)}80%,100%{opacity:0}}
-.dr1{animation:dr1 var(--d) infinite}
-@keyframes dr1{0%,5%{transform:translateY(-72px);opacity:0}15%{opacity:1}22%{transform:translateY(0)}26%{transform:translateY(-12px)}30%,92%{transform:translateY(0);opacity:1}100%{opacity:0}}
-.dr2{animation:dr2 var(--d) infinite}
-@keyframes dr2{0%,18%{transform:translateY(-72px);opacity:0}28%{opacity:1}36%{transform:translateY(0)}40%{transform:translateY(-10px)}44%,92%{transform:translateY(0);opacity:1}100%{opacity:0}}
-.dr3{animation:dr3 var(--d) infinite}
-@keyframes dr3{0%,32%{transform:translateY(-72px);opacity:0}42%{opacity:1}50%{transform:translateY(0)}54%{transform:translateY(-9px)}58%,92%{transform:translateY(0);opacity:1}100%{opacity:0}}
-.dr4{animation:dr4 var(--d) infinite}
-@keyframes dr4{0%,46%{transform:translateY(-72px);opacity:0}56%{opacity:1}64%{transform:translateY(0)}68%{transform:translateY(-8px)}72%,92%{transform:translateY(0);opacity:1}100%{opacity:0}}
-.grow{animation:grow var(--d) infinite;transform-origin:center}
-@keyframes grow{0%,20%{transform:scale(0)}40%,92%{transform:scale(1)}100%{transform:scale(0)}}
-.growy{animation:growy var(--d) infinite;transform-origin:top}
-@keyframes growy{0%,58%{transform:scaleY(0)}80%,92%{transform:scaleY(1)}100%{transform:scaleY(0)}}
-.fadein{animation:fadein var(--d) infinite}
-@keyframes fadein{0%,55%{opacity:0}75%,92%{opacity:1}100%{opacity:0}}
-.rise{animation:rise2 var(--d) infinite;transform-origin:bottom}
-@keyframes rise2{0%,5%{transform:scaleY(.05)}45%,92%{transform:scaleY(1)}100%{transform:scaleY(.05)}}
-.tier1{animation:tier var(--d) infinite;animation-delay:0s}
-@keyframes tier{0%,40%{transform:scale(0)}50%{transform:scale(1.15)}56%,92%{transform:scale(1)}100%{transform:scale(0)}}
-.tier2{animation:tier2 var(--d) infinite}
-@keyframes tier2{0%,52%{transform:scale(0)}62%{transform:scale(1.15)}68%,92%{transform:scale(1)}100%{transform:scale(0)}}
-.tier3{animation:tier3 var(--d) infinite}
-@keyframes tier3{0%,64%{transform:scale(0)}74%{transform:scale(1.2)}80%,92%{transform:scale(1)}100%{transform:scale(0)}}
-.stm{animation:stm 2.6s ease-in infinite;opacity:0}
-@keyframes stm{0%{transform:translateY(10px);opacity:0}30%{opacity:.9}100%{transform:translateY(-26px);opacity:0}}
-.pour{stroke-dasharray:6 8;animation:flow .5s linear infinite}
-@keyframes flow{to{stroke-dashoffset:-14}}
-.kettle{animation:kt var(--d) infinite}
-@keyframes kt{0%,8%{transform:rotate(0)}18%,60%{transform:rotate(-22deg)}72%,100%{transform:rotate(0)}}
-.pourv{animation:pv var(--d) infinite;opacity:0}
-@keyframes pv{0%,18%{opacity:0}22%,58%{opacity:1}64%,100%{opacity:0}}
-.bomb{animation:bomb var(--d) infinite}
-@keyframes bomb{0%,50%{transform:translate(36px,-60px);opacity:0}64%,92%{transform:translate(0,0);opacity:1}100%{opacity:0;transform:translate(36px,-60px)}}
-.knife{animation:knife var(--d) infinite}
-@keyframes knife{0%,34%{transform:translateX(70px);opacity:0}40%{opacity:1}56%{transform:translateX(-30px)}62%,100%{opacity:0;transform:translateX(70px)}}
-.slide{animation:slide2 var(--d) infinite}
-@keyframes slide2{0%,56%{transform:translateX(0)}74%,92%{transform:translateX(54px) rotate(8deg)}100%{transform:translateX(0)}}
-.wrapf{animation:wrapf var(--d) infinite;transform-origin:left center}
-@keyframes wrapf{0%,18%{transform:rotateY(0);opacity:1}36%,100%{transform:rotateY(90deg);opacity:0}}
-.spk{animation:twk 1.8s ease-in-out infinite}
-@keyframes twk{0%,100%{transform:scale(.3);opacity:.2}50%{transform:scale(1.2);opacity:1}}
-.melt{animation:melt var(--d) infinite}
-@keyframes melt{0%,34%{transform:scale(1);opacity:1}60%,92%{transform:scale(1.5,.4);opacity:.5}100%{opacity:0}}
-.sy{animation:sy var(--d) infinite;transform-origin:top}
-@keyframes sy{0%,48%{transform:scaleY(0)}70%,92%{transform:scaleY(1)}100%{transform:scaleY(0)}}
-.knd{animation:knd var(--d) infinite}
-@keyframes knd{0%,58%{transform:translateX(120px) rotate(-8deg);opacity:0}64%{opacity:1}76%{transform:translateX(-10px)}88%,100%{transform:translateX(120px) rotate(-8deg);opacity:0}}
-.sl{animation:slc var(--d) infinite}
-@keyframes slc{0%,74%{transform:translateX(0)}88%,96%{transform:translateX(70px) rotate(10deg)}100%{transform:translateX(0)}}
-@media (prefers-reduced-motion:reduce){.pcard,.chp,.pane,.phero h2 span,.sh h2 span,.tg,.sub2{opacity:1!important;transform:none!important}.cap,.a3_3,.a2_2{opacity:1!important}.a3_1,.a3_2,.a2_1{opacity:0!important}}
-</style>
-
-
-
-
-
-
-
-
 
 <nav id="ac-gn"></nav>
 <div class="ann">Preventa abierta · <b>Envío gratis</b> a sucursal desde 2 cajas</div>
 <header class="nav" id="nav"><div class="wrap">
   <a class="word" href="#top" aria-label="Clickly, inicio">clickly</a>
-  <nav class="lk" aria-label="Secciones"><a href="#lineas">Líneas</a><a href="#pops">Pops</a><a href="#cajas">Cajas</a><a href="#preguntas">Preguntas</a></nav>
+  <nav class="lk" aria-label="Secciones"><a href="#pops">Pops</a><a href="#cajas">Cajas</a><a href="#preguntas">Preguntas</a></nav>
   <div class="r"><button class="bag" id="bag" data-press data-open="1" aria-label="Pedir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>Pedir<span class="n tab" id="bagn"></span></button></div>
 </div></header>
 
@@ -534,11 +306,6 @@ svg.sv text{font-family:var(--f);font-weight:600;fill:#3A2418}
 </div>
 <div class="parade" id="parade" aria-label="Los pops"></div>
 </section>
-
-<section class="lines" id="lineas"><div class="wrap">
-  <div class="hd rv"><small>Cada línea es su propio mundo</small><h2>Elegí tu línea</h2><p>Tocá una y entrá.</p></div>
-  <div class="ltiles" id="ltiles"></div>
-</div></section>
 
 <section id="pops"><div class="wrap">
   <div class="hd rv"><small>Esta temporada</small><h2>La línea de pops</h2><p>Tocá cualquiera para escuchar el clic.</p></div>
@@ -572,13 +339,6 @@ svg.sv text{font-family:var(--f);font-weight:600;fill:#3A2418}
   <details><summary>¿Cómo funciona la preventa?</summary><p>Armás tus cajas, completás tus datos y reservás. No se cobra nada ahora: te escribimos para coordinar el pago y el envío. Por ahora enviamos solo dentro de Argentina.</p></details>
 </div></section>
 </main>
-<div id="para" role="dialog" aria-modal="true" aria-label="Línea" hidden><div class="fx" id="parafx" aria-hidden="true"></div><div class="pin" id="parain"></div></div>
-<div id="story" role="dialog" aria-modal="true" aria-label="Historia del pop" hidden><div class="fx" id="storyfx" aria-hidden="true"></div><div class="sin" id="storyin"></div></div>
-<div id="story" role="dialog" aria-modal="true" aria-label="Historia del pop" hidden><div class="fx" id="storyfx" aria-hidden="true"></div><div class="sin" id="storyin"></div></div>
-<div id="story" role="dialog" aria-modal="true" aria-label="Historia del pop" hidden><div class="fx" id="storyfx" aria-hidden="true"></div><div class="sin" id="storyin"></div></div>
-<div id="story" role="dialog" aria-modal="true" aria-label="Historia del pop" hidden><div class="fx" id="storyfx" aria-hidden="true"></div><div class="sin" id="storyin"></div></div>
-<div id="story" role="dialog" aria-modal="true" aria-label="Historia del pop" hidden><div class="fx" id="storyfx" aria-hidden="true"></div><div class="sin" id="storyin"></div></div>
-<div id="story" role="dialog" aria-modal="true" aria-label="Historia del pop" hidden><div class="fx" id="storyfx" aria-hidden="true"></div><div class="sin" id="storyin"></div></div>
 
 <footer id="ac-ft" data-page="Clickly" data-note="<p>Clickers impresos en 3D. No son comida. Preventa: reservás sin pagar ahora. Tus cajas y tu reserva quedan guardadas en este dispositivo. Envíos solo dentro de Argentina.</p><p>Clickly es una marca de NiDoo.</p>"></footer>
 <script src="/apple/ac.js"></script>
@@ -733,14 +493,14 @@ function drawFab(){const T=totals(),cur=T.n?T.bx[T.bx.length-1]:[];
   $('#fabs').textContent=!T.n?'':T.rest?`faltan ${MAX-T.rest} · ${money(T.sub)}`:(T.full>=FREE?'Envío gratis · ':'')+money(T.sub);
   $('#fabb').textContent=T.n&&!T.rest?'Reservar':'Ver caja';
   const n=$('#bagn');n.textContent=T.n||'';n.classList.toggle('on',!!T.n);$('#bag').setAttribute('aria-label',`Pedir, ${T.n} pops en tu caja`)}
-function ui(){clean();drawFab();updLineup();if(typeof updPara==="function")updPara();if(dOpen()){if(STEP===3)drawBuilder($('#dbody'));drawFoot();$('#dfoot').hidden=STEP<3&&!total()}onScroll()}
+function ui(){clean();drawFab();updLineup();if(dOpen()){if(STEP===3)drawBuilder($('#dbody'));drawFoot();$('#dfoot').hidden=STEP<3&&!total()}onScroll()}
 
 function add(id,src){const p=pop(id);if(!p)return;if(avail(id)<=0){toast(`${p.n}: sin stock por ahora`);return}if(room()<=0){toast('Llegaste al máximo de 5 cajas');return}
   Q[id]=(Q[id]||0)+1;save();click();fly(id,src);ui();const T=totals();
   toast(T.rest?`Sumaste ${short(p.n)} · caja ${T.full+1}: ${T.rest} de 5`:`¡Caja ${T.full} lista! 🎉`)}
 function rem(id){if(!Q[id])return;Q[id]--;if(!Q[id])delete Q[id];save();ui()}
 function fly(id,src){if(dOpen())return;const b=$('#bag');const bump=()=>{b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump')};
-  const sec=src&&src.closest&&src.closest('.it,.pcard'),im0=sec&&sec.querySelector('.ph img');if(RM.matches||!im0){bump();return}
+  const sec=src&&src.closest&&src.closest('.it'),im0=sec&&sec.querySelector('.ph img');if(RM.matches||!im0){bump();return}
   const s=im0.getBoundingClientRect(),t=b.getBoundingClientRect(),w=Math.min(s.width,150),im=new Image();im.src=IMG[id];im.className='fly';im.style.width=im.style.height=w+'px';document.body.appendChild(im);
   const x0=s.left+s.width/2-w/2,y0=s.top+s.height/2-w/2,x1=t.left+t.width/2-w/2,y1=t.top+t.height/2-w/2;
   im.animate([{transform:`translate(${x0}px,${y0}px)`},{transform:`translate(${(x0+x1)/2}px,${Math.min(y0,y1)-70}px) rotate(-20deg) scale(.6)`,offset:.45},{transform:`translate(${x1}px,${y1}px) rotate(-40deg) scale(${24/w})`,opacity:.5}],{duration:650,easing:'cubic-bezier(.45,0,.2,1)'}).onfinish=()=>{im.remove();bump()}}
@@ -838,120 +598,8 @@ document.addEventListener('click',e=>{const t=e.target;
   if(t.id==='showres'){showRes();return}
   const op=t.closest('[data-open]');if(op){const T=totals();if(op.id==='fab'&&T.n&&!T.rest){openRes();return}openD(T.n?3:+op.dataset.open===3?3:undefined);return}});
 
-
-/* Líneas: botones, paraíso de cada una e historia de cada pop */
-const TH={
- base:{b:'#2F6FE0',b2:'#1F4FB0',i:'#FFFFFF',a:'#FEDFA2',ac:'#3A2418',card:'rgba(255,255,255,.16)',ring:'rgba(255,255,255,.22)',tg:'El modelo de siempre.'},
- ar:{b:'#74ACDF',b2:'#FFFFFF',i:'#12304F',a:'#F6B40E',ac:'#12304F',card:'rgba(255,255,255,.55)',ring:'rgba(255,255,255,.8)',tg:'Sabores de acá, hechos pop.'},
- bf:{b:'#F6884C',b2:'#FFB77A',i:'#3A2418',a:'#FFF6E4',ac:'#3A2418',card:'rgba(255,246,228,.5)',ring:'rgba(255,246,228,.75)',tg:'Arrancá el día haciendo clic.'},
- sweet:{b:'#F06A8C',b2:'#FFA3BC',i:'#3A1020',a:'#FFF6E4',ac:'#3A1020',card:'rgba(255,246,228,.5)',ring:'rgba(255,246,228,.75)',tg:'Lo dulce también hace clic.'},
- milk:{b:'#FFEFB0',b2:'#F6DC82',i:'#3A2418',a:'#3A2418',ac:'#FFF6E4',card:'rgba(255,255,255,.6)',ring:'rgba(246,220,130,.6)',tg:'Suave, cremoso y para apretar.'}};
-const LORDER=['base','ar','bf','sweet','milk'];
-const lineIds=()=>LORDER.filter(k=>LINES[k]&&POPS.some(p=>p.line===k));
-const rnd=(a,b)=>a+Math.random()*(b-a);
-function drawLines(){const el=$('#ltiles');if(!el)return;el.innerHTML=lineIds().map(k=>{const L=LINES[k],t=TH[k]||TH.base,ps=POPS.filter(p=>p.line===k);
-  return`<button class="ltile rv" data-press data-line="${k}" style="--tb:${t.b};--tb2:${t.b2};--ti:${t.i}" aria-label="Entrar a ${esc(L.n)}"><span class="li${ps.length===1?' one':''}">${ps.slice(0,3).map(p=>`<img src="${timg(p.id)}" alt="" width="96" height="96" loading="lazy" decoding="async">`).join('')}</span><span class="tx"><small>${esc(L.tag)}</small><b>${esc(L.n.replace('Línea ',''))}</b><em>${ps.length} ${ps.length===1?'pop':'pops'}</em></span></button>`}).join('');observe()}
-/* fondos animados de cada línea */
-function buildFx(k){let h='';const N=(n,fn)=>{for(let i=0;i<n;i++)h+=fn(i)};
- if(k==='base'){N(14,()=>{const s=rnd(26,80);return`<i class="c" style="left:${rnd(0,100)}%;bottom:-100px;width:${s}px;height:${s}px;animation-duration:${rnd(9,18)}s;animation-delay:${-rnd(0,18)}s"></i>`});N(3,i=>`<i class="rp" style="animation-delay:${i*1.2}s"></i>`);N(6,i=>`<i class="t" style="left:${rnd(4,80)}%;top:${rnd(14,88)}%;font-size:${rnd(22,40)}px;--r:${rnd(-14,14)}deg;animation-delay:${i*.6}s">clic!</i>`)}
- if(k==='ar'){h+=`<i class="sb" style="top:14%;height:20%"></i><i class="sb" style="top:62%;height:20%;animation-delay:-3s"></i>`;N(5,i=>`<i class="cl" style="top:${rnd(6,80)}%;width:${rnd(90,170)}px;animation-duration:${rnd(40,80)}s;animation-delay:${-rnd(0,60)}s"></i>`);const C=['#fff','#F6B40E','#fff','#4A8BD0'];N(22,i=>`<i class="rb" style="left:${rnd(0,100)}%;background:${C[i%4]};--dx:${rnd(-60,60)}px;--rot:${rnd(-400,400)}deg;animation-duration:${rnd(8,15)}s;animation-delay:${-rnd(0,15)}s"></i>`)}
- if(k==='bf'){N(10,()=>{const s=rnd(60,140);return`<i class="v" style="left:${rnd(0,95)}%;width:${s}px;height:${s}px;--dx:${rnd(-60,60)}px;animation-duration:${rnd(6,12)}s;animation-delay:${-rnd(0,12)}s"></i>`});N(24,()=>{const s=rnd(5,10);return`<i class="cr" style="left:${rnd(0,100)}%;width:${s}px;height:${s}px;--dx:${rnd(-30,30)}px;--rot:0deg;animation-duration:${rnd(6,12)}s;animation-delay:${-rnd(0,12)}s"></i>`});N(5,()=>{const s=rnd(70,130);return`<i class="pc" style="left:${rnd(0,90)}%;width:${s}px;height:${s}px;animation-duration:${rnd(16,28)}s;animation-delay:${-rnd(0,28)}s"></i>`})}
- if(k==='sweet'){const C=['#FFF6E4','#FFFFFF','#C9A7F0','#FEDFA2','#FF4F7B','#8FD3E8'];N(44,i=>`<i class="g" style="left:${rnd(0,100)}%;width:${rnd(8,12)}px;height:${rnd(22,34)}px;background:${C[i%6]};--dx:${rnd(-80,80)}px;--rot:${rnd(-540,540)}deg;animation-duration:${rnd(5,11)}s;animation-delay:${-rnd(0,11)}s"></i>`);N(14,i=>`<i class="stw" style="left:${rnd(2,96)}%;top:${rnd(4,92)}%;animation-delay:${-rnd(0,2.4)}s"></i>`);N(4,()=>{const s=rnd(110,190);return`<i class="sw" style="left:${rnd(0,85)}%;width:${s}px;height:${s}px;animation-duration:${rnd(18,30)}s;animation-delay:${-rnd(0,30)}s"></i>`})}
- if(k==='milk'){N(16,()=>{const s=rnd(20,90);return`<i class="b" style="left:${rnd(0,98)}%;width:${s}px;height:${s}px;--dx:${rnd(-40,40)}px;animation-duration:${rnd(7,15)}s;animation-delay:${-rnd(0,15)}s"></i>`});N(12,()=>`<i class="dr" style="left:${rnd(0,98)}%;--dx:0px;--rot:0deg;animation-duration:${rnd(3,6)}s;animation-delay:${-rnd(0,6)}s"></i>`);N(3,i=>{const s=rnd(160,260);return`<i class="bl" style="left:${[5,40,70][i]}%;top:${[20,55,30][i]}%;width:${s}px;height:${s}px;animation-delay:${-i*3}s"></i>`});h+=`<i class="w"></i><i class="w" style="bottom:-60px;opacity:.5;animation-delay:-2s"></i>`}
- const f=$('#parafx');f.className='fx fx-'+k;f.innerHTML=h}
-/* franja de arriba de cada línea */
-function strip(k){let h='';
- if(k==='base'){for(let i=0;i<14;i++)h+=`<i class="k" style="left:${i*(100/14)+1}%;animation-delay:${i*.13}s"></i>`}
- if(k==='ar'){const C=['#fff','#F6B40E','#fff','#12304F'];h+=`<i class="bw"></i>`;for(let i=0;i<14;i++)h+=`<i class="bn" style="left:${i*(100/14)+.5}%;--c:${C[i%4]};animation-delay:${-i*.25}s"></i>`}
- if(k==='bf'||k==='sweet'||k==='milk'){const c=k==='bf'?'#B5712C':k==='sweet'?'#FFF6E4':'#FFFFFF';for(let i=0;i<9;i++)h+=`<i class="drp" style="left:${i*11.2+1}%;width:${rnd(26,46)}px;height:${rnd(34,56)}px;background:${c};animation-duration:${rnd(2.2,4)}s;animation-delay:${-rnd(0,4)}s"></i>`}
- return`<div class="strip" aria-hidden="true">${h}</div>`}
-/* dibujito animado al lado del titulo */
-function deco(k){const o='<svg class="dsvg" viewBox="0 0 200 200" aria-hidden="true">';
- if(k==='base')return o+`<circle class="d-ring" cx="100" cy="92" r="46" fill="none" stroke="#fff" stroke-width="5"/><circle class="d-ring" style="animation-delay:.6s" cx="100" cy="92" r="46" fill="none" stroke="#fff" stroke-width="5"/><rect x="40" y="110" width="120" height="62" rx="16" fill="#1F4FB0"/><g class="d-press"><rect x="34" y="80" width="132" height="42" rx="18" fill="#5E9FDC"/></g></svg>`;
- if(k==='ar'){let r='';for(let i=0;i<16;i++)r+=`<polygon points="100,12 110,52 90,52" fill="#F6B40E" transform="rotate(${i*22.5} 100 100)"/>`;return o+`<g class="d-spin">${r}</g><circle class="d-pulse" cx="100" cy="100" r="44" fill="#F6B40E"/><circle cx="100" cy="100" r="30" fill="#FFD24D"/></svg>`}
- if(k==='bf')return o+`<path class="d-steam" d="M80 70 q-10 -14 0 -26 q10 -12 0 -24" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/><path class="d-steam" style="animation-delay:.8s" d="M104 70 q-10 -14 0 -26 q10 -12 0 -24" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/><path class="d-steam" style="animation-delay:1.6s" d="M128 70 q-10 -14 0 -26 q10 -12 0 -24" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M52 84 h96 v38 q0 36 -36 36 h-24 q-36 0 -36 -36z" fill="#FFF6E4"/><path d="M148 94 h14 q16 0 16 18 q0 18 -16 18 h-14" fill="none" stroke="#FFF6E4" stroke-width="10"/><rect x="60" y="92" width="80" height="10" rx="5" fill="#8A4B1A"/><ellipse cx="100" cy="176" rx="64" ry="8" fill="rgba(58,36,24,.2)"/></svg>`;
- if(k==='sweet')return o+`<g class="d-swirl"><circle cx="100" cy="86" r="62" fill="#FFF6E4"/><path d="M100 86 m0 0 a8 8 0 0 1 16 0 a18 18 0 0 1 -36 0 a28 28 0 0 1 56 0 a38 38 0 0 1 -76 0" fill="none" stroke="#FF4F7B" stroke-width="9" stroke-linecap="round"/></g><rect x="95" y="146" width="10" height="46" rx="5" fill="#FFF6E4"/></svg>`;
- if(k==='milk')return o+`<path d="M64 40 h72 l-8 120 q-1 12 -13 12 h-30 q-12 0 -13 -12z" fill="rgba(255,255,255,.8)" stroke="#3A2418" stroke-width="5" stroke-linejoin="round"/><g clip-path="inset(0)"><rect class="d-fill" x="72" y="62" width="56" height="102" fill="#fff" rx="6"/></g><circle class="d-bob" cx="88" cy="120" r="7" fill="#F6DC82"/><circle class="d-bob" style="animation-delay:-1s" cx="112" cy="100" r="5" fill="#F6DC82"/></svg>`;
- return ''}
-function words(t){return t.split(' ').map((w,i)=>`<span style="--i:${i}">${esc(w)}</span>`).join(' ')}
-function drawParaCard(p,i){const[sc,stx]=stockOf(p);return`<article class="pcard" id="pa-${p.id}" style="--i:${i%4};--rt:${i%2?2:-2}deg"><button class="ph" data-press data-pclick aria-label="Hacer clic en ${esc(p.n)}"><img src="${IMG[p.id]}" alt="${esc(p.n)}" width="560" height="560" decoding="async"><span class="n tab ${Q[p.id]?'on':''}">${Q[p.id]||''}</span></button>
-  <h3>${esc(p.n)}</h3><p class="d">${esc(p.d)} ${esc(p.ct)}.</p>${ST[p.id]?`<button class="more" data-story="${p.id}">De dónde sale <span aria-hidden="true">›</span></button>`:''}<div class="ft"><span class="ctl">${popCtrl(p)}</span>${stx?`<span class="st ${sc}">${stx}</span>`:`<span class="pr tab">${p.xp?money(p.xp)+' c/u':money(PBOX/MAX)+' en caja'}</span>`}</div></article>`}
-function updPara(){POPS.forEach(p=>{[['#pa-','.ctl','.ph .n'],['#sc-','.ctl2','.none']].forEach(([pre,c,nn])=>{const s=$(pre+p.id);if(!s)return;const a=s.querySelector(c);if(a)a.innerHTML=popCtrl(p);const n=s.querySelector(nn);if(n){n.textContent=Q[p.id]||'';n.classList.toggle('on',!!Q[p.id])}})});const sc=$('#sctl');if(sc&&SP)sc.innerHTML=popCtrl(pop(SP))}
-let PL=null,SP=null,PIO=null;
-function themeVars(t){return`--pb:${t.b};--pi:${t.i};--pa:${t.a};--pc:${t.ac};--pcard:${t.card};--pring:${t.ring};--hb:${t.b};--hi:${t.i}`}
-function setTheme(c){const m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',c)}
-function revealOn(root){if(PIO)PIO.disconnect();const els=root.querySelectorAll('.pcard,.chp');if(RM.matches||!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('show'));return}
-  PIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');PIO.unobserve(e.target)}}),{root,threshold:.12});els.forEach(e=>PIO.observe(e))}
-function fillPara(k){const L=LINES[k],t=TH[k]||TH.base,P=$('#para');PL=k;P.style.cssText=themeVars(t);
-  const ps=POPS.filter(p=>p.line===k),name=L.n.replace('Línea ','');
-  $('#parain').innerHTML=`${strip(k)}<div class="top"><button class="back" data-pclose><span aria-hidden="true">‹</span> Todas las líneas</button><span class="wm">clickly</span></div>
-   <div class="phero"><h2 aria-label="${esc(name)}">${[...name].map((c,i)=>`<span style="--i:${i}" aria-hidden="true">${esc(c)}</span>`).join('')}</h2><div class="prow"><p class="tg"><i>${esc(L.tag)}</i>${esc(t.tg)}</p><div class="deco">${deco(k)}</div></div></div>
-   <div class="pgrid">${ps.map(drawParaCard).join('')}</div>
-   <div class="hop">${lineIds().map(x=>`<button data-line="${x}" class="${x===k?'cur':''}" style="--hb:${(TH[x]||TH.base).b};--hi:${(TH[x]||TH.base).i}">${esc(LINES[x].n.replace('Línea ',''))}</button>`).join('')}</div>`;
-  buildFx(k);setTheme(t.b);revealOn(P)}
-function circle(el,src){if(RM.matches)return;const r=src&&src.getBoundingClientRect?src.getBoundingClientRect():null,x=r?r.left+r.width/2:innerWidth/2,y=r?r.top+r.height/2:innerHeight/2;
-  el.animate([{clipPath:`circle(0px at ${x}px ${y}px)`},{clipPath:`circle(${Math.hypot(innerWidth,innerHeight)}px at ${x}px ${y}px)`}],{duration:700,easing:'cubic-bezier(.3,.7,.2,1)'})}
-function openPara(k,src,push){const P=$('#para');if(!LINES[k])return;const was=P.classList.contains('on');fillPara(k);P.hidden=false;P.classList.add('on');P.scrollTop=0;document.body.style.overflow='hidden';
-  if(push!==false)try{history[was?'replaceState':'pushState']({para:k},'','#linea-'+k)}catch(e){}
-  if(src)circle(P,src);else if(!was&&!RM.matches)P.animate([{opacity:0},{opacity:1}],{duration:350});click()}
-function closePara(back){const P=$('#para');if(!P.classList.contains('on'))return;closeStory(false);P.classList.remove('on');P.hidden=true;document.body.style.overflow='';PL=null;$('#parafx').innerHTML='';setTheme('#FFF6E4');
-  if(back!==false&&/^#(linea|historia)-/.test(location.hash))try{history.go(/^#historia-/.test(location.hash)?-2:-1)}catch(e){}}
-
-/* ---------- historia de cada pop ---------- */
-const BASE_SCENE=(inner,d)=>`<svg class="sv" viewBox="0 0 320 240" style="--d:${d}s" role="img" aria-label="Animación">${inner}</svg>`;
-const SC={
- base:()=>BASE_SCENE(`<rect x="70" y="124" width="180" height="88" rx="18" fill="#2F6FE0"/><rect x="132" y="146" width="56" height="52" rx="8" fill="#1F4FB0"/><rect class="plg" x="152" y="150" width="16" height="30" rx="4" fill="#FEDFA2"/><g class="lid"><rect x="62" y="98" width="196" height="38" rx="18" fill="#5E9FDC"/><text x="160" y="124" text-anchor="middle" font-size="18" style="fill:#fff">clickly</text></g><circle class="rg" cx="160" cy="98" r="34" fill="none" stroke="#2F6FE0" stroke-width="4"/><circle class="rg" style="animation-delay:.3s" cx="160" cy="98" r="34" fill="none" stroke="#2F6FE0" stroke-width="4"/><text class="pop" x="160" y="56" text-anchor="middle" font-size="30">¡CLIC!</text><text x="160" y="228" text-anchor="middle" font-size="13">la tapa baja 4 mm sobre un switch</text>`,2.4),
- medialuna:()=>BASE_SCENE(`<g class="a3_1"><polygon points="76,64 244,64 160,186" fill="#F3D08B"/><path d="M76 64 L244 64 L160 186Z" fill="none" stroke="#E0A94E" stroke-width="4" stroke-linejoin="round"/></g><g class="a3_2"><g transform="rotate(-24 160 120)"><rect x="88" y="94" width="144" height="52" rx="26" fill="#F3D08B"/><g stroke="#E0A94E" stroke-width="5" stroke-linecap="round"><path d="M122 98v44"/><path d="M146 96v48"/><path d="M170 96v48"/><path d="M194 98v44"/></g></g></g><g class="a3_3"><path d="M200 36 a44 44 0 1 0 0 88 a34 34 0 1 1 0 -88z" fill="#FFF6E4" opacity=".7"/><path d="M62 178 Q160 34 258 178" fill="none" stroke="#E9A93E" stroke-width="46" stroke-linecap="round"/><path d="M62 178 Q160 34 258 178" fill="none" stroke="#F5CF7A" stroke-width="12" stroke-linecap="round" opacity=".7" transform="translate(0,-10)"/><g stroke="#C98A2B" stroke-width="4" stroke-linecap="round"><path d="M104 118l-14 -10"/><path d="M132 92l-6 -16"/><path d="M164 84v-18"/><path d="M196 92l6 -16"/><path d="M224 118l14 -10"/></g></g><text class="cap a3_1" x="160" y="222" text-anchor="middle">1 · Masa en triángulo</text><text class="cap a3_2" x="160" y="222" text-anchor="middle">2 · Se enrolla</text><text class="cap a3_3" x="160" y="222" text-anchor="middle">3 · Se curva: media luna</text>`,7),
- alfajor:()=>BASE_SCENE(`<ellipse cx="160" cy="214" rx="86" ry="10" fill="rgba(58,36,24,.16)"/><g class="dr1"><ellipse cx="160" cy="176" rx="72" ry="22" fill="#E3B777"/><rect x="88" y="160" width="144" height="16" fill="#E3B777"/><ellipse cx="160" cy="160" rx="72" ry="22" fill="#EBC58B"/></g><g class="grow"><ellipse cx="160" cy="150" rx="68" ry="18" fill="#B5651D"/></g><g class="dr3"><ellipse cx="160" cy="128" rx="72" ry="22" fill="#E3B777"/><rect x="88" y="112" width="144" height="16" fill="#E3B777"/><ellipse cx="160" cy="112" rx="72" ry="22" fill="#EBC58B"/></g><g class="fadein"><path d="M86 112 a74 24 0 0 1 148 0 v42 q0 18 -20 18 h-108 q-20 0 -20 -18z" fill="#4A2A18"/><ellipse cx="160" cy="108" rx="74" ry="22" fill="#5E3721"/><ellipse cx="136" cy="102" rx="28" ry="5" fill="#8A5A3A" opacity=".7"/></g><g class="sy"><rect x="94" y="150" width="14" height="34" rx="7" fill="#4A2A18"/><rect x="208" y="150" width="14" height="28" rx="7" fill="#4A2A18"/></g><text class="cap a3_1" x="160" y="38" text-anchor="middle">1 · Dos tapas blandas</text><text class="cap a3_2" x="160" y="38" text-anchor="middle">2 · Dulce de leche en el medio</text><text class="cap a3_3" x="160" y="38" text-anchor="middle">3 · Baño de chocolate</text>`,7),
- mate:()=>BASE_SCENE(`<path d="M92 112 Q66 170 108 206 Q160 228 212 206 Q254 170 228 112Z" fill="#B58A4B"/><path d="M100 150 Q160 168 220 150" fill="none" stroke="#8A6330" stroke-width="5" opacity=".6"/><ellipse cx="160" cy="112" rx="70" ry="14" fill="#3A2418"/><path d="M104 112 Q118 82 160 80 Q202 82 216 112Z" fill="#6F9140"/><path d="M130 100l6 -10M150 92l-3 -12M176 90l5 -10M196 100l8 -8" stroke="#9CBF63" stroke-width="3" stroke-linecap="round"/><ellipse cx="160" cy="116" rx="72" ry="14" fill="none" stroke="#C9CED6" stroke-width="6"/><g class="bomb"><path d="M200 36 L158 112" stroke="#C9CED6" stroke-width="6" stroke-linecap="round"/><circle cx="202" cy="34" r="6" fill="#C9CED6"/></g><g class="kettle"><path d="M30 60 h58 l8 46 h-74z" fill="#7A5E4C"/><path d="M88 74 q22 -6 36 14" fill="none" stroke="#7A5E4C" stroke-width="8" stroke-linecap="round"/><path d="M34 60 q26 -24 52 0" fill="none" stroke="#3A2418" stroke-width="5"/></g><path class="pourv pour" d="M124 88 Q134 100 142 112" fill="none" stroke="#7EC8F0" stroke-width="5" stroke-linecap="round"/><path class="stm" d="M140 70 q-8 -12 0 -22 q8 -10 0 -20" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path class="stm" style="animation-delay:.9s" d="M170 68 q-8 -12 0 -22 q8 -10 0 -20" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><text class="cap a3_1" x="160" y="230" text-anchor="middle">1 · Calabaza con yerba</text><text class="cap a3_2" x="160" y="230" text-anchor="middle">2 · Agua caliente</text><text class="cap a3_3" x="160" y="230" text-anchor="middle">3 · Bombilla y a ronda</text>`,7),
- pancake:()=>BASE_SCENE(`<ellipse cx="160" cy="208" rx="100" ry="18" fill="#FFF6E4" stroke="#3A2418" stroke-opacity=".2" stroke-width="3"/><g class="dr1"><rect x="90" y="176" width="140" height="18" rx="9" fill="#D9902F"/><ellipse cx="160" cy="176" rx="70" ry="12" fill="#E8A33D"/></g><g class="dr2"><rect x="90" y="156" width="140" height="18" rx="9" fill="#D9902F"/><ellipse cx="160" cy="156" rx="70" ry="12" fill="#E8A33D"/></g><g class="dr3"><rect x="90" y="136" width="140" height="18" rx="9" fill="#D9902F"/><ellipse cx="160" cy="136" rx="70" ry="12" fill="#E8A33D"/></g><g class="dr4"><rect x="90" y="116" width="140" height="18" rx="9" fill="#D9902F"/><ellipse cx="160" cy="116" rx="70" ry="12" fill="#E8A33D"/></g><g class="sy"><path d="M104 116 q56 -26 112 0 v24 q0 12 -8 12 q-8 0 -8 -14 v-6 h-8 v30 q0 12 -8 12 q-8 0 -8 -12 v-26 h-8 v14 q0 10 -8 10 q-8 0 -8 -10 v-14 h-8 v30 q0 10 -8 10 q-8 0 -8 -10 v-18 h-8 v8 q0 10 -8 10 q-8 0 -8 -10z" fill="#8A4B1A" opacity=".92"/></g><g class="melt"><rect x="142" y="98" width="36" height="22" rx="5" fill="#FFE98A"/><rect x="142" y="98" width="36" height="8" rx="4" fill="#FFF4B8"/></g><text class="cap a3_1" x="160" y="38" text-anchor="middle">1 · Se apilan los panqueques</text><text class="cap a3_2" x="160" y="38" text-anchor="middle">2 · Manteca arriba</text><text class="cap a3_3" x="160" y="38" text-anchor="middle">3 · Almíbar</text>`,8),
- muffin:()=>BASE_SCENE(`<ellipse cx="160" cy="214" rx="80" ry="8" fill="rgba(58,36,24,.16)"/><g class="rise"><path d="M92 140 Q92 86 160 84 Q228 86 228 140Z" fill="#D9A56A"/><path d="M118 112q8 -10 18 -6M170 104q10 -8 20 -2M206 126q6 -8 14 -4" fill="none" stroke="#B9854B" stroke-width="4" stroke-linecap="round"/></g><polygon points="98,132 222,132 206,212 114,212" fill="#8A5A3A"/><g stroke="#6B4228" stroke-width="3" stroke-linecap="round"><path d="M124 136l6 72"/><path d="M146 136l4 72"/><path d="M170 136v72"/><path d="M194 136l-4 72"/><path d="M216 136l-8 72"/></g><ellipse class="tier1" cx="160" cy="98" rx="68" ry="18" fill="#F7A8C4"/><ellipse class="tier2" cx="160" cy="76" rx="48" ry="15" fill="#F9B8CF"/><ellipse class="tier3" cx="160" cy="56" rx="28" ry="12" fill="#FBC9DA"/><path class="tier3" d="M160 34 q10 12 0 24 q-10 -12 0 -24z" fill="#FBC9DA"/><text class="cap a2_1" x="160" y="38" text-anchor="middle">1 · Bizcocho en pirotín</text><text class="cap a2_2" x="160" y="38" text-anchor="middle">2 · Crema batida arriba</text>`,6),
- pan:()=>BASE_SCENE(`<g class="a2_1"><rect x="76" y="84" width="168" height="112" rx="12" fill="none" stroke="#9AA3AD" stroke-width="7"/><g class="rise"><path d="M86 192 V112 Q86 84 120 84 H200 Q234 84 234 112 V192Z" fill="#F3D69C"/><path d="M86 116 Q86 84 120 84 H200 Q234 84 234 116" fill="none" stroke="#B5712C" stroke-width="7"/></g></g><g class="a2_2"><path d="M96 200 V126 Q64 120 64 88 Q64 54 100 54 H220 Q256 54 256 88 Q256 120 224 126 V200 Q224 212 212 212 H108 Q96 212 96 200Z" fill="#B5712C"/><path d="M110 196 V116 Q86 112 80 90 Q80 70 104 68 H216 Q240 70 240 90 Q234 112 210 116 V196Z" fill="#F3D69C"/><circle cx="130" cy="94" r="3" fill="#E3BE80"/><circle cx="176" cy="130" r="3" fill="#E3BE80"/><circle cx="150" cy="166" r="3" fill="#E3BE80"/><circle cx="196" cy="90" r="3" fill="#E3BE80"/></g><text class="cap a2_1" x="160" y="228" text-anchor="middle">1 · Se hornea dentro de un molde</text><text class="cap a2_2" x="160" y="228" text-anchor="middle">2 · Corteza afuera, miga adentro</text>`,7),
- macaron:()=>BASE_SCENE(`<ellipse cx="160" cy="214" rx="86" ry="9" fill="rgba(58,36,24,.16)"/><g class="dr1"><ellipse cx="160" cy="176" rx="72" ry="14" fill="#F7B9CA"/><path d="M90 172 a72 28 0 0 0 140 0z" fill="#EF97B1"/><path d="M96 176q4 8 10 0M112 178q4 8 10 0M128 180q4 8 10 0M144 180q4 8 10 0M160 180q4 8 10 0M176 180q4 8 10 0M192 180q4 8 10 0M208 178q4 8 10 0" fill="none" stroke="#F7B9CA" stroke-width="4"/></g><path class="dr2" d="M98 160 Q124 140 150 160 T204 160 T226 156" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round"/><g class="dr4"><path d="M88 128 a72 34 0 0 1 144 0z" fill="#F4A9BE"/><ellipse cx="160" cy="128" rx="72" ry="12" fill="#EF97B1"/><ellipse cx="130" cy="106" rx="26" ry="6" fill="#fff" opacity=".4"/></g><path class="spk" style="animation-delay:.2s" d="M60 70 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z" fill="#fff"/><path class="spk" style="animation-delay:.9s" d="M252 90 l4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4z" fill="#fff"/><text class="cap a3_1" x="160" y="38" text-anchor="middle">1 · Dos tapitas de almendra</text><text class="cap a3_2" x="160" y="38" text-anchor="middle">2 · Relleno cremoso</text><text class="cap a3_3" x="160" y="38" text-anchor="middle">3 · Se cierra y listo</text>`,7),
- butter:()=>BASE_SCENE(`<ellipse cx="150" cy="214" rx="104" ry="9" fill="rgba(58,36,24,.14)"/><rect x="60" y="126" width="200" height="76" rx="8" fill="#F6DC82"/><rect x="60" y="126" width="200" height="14" rx="6" fill="#FBEBA8"/><g class="sl"><rect x="196" y="126" width="30" height="76" rx="4" fill="#F9E597"/><rect x="196" y="126" width="30" height="12" rx="4" fill="#FFF3C2"/></g><g class="wrapf"><rect x="60" y="120" width="200" height="86" rx="8" fill="#F3E8BF" stroke="#D9C98A" stroke-width="3"/><text x="140" y="170" text-anchor="middle" font-size="26" style="fill:#2B63C9;font-weight:700">BUTTER</text><text x="94" y="144" font-size="11" style="fill:#2B63C9">SALTED</text><text x="212" y="196" font-size="11" style="fill:#2B63C9">4 OZ</text></g><g class="knd"><rect x="186" y="62" width="6" height="86" rx="3" fill="#C9CED6"/><rect x="180" y="40" width="18" height="28" rx="7" fill="#3A2418"/></g><text class="cap a3_1" x="160" y="38" text-anchor="middle">1 · Barrita envuelta en papel</text><text class="cap a3_2" x="160" y="38" text-anchor="middle">2 · Se abre el envoltorio</text><text class="cap a3_3" x="160" y="38" text-anchor="middle">3 · Se corta una pastilla</text>`,7)};
-/* datos de cada historia: qué es, nombre, en qué se basa */
-const ST={
- base:{real:'La cajita Clickly',sub:'La caja de la que sale todo.',es:'Una cajita con tapa. Es el modelo base de Clickly: el que siempre está y el que mejor muestra cómo funciona todo.',nom:'Box es caja en inglés. Se llama así porque literalmente es una caja, y la tapa es el botón.',bas:'Una caja de cartulina, pero chiquita y con tapa que sube y baja. Tiene el mismo switch mecánico que todos los pops; lo único que cambia entre pops es el disfraz de afuera.',hs:[[50,30]]},
- medialuna:{real:'La medialuna',sub:'La de todas las mañanas.',es:'La factura argentina del desayuno y la merienda. Va muy bien con el café con leche. Las hay de manteca, más dulces y esponjosas, y de grasa, más saladas y crocantes.',nom:'Se llama así por la forma: una luna a medio llenar, una media luna. Es pariente del cuerno francés que se conoce como croissant.',bas:'Una medialuna gordita con sus rollitos y sus cuernos. El rollito del medio es el botón: lo apretás y baja 4 mm.',hs:[[50,34]]},
- alfajor:{real:'El alfajor',sub:'Dos tapas, dulce de leche y chocolate.',es:'Dos tapas de masa blanda con dulce de leche en el medio y un baño de chocolate. Es uno de los dulces más queridos de Argentina.',nom:'Viene de una palabra árabe que significa relleno. Llegó con los españoles y con los años se hizo tan nuestro que ya pensamos que nació acá.',bas:'Un alfajor de chocolate con su baño y sus ondas. La tapa de arriba, con el baño aparte, es el botón.',hs:[[50,34]]},
- mate:{real:'El mate',sub:'La ronda que no puede faltar.',es:'La infusión de yerba mate, que se toma con bombilla de un recipiente que se pasa en ronda. Mate es la bebida y también el recipiente, que clásicamente es una calabaza.',nom:'La palabra mate viene del quechua mati, que quiere decir calabaza: el recipiente le dio el nombre a toda la bebida.',bas:'Un mate de calabaza con su virola metálica y la yerba arriba, con sus palitos. Sin bombilla: la yerba es el botón.',hs:[[50,34]]},
- pancake:{real:'Los panqueques',sub:'Una torre para el desayuno.',es:'Una pila de panqueques bien esponjosos, con una pastilla de manteca que se derrite arriba y almíbar cayendo por los costados. Es el desayuno de domingo por excelencia.',nom:'Pan es sartén en inglés y cake es torta: el pancake es una torta que se cocina en sartén.',bas:'La pila de panqueques con almíbar y una pastillita de manteca arriba. El panqueque de arriba, el de la manteca, es el botón.',hs:[[50,26]]},
- muffin:{real:'El muffin',sub:'Un bizcochito para una persona.',es:'Un bizcochito individual que se hornea en un molde de papel plisado, el pirotín. Acá lo imaginamos con mucha crema batida rosa arriba.',nom:'Muffin es el nombre que le damos acá tal cual, como en cualquier panadería. Lo que lo distingue es el pirotín: la tacita de papel donde se hornea.',bas:'Un muffin con pirotín marrón, bizcocho y un moño de crema rosa. Apretás la crema y hace clic.',hs:[[50,24]]},
- pan:{real:'El pan de molde',sub:'La rebanada que va con todo.',es:'El pan en rebanadas parejas, con la corteza marrón alrededor y la miga clara y blanda adentro. Sirve para el desayuno, para el sándwich o para una tostada.',nom:'Se llama de molde porque se hornea dentro de un molde rectangular. Por eso todas las rebanadas salen del mismo tamaño y con la corteza alrededor.',bas:'La rebanada con su corteza marrón, que es la base, y la miga clara que asoma, que es el botón. Por eso la miga sobresale.',hs:[[50,30]]},
- macaron:{real:'El macaron',sub:'Chiquito, delicado y de colores.',es:'Dos tapitas de almendra y merengue con un relleno cremoso en el medio. Se hacen en muchos colores y se comen de un bocado.',nom:'Su nombre viene de una palabra italiana antigua que quiere decir masa. Ojo: no es lo mismo que el macarrón de coco.',bas:'Un macaron con tapitas rosa pastel y relleno blanco. La tapita de arriba es el botón.',hs:[[50,28]]},
- butter:{real:'La barrita de manteca',sub:'Cuatro onzas de pura suavidad.',es:'La manteca, envuelta en papel con letras azules, que se corta en pastillas. La barrita clásica pesa 4 onzas, unos 113 gramos.',nom:'Butter es manteca en inglés. El pop copia la barrita salada de 4 onzas con su papel y sus letras azules.',bas:'Una pastilla de manteca con dos switches adentro: apretás un lado, el otro o el centro y hace clic.',hs:[[28,46],[72,46],[50,40]]}};
-function drawStory(id,k){const p=pop(id),st=ST[id],t=TH[p.line]||TH.base;if(!p||!st)return;SP=id;const S=$('#story');S.style.cssText=themeVars(t);
-  const ps=POPS.filter(x=>x.line===p.line&&ST[x.id]),ix=ps.findIndex(x=>x.id===id),prev=ps[(ix-1+ps.length)%ps.length],next=ps[(ix+1)%ps.length];
-  $('#storyin').innerHTML=`${strip(p.line)}<div class="top"><button class="back" data-sclose><span aria-hidden="true">‹</span> ${esc(LINES[p.line].n.replace('Línea ',''))}</button><span class="wm">clickly</span></div>
-  <div class="sh"><h2 aria-label="${esc(p.n)}">${p.n.split(' ').map((w,i)=>`<span style="--i:${i}" aria-hidden="true">${esc(w)}</span>`).join(' ')}</h2></div><p class="sub2">${esc(st.sub)}</p>
-  <div class="duo"><div class="pane"><b>Lo real: ${esc(st.real)}</b>${SC[id]?SC[id]():''}</div>
-   <div class="pane"><b>El pop</b><div class="rend"><img src="${IMG[id]}" alt="${esc(p.n)}" width="560" height="560">${st.hs.map(h=>`<i class="hs" style="left:${h[0]}%;top:${h[1]}%"></i>`).join('')}<span class="hl">${esc(p.ct)}</span></div></div></div>
-  <div class="chs"><div class="chp"><span class="no">1</span><div><h4>Qué es</h4><p>${esc(st.es)}</p></div></div><div class="chp"><span class="no">2</span><div><h4>Por qué se llama así</h4><p>${esc(st.nom)}</p></div></div>
-   <div class="chp"><span class="no">3</span><div><h4>En qué se basa el pop</h4><p>${esc(st.bas)}</p></div></div><div class="chp"><span class="no">4</span><div><h4>Cómo hace clic</h4><p>${esc(p.ct)}. Adentro hay un switch mecánico de teclado: el botón baja 4 mm y suena el clic.</p></div></div></div>
-  <div class="sctl"><span id="sctl">${popCtrl(p)}</span><span class="pr tab">${p.xp?money(p.xp)+' c/u':money(PBOX/MAX)+' en caja'}</span></div>
-  <div class="snav"><button data-story="${prev.id}"><span aria-hidden="true">‹</span> ${esc(prev.n)}</button><button data-story="${next.id}">${esc(next.n)} <span aria-hidden="true">›</span></button></div>`;
-  const f=$('#storyfx');f.className='fx fx-'+(TH[p.line]?p.line:'base');f.innerHTML=$('#parafx').innerHTML||'';
-  revealOn(S);setTheme(t.b)}
-function openStory(id,src,push){const S=$('#story');if(!ST[id])return;const was=S.classList.contains('on');drawStory(id);S.hidden=false;S.classList.add('on');S.scrollTop=0;document.body.style.overflow='hidden';
-  if(push!==false)try{history[was?'replaceState':'pushState']({story:id},'','#historia-'+id)}catch(e){}
-  if(src)circle(S,src);else if(!was&&!RM.matches)S.animate([{opacity:0,transform:'translateY(40px)'},{opacity:1,transform:'none'}],{duration:400,easing:'cubic-bezier(.2,.9,.25,1)'});click()}
-function closeStory(back){const S=$('#story');if(!S.classList.contains('on'))return;S.classList.remove('on');S.hidden=true;SP=null;$('#storyfx').innerHTML='';
-  const t=PL?(TH[PL]||TH.base).b:'#FFF6E4';setTheme(t);if(!PL)document.body.style.overflow='';
-  if(back!==false&&/^#historia-/.test(location.hash))try{history.back()}catch(e){}}
-document.addEventListener('click',e=>{const t=e.target;
-  const ln=t.closest('[data-line]');if(ln){if($('#story').classList.contains('on'))closeStory(false);openPara(ln.dataset.line,ln);return}
-  if(t.closest('[data-pclose]')){closePara();return}
-  const sg=t.closest('[data-story]');if(sg){openStory(sg.dataset.story,sg);return}
-  if(t.closest('[data-sclose]')){closeStory();return}});
-addEventListener('popstate',()=>{const h=location.hash,a=h.match(/^#historia-(\w+)/),m=h.match(/^#linea-(\w+)/);
-  if(a&&ST[a[1]]){openStory(a[1],null,false);return}
-  if(m&&LINES[m[1]]){closeStory(false);if(PL!==m[1]||!$('#para').classList.contains('on'))openPara(m[1],null,false);return}
-  closePara(false)});
-addEventListener('keydown',e=>{if(e.key!=='Escape'||dOpen()||!$('#modal').hidden)return;if($('#story').classList.contains('on'))closeStory();else if(PL)closePara()});
-
-function drawAll(){drawParade();drawLines();drawLineup();drawPacks();ui()}
+function drawAll(){drawParade();drawLineup();drawPacks();ui()}
 drawAll();
-{const m=location.hash.match(/^#linea-(\w+)/);if(m&&LINES[m[1]])openPara(m[1],null,false)}
 function loadCat(){if(!API)return;fetch(API+'?a=catalogo',{cache:'no-store'}).then(x=>x.json()).then(cat=>{if(!cat||!cat.ok)return;try{localStorage.setItem(CATKEY,JSON.stringify(cat))}catch(e){}const ch=applyCat(cat);if(ch)drawAll();else{drawLineup();ui()}}).catch(()=>{})}
 loadCat();
 /* vuelta desde Mercado Pago */
