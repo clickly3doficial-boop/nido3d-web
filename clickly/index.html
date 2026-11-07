@@ -288,7 +288,7 @@ section{padding:clamp(4.5rem,9vw,8rem) 0}
 @media (min-width:760px){.it .ph{width:clamp(220px,30vw,340px)}.it .d{font-size:1.1rem}}
 #ac-ft{padding-bottom:110px}
 
-.lines{position:sticky;top:64px;z-index:39;display:flex;gap:.5rem;overflow-x:auto;padding:.6rem 1rem;justify-content:safe center;background:color-mix(in srgb,var(--bg) 92%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);scrollbar-width:none}
+.lines{position:sticky;top:var(--navh,64px);margin-top:-1px;z-index:39;display:flex;gap:.5rem;overflow-x:auto;padding:.6rem 1rem;justify-content:safe center;background:color-mix(in srgb,var(--bg) 92%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);scrollbar-width:none}
 .lines::-webkit-scrollbar{display:none}
 .lines button{flex:none;font:600 .92rem var(--f);color:var(--ink);background:transparent;border:2px solid var(--line);border-radius:999px;padding:.45rem 1rem;cursor:pointer;display:inline-flex;align-items:center;gap:.45rem;transition:background .25s,color .25s,border-color .25s,transform .25s var(--spring)}
 .lines button i{width:.7rem;height:.7rem;border-radius:50%;background:var(--lc)}
@@ -384,6 +384,8 @@ let LINE='all';
 function setLine(k){LINE=k;const t=THEME[k]||THEME.all,r=document.documentElement.style;
  r.setProperty('--bg',t.bg);r.setProperty('--paper',t.bg);r.setProperty('--pink',t.pink);r.setProperty('--pink2',t.acc);r.setProperty('--accent',t.acc);r.setProperty('--rose',t.accd);r.setProperty('--accent-d',t.accd);r.setProperty('--good',t.accd);r.setProperty('--bad',t.accd);r.setProperty('--ink',t.ink);r.setProperty('--ink2',t.ink2);r.setProperty('--line',t.ink+'20');
  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=t.bg;drawLines();drawLineup()}
+function navH(){const n=document.getElementById('nav');if(n)document.documentElement.style.setProperty('--navh',(n.getBoundingClientRect().height-1)+'px')}
+addEventListener('resize',navH);addEventListener('load',navH);
 function drawLines(){const ks=Object.keys(LINES).filter(k=>POPS.some(p=>p.line===k));
  $('#lines').innerHTML=[['all','Todas','#F6884C'],...ks.map(k=>[k,LINES[k].n.replace('Línea ',''),LINES[k].c])].map(([k,n,c])=>`<button data-line="${k}" style="--lc:${c}" aria-pressed="${LINE===k}">${k==='all'?'':'<i></i>'}${esc(n)}</button>`).join('')}
 const LINES={base:{n:'Línea BASE',tag:'Para siempre',c:'#2F6FE0'},ar:{n:'Línea ARGENTINA',tag:'Nuevo',c:'#74ACDF'},bf:{n:'Línea BREAKFAST',tag:'Tiempo limitado',c:'#F6884C'},sweet:{n:'Línea SWEET',tag:'Nuevo',c:'#F06A8C'}};
@@ -614,7 +616,7 @@ document.addEventListener('click',e=>{const t=e.target;const lb=t.closest&&t.clo
   if(t.id==='showres'){showRes();return}
   const op=t.closest('[data-open]');if(op){const T=totals();if(op.id==='fab'&&T.n&&!T.rest){openRes();return}openD(T.n?3:+op.dataset.open===3?3:undefined);return}});
 
-function drawAll(){drawLines();drawParade();drawLineup();drawPacks();ui()}
+function drawAll(){drawLines();drawParade();drawLineup();drawPacks();ui();navH()}
 drawAll();
 function loadCat(){if(!API)return;fetch(API+'?a=catalogo',{cache:'no-store'}).then(x=>x.json()).then(cat=>{if(!cat||!cat.ok)return;try{localStorage.setItem(CATKEY,JSON.stringify(cat))}catch(e){}const ch=applyCat(cat);if(ch)drawAll();else{drawLineup();ui()}}).catch(()=>{})}
 loadCat();
