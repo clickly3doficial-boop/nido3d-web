@@ -294,6 +294,12 @@ section{padding:clamp(4.5rem,9vw,8rem) 0}
 .lines button i{width:.7rem;height:.7rem;border-radius:50%;background:var(--lc)}
 .lines button:active{transform:scale(.96)}
 .lines button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+.pds{text-align:center;padding-bottom:1.4rem}.pds .x{position:absolute;top:.8rem;right:.8rem}
+.pds .pi{width:min(260px,70%);aspect-ratio:1;margin:.2rem auto .4rem;border-radius:50%;background:var(--pink);display:grid;place-items:center}.pds .pi img{width:92%;height:auto}
+.pds h3{font-size:1.7rem;letter-spacing:-.02em;margin:.2rem 0}.pds .ln{display:inline-flex;align-items:center;gap:.4rem;font-weight:600;font-size:.88rem;color:var(--ink2)}.pds .ln i{width:.7rem;height:.7rem;border-radius:50%;background:var(--lc)}
+.pds .ds{margin:.7rem auto .2rem;max-width:34ch}.pds dl{display:grid;grid-template-columns:auto 1fr;gap:.5rem 1rem;text-align:left;margin:1rem 0;padding:1rem 1.1rem;background:var(--pink);border-radius:18px;font-size:.95rem}
+.pds dt{font-weight:600;color:var(--accent-d)}.pds dd{margin:0}.pds .pill{width:100%}.pds .pill[disabled]{opacity:.45}
 </style>
 
 <nav id="ac-gn"></nav>
@@ -351,6 +357,8 @@ section{padding:clamp(4.5rem,9vw,8rem) 0}
 
 <button class="fab hide" id="fab" data-press data-open="3" aria-label="Ver tu caja"><span class="slots" id="mini" aria-hidden="true"></span><span class="tx"><b id="fabt">Tu caja</b><span id="fabs"></span></span><span class="pill" id="fabb">Ver caja</span></button>
 
+<div class="modal" id="pdm" hidden role="dialog" aria-modal="true" aria-labelledby="pdt"><div class="sheet pds" id="pdc"></div></div>
+
 <div class="drw" id="drw" role="dialog" aria-modal="true" aria-labelledby="dtitle" aria-hidden="true"><div class="dp">
   <header><div class="dh"><button class="ib" id="dback" aria-label="Volver">‹</button><h2 id="dtitle">Tu pedido</h2><button class="ib" data-dclose aria-label="Cerrar">×</button></div>
     <div class="prog" id="prog"><button data-step="1">Entrega</button><button data-step="2">Caja</button><button data-step="3">Pops</button></div></header>
@@ -366,12 +374,12 @@ const IMGDIR='/clickly/img/';
 const IMG={},IMGT={};
 const POPS=[
  {id:'base',n:'Clickly Box',line:'base',c:'#2F6FE0',ct:'Click en la tapa',d:'Una cajita cuya tapa es el clicker. El modelo base, el que siempre está.'},
- {id:'medialuna',n:'Medialuna Pop',line:'ar',c:'#5E9FDC',ct:'Click en el rollito del medio',d:'Una medialuna gordita, con sus rollitos y sus cuernos.'},
- {id:'alfajor',n:'Alfajor Pop',line:'ar',c:'#7B4B2A',ct:'Click en la galleta de arriba',d:'Dos galletas con dulce de leche, todo marrón.',local:1},
- {id:'mate',n:'Mate Pop',line:'ar',c:'#6F9140',ct:'Click en la yerba',d:'Un mate de calabaza con su virola y la yerba arriba, con palitos. Apretás la yerba y hace clic.'},
+ {id:'medialuna',n:'Medialuna Pop',line:'ar',c:'#5E9FDC',ct:'Click en el rollito del medio',d:'Una medialuna gordita, con sus rollitos y sus cuernos.',m:'40,2 × 30,8 × 28,2 mm'},
+ {id:'alfajor',n:'Alfajor Pop',line:'ar',c:'#7B4B2A',ct:'Click en la galleta de arriba',d:'Dos galletas con dulce de leche, todo marrón.',local:1,m:'44,2 × 44,2 × 26,4 mm'},
+ {id:'mate',n:'Mate Pop',line:'ar',c:'#6F9140',ct:'Click en la yerba',d:'Un mate de calabaza con su virola y la yerba arriba, con palitos. Apretás la yerba y hace clic.',m:'36,8 × 36,9 × 26,7 mm'},
  {id:'pancake',n:'Pancake Pop',line:'bf',c:'#E8A33D',ct:'Click en el panqueque de arriba',d:'Una pila de panqueques con almíbar y una pastillita de manteca arriba.'},
- {id:'macaron',n:'Pink Macaron Pop',line:'sweet',c:'#EF97B1',ct:'Click en la tapita de arriba',d:'Un macaron con tapitas rosa pastel y relleno blanco.'},
- {id:'candy',n:'Candy Pop',line:'sweet',c:'#CDBFF0',ct:'Click en el medio',d:'Un caramelo con su envoltorio y las puntas torcidas.',local:1},
+ {id:'macaron',n:'Pink Macaron Pop',line:'sweet',c:'#EF97B1',ct:'Click en la tapita de arriba',d:'Un macaron con tapitas rosa pastel y relleno blanco.',m:'Ø42,4 × 29 mm'},
+ {id:'candy',n:'Candy Pop',line:'sweet',c:'#CDBFF0',ct:'Click en el medio',d:'Un caramelo con su envoltorio y las puntas torcidas.',local:1,m:'70,6 × 30,8 × 26,7 mm'},
  {id:'muffin',n:'Muffin Pop',line:'bf',c:'#F7A8C4',ct:'Click en la crema',d:'Un muffin con pirotín marrón, bizcocho y mucha crema batida rosa.',local:1},
  {id:'pan',n:'Pan Pop',line:'bf',c:'#B5712C',ct:'Click en la miga',d:'Una rebanada de pan de molde, con la miga a ras de la corteza. Apretás la miga y hace clic.',local:1},
 ];
@@ -449,7 +457,7 @@ const short=n=>n.replace(/ Pop$/,'');
 
 
 /* Portada: desfile de pops */
-function drawParade(){const one=POPS.map(p=>`<button data-press data-pclick aria-label="Hacer clic en ${esc(p.n)}"><img src="${timg(p.id)}" alt="${esc(p.n)}" width="420" height="420"></button>`).join('');
+function drawParade(){const one=POPS.map(p=>`<button data-press data-pclick data-pid="${p.id}" aria-label="Ver ${esc(p.n)}"><img src="${timg(p.id)}" alt="${esc(p.n)}" width="420" height="420"></button>`).join('');
   $('#parade').innerHTML=`<div class="row">${one}${one.replace(/aria-label="[^"]*"/g,'aria-hidden="true" tabindex="-1"')}</div>`}
 
 /* La línea de pops */
@@ -457,7 +465,7 @@ function popCtrl(p){const q=Q[p.id]||0,a=avail(p.id),r=room();
   if(!q)return`<button class="pill sm" data-press data-plus="${p.id}" ${a<=0||r<=0?'disabled':''}>${a<=0?'Agotado':r<=0?'Pedido lleno':'Sumar a mi caja'}</button>`;
   return`<div class="stepper"><button data-minus="${p.id}" aria-label="Sacar un ${esc(p.n)}">−</button><output class="tab" aria-live="polite">${q}</output><button data-press data-plus="${p.id}" ${a<=0||r<=0?'disabled':''} aria-label="Sumar otro ${esc(p.n)}">+</button></div>`}
 function drawLineup(){$('#lineup').innerHTML=POPS.filter(p=>LINE==='all'||p.line===LINE).map(p=>{const [sc,stx]=stockOf(p);return`<article class="it rv" id="pop-${p.id}">
-   <button class="ph" data-press data-pclick aria-label="Hacer clic en ${esc(p.n)}"><img src="${IMG[p.id]}" alt="${esc(p.n)}" width="560" height="560" loading="lazy" decoding="async"><span class="n tab ${Q[p.id]?'on':''}">${Q[p.id]||''}</span></button>
+   <button class="ph" data-press data-pclick data-pid="${p.id}" aria-label="Ver ${esc(p.n)}"><img src="${IMG[p.id]}" alt="${esc(p.n)}" width="560" height="560" loading="lazy" decoding="async"><span class="n tab ${Q[p.id]?'on':''}">${Q[p.id]||''}</span></button>
    <div><h3>${esc(p.n)}</h3><p class="d">${esc(p.d)} ${esc(p.ct)}.</p>
    <div class="ft"><span class="ctl">${popCtrl(p)}</span>${stx?`<span class="st ${sc}">${stx}</span>`:`<span class="pr tab">${p.xp?money(p.xp)+' c/u':money(PBOX/MAX)+' en caja'}</span>`}</div></div></article>`}).join('');observe()}
 function updLineup(){POPS.forEach(p=>{const s=$('#pop-'+p.id);if(!s)return;s.querySelector('.ctl').innerHTML=popCtrl(p);const n=s.querySelector('.ph .n');n.textContent=Q[p.id]||'';n.classList.toggle('on',!!Q[p.id])})}
@@ -513,7 +521,7 @@ function drawFab(){const T=totals(),cur=T.n?T.bx[T.bx.length-1]:[];
   $('#fabs').textContent=!T.n?'':T.rest?`faltan ${MAX-T.rest} · ${money(T.sub)}`:(T.full>=FREE?'Envío gratis · ':'')+money(T.sub);
   $('#fabb').textContent=T.n&&!T.rest?'Reservar':'Ver caja';
   const n=$('#bagn');n.textContent=T.n||'';n.classList.toggle('on',!!T.n);$('#bag').setAttribute('aria-label',`Pedir, ${T.n} pops en tu caja`)}
-function ui(){clean();drawFab();updLineup();if(dOpen()){if(STEP===3)drawBuilder($('#dbody'));drawFoot();$('#dfoot').hidden=STEP<3&&!total()}onScroll()}
+function ui(){clean();drawFab();updLineup();if(POPID&&!$('#pdm').hidden)drawPop();if(dOpen()){if(STEP===3)drawBuilder($('#dbody'));drawFoot();$('#dfoot').hidden=STEP<3&&!total()}onScroll()}
 
 function add(id,src){const p=pop(id);if(!p)return;if(avail(id)<=0){toast(`${p.n}: sin stock por ahora`);return}if(room()<=0){toast('Llegaste al máximo de 5 cajas');return}
   Q[id]=(Q[id]||0)+1;save();click();fly(id,src);ui();const T=totals();
@@ -598,15 +606,32 @@ addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onS
 /* Eventos */
 $('#modal').addEventListener('submit',e=>{if(e.target.id==='rform')submitRes(e)});
 $('#modal').addEventListener('input',e=>{if(e.target.classList.contains('bad')){e.target.classList.remove('bad');const er=e.target.parentElement.querySelector('.err');if(er)er.textContent=''}if(e.target.name==='envio')$('#r_enverr').textContent=''});
-addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!$('#modal').hidden)closeSheet();else closeD()});
+addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!$('#pdm').hidden){closePop();return}if(!$('#modal').hidden)closeSheet();else closeD()});
+
+let POPID=null;
+function drawPop(){const p=POPS.find(x=>x.id===POPID);if(!p)return;const L=LINES[p.line],[sc,stx]=stockOf(p),a=avail(p.id),can=a>0&&room()>0;
+ $('#pdc').innerHTML=`<button class="ib x" data-pdclose aria-label="Cerrar">×</button>
+ <div class="pi"><img src="${IMG[p.id]}" alt="${esc(p.n)}"></div>
+ <h3 id="pdt">${esc(p.n)}</h3><span class="ln" style="--lc:${L.c}"><i></i>${esc(L.n)}</span>
+ <p class="ds">${esc(p.d)}</p>
+ <dl><dt>Cómo se usa</dt><dd>${esc(p.ct)}. Baja 4 mm sobre el switch y hace clic.</dd>
+ <dt>Mecanismo</dt><dd>Switch mecánico MX adentro.</dd>
+ ${p.m?`<dt>Medidas</dt><dd>${esc(p.m)}</dd>`:''}
+ <dt>Precio</dt><dd>${p.xp?money(p.xp)+' c/u':money(PBOX/MAX)+' en caja de 5'} · suelto ${money(PRICE)} solo con retiro</dd>
+ <dt>Stock</dt><dd>${stx||'Disponible'}</dd>
+ <dt>Hecho en</dt><dd>Impreso en 3D en Argentina. No es comida.</dd></dl>
+ <button class="pill" data-press data-plus="${p.id}" ${can?'':'disabled'}>${a<=0?'Agotado':room()<=0?'Caja completa':'Sumar a mi caja'}${Q[p.id]?' · ya sumaste '+Q[p.id]:''}</button>`}
+function openPop(id){POPID=id;drawPop();$('#pdm').hidden=false;document.body.style.overflow='hidden'}
+function closePop(){$('#pdm').hidden=true;POPID=null;if(!dOpen())document.body.style.overflow=''}
 function wob(el){const im=el.querySelector('img');if(!im||RM.matches)return;im.animate([{transform:'none'},{transform:'scale(1.08,.86)'},{transform:'scale(.96,1.05)'},{transform:'none'}],{duration:380,easing:'cubic-bezier(.34,1.56,.64,1)'})}
 document.addEventListener('click',e=>{const t=e.target;const lb=t.closest&&t.closest('[data-line]');if(lb){setLine(lb.dataset.line);const h=$('#pops');if(h)window.scrollTo({top:h.offsetTop-120,behavior:'smooth'});return}
+  if(t.id==='pdm'||t.closest('[data-pdclose]')){closePop();return}
   if(t.id==='modal'||t.closest('[data-close]')){closeSheet();return}
   if(t.id==='drw'||t.closest('[data-dclose]')){closeD();return}
   if(t.id==='rdm'){const txt=$('#sheet').dataset.txt||'',ok=()=>{toast('Resumen copiado: pegalo en el DM');window.open('https://ig.me/m/clickly_oficial','_blank','noopener')};if(navigator.clipboard)navigator.clipboard.writeText(txt).then(ok,ok);else ok();return}
   const pl=t.closest('[data-plus]');if(pl){add(pl.dataset.plus,pl);return}
   const mi=t.closest('[data-minus]');if(mi){rem(mi.dataset.minus);return}
-  const pc=t.closest('[data-pclick]');if(pc){wob(pc);return}
+  const pc=t.closest('[data-pclick]');if(pc){wob(pc);if(pc.dataset.pid)openPop(pc.dataset.pid);return}
   const en=t.closest('[data-env]');if(en){draft.envio=en.dataset.env==='retiro'?'retiro':'sucursal';if(draft.envio!=='retiro'&&GOAL===0)GOAL=1;setTimeout(()=>go(2),RM.matches?0:180);drawStep();return}
   const g=t.closest('[data-goal]');if(g){GOAL=+g.dataset.goal;if(dOpen()){drawStep();setTimeout(()=>go(3),RM.matches?0:180)}else{if(GOAL===0)draft.envio='retiro';else if(GOAL>=2&&!draft.envio)draft.envio='sucursal';openD(ENVSEL()?3:1)}return}
   const sp=t.closest('[data-step]');if(sp){if(+sp.dataset.step<=STEP||ENVSEL())go(+sp.dataset.step);return}
