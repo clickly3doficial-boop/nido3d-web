@@ -383,7 +383,7 @@ const POPS=[
  {id:'base',n:'Clickly Box',line:'base',c:'#2F6FE0',ct:'Click en la tapa',d:'Una cajita cuya tapa es el clicker. El modelo base, el que siempre está.'},
  {id:'medialuna',n:'Medialuna Pop',line:'ar',c:'#5E9FDC',ct:'Click en el rollito del medio',d:'Una medialuna gordita, con sus rollitos y sus cuernos.',m:'40,2 × 30,8 × 28,2 mm'},
  {id:'alfajor',n:'Alfajor Pop',line:'ar',c:'#7B4B2A',ct:'Click en la galleta de arriba',d:'Dos galletas con dulce de leche, todo marrón.',local:1,m:'44,2 × 44,2 × 26,4 mm'},
- {id:'mate',n:'Mate Pop',line:'ar',c:'#6F9140',ct:'Click en la yerba',d:'Un mate de calabaza con su virola y la yerba arriba, con palitos. Apretás la yerba y hace clic.',m:'36,8 × 36,9 × 26,7 mm'},
+ {id:'empanada',n:'Empanada Pop',line:'ar',c:'#C98A3C',ct:'Click en la tapa',d:'Una empanada gordita, con su repulgue. Apretás la tapa y hace clic.',local:1,m:'43,9 × 35,3 × 29,4 mm'},
  {id:'pancake',n:'Pancake Pop',line:'bf',c:'#E8A33D',ct:'Click en el panqueque de arriba',d:'Una pila de panqueques con almíbar y una pastillita de manteca arriba.'},
  {id:'macaron',n:'Pink Macaron Pop',line:'sweet',c:'#EF97B1',ct:'Click en la tapita de arriba',d:'Un macaron con tapitas rosa pastel y relleno blanco.',m:'Ø42,4 × 29 mm'},
  {id:'candy',n:'Candy Pop',line:'sweet',c:'#CDBFF0',ct:'Click en el medio',d:'Un caramelo con su envoltorio y las puntas torcidas.',local:1,m:'70,6 × 30,8 × 26,7 mm'},
@@ -616,7 +616,7 @@ $('#modal').addEventListener('input',e=>{if(e.target.classList.contains('bad')){
 addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!$('#pdm').hidden){closePop();return}if(!$('#modal').hidden)closeSheet();else closeD()});
 
 let POPID=null;
-const LAYERS={"alfajor": 8.0, "candy": 4.8, "macaron": 8.28, "medialuna": 7.89, "mate": 9.14, "pancake": 8.58, "pan": 7.2, "muffin": 8.17};
+const LAYERS={"alfajor": 8.0, "candy": 4.8, "macaron": 8.28, "medialuna": 7.89, "empanada": 1, "pancake": 8.58, "pan": 7.2, "muffin": 8.17};
 const pimg=(p,lazy)=>LAYERS[p.id]?`<span class="pl" data-id="${p.id}"><img src="${IMGDIR+p.id}-f0.webp" alt="${esc(p.n)}" width="560" height="560" ${lazy?'loading="lazy" decoding="async"':''}><canvas width="560" height="560"></canvas></span>`:`<img src="${IMG[p.id]}" alt="${esc(p.n)}" width="560" height="560" ${lazy?'loading="lazy" decoding="async"':''}>`;
 function drawPop(){const p=POPS.find(x=>x.id===POPID);if(!p)return;const L=LINES[p.line],[sc,stx]=stockOf(p),a=avail(p.id),can=a>0&&room()>0;
  $('#pdc').innerHTML=`<button class="ib x" data-pdclose aria-label="Cerrar">×</button>
