@@ -386,6 +386,7 @@ const POPS=[
  {id:'empanada',n:'Empanada Pop',line:'ar',c:'#C98A3C',ct:'Click en la cúpula',d:'Una empanada con su repulgue. Apretás la cúpula y hace clic.',local:1,m:'80,1 × 44,4 × 28,9 mm'},
  {id:'pancake',n:'Pancake Pop',line:'bf',c:'#E8A33D',ct:'Click en el panqueque de arriba',d:'Una pila de panqueques con almíbar y una pastillita de manteca arriba.'},
  {id:'macaron',n:'Pink Macaron Pop',line:'sweet',c:'#EF97B1',ct:'Click en la tapita de arriba',d:'Un macaron con tapitas rosa pastel y relleno blanco.',m:'Ø42,4 × 29 mm'},
+ {id:'chocolate',n:'Doble Chocolate Flexi Pop',line:'sweet',c:'#7A4B2A',ct:'Click en cada mitad de arriba',d:'Una barra de chocolate flexi con dos clickers: cada mitad tiene su propio switch, así que lleva 2 switches.',local:1,m:'34 × 64 × 29,3 mm · 2 switches',xp:6000},
  {id:'candy',n:'Candy Pop',line:'sweet',c:'#CDBFF0',ct:'Click en el medio',d:'Un caramelo con su envoltorio y las puntas torcidas.',local:1,m:'70,6 × 30,8 × 26,7 mm'},
  {id:'muffin',n:'Muffin Pop',line:'bf',c:'#F7A8C4',ct:'Click en la crema',d:'Un muffin con pirotín marrón, bizcocho y mucha crema batida rosa.',local:1},
  {id:'pan',n:'Pan Pop',line:'bf',c:'#B5712C',ct:'Click en la miga',d:'Una rebanada de pan de molde, con la miga a ras de la corteza. Apretás la miga y hace clic.',local:1},
@@ -626,7 +627,7 @@ function drawPop(){const p=POPS.find(x=>x.id===POPID);if(!p)return;const L=LINES
  <dl><dt>Cómo se usa</dt><dd>${esc(p.ct)}. Baja 4 mm sobre el switch y hace clic.</dd>
  <dt>Mecanismo</dt><dd>Switch mecánico MX adentro.</dd>
  ${p.m?`<dt>Medidas</dt><dd>${esc(p.m)}</dd>`:''}
- <dt>Precio</dt><dd>${p.xp?money(p.xp)+' c/u':money(PBOX/MAX)+' en caja de 5'} · suelto ${money(PRICE)} solo con retiro</dd>
+ <dt>Precio</dt><dd>${p.xp?money(p.xp)+' c/u':money(PBOX/MAX)+' en caja de 5'} · suelto ${money(p.xp||PRICE)} solo con retiro</dd>
  <dt>Stock</dt><dd>${stx||'Disponible'}</dd>
  <dt>Hecho en</dt><dd>Impreso en 3D en Argentina. No es comida.</dd></dl>
  <button class="pill" data-press data-plus="${p.id}" ${can?'':'disabled'}>${a<=0?'Agotado':room()<=0?'Caja completa':'Sumar a mi caja'}${Q[p.id]?' · ya sumaste '+Q[p.id]:''}</button>`}
