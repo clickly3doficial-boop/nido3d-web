@@ -351,7 +351,7 @@ section{padding:clamp(4.5rem,9vw,8rem) 0}
   <div class="hd rv"><h2>Preguntas</h2></div>
   <details><summary>¿Son comida?</summary><p>No. Son clickers impresos en 3D con forma de lo que más te gusta. No se comen, no se derriten y no caducan.</p></details>
   <details><summary>¿Puedo repetir el mismo pop?</summary><p>Sí. La caja es de cuatro y podés poner el mismo pop las veces que quieras.</p></details>
-  <details><summary>¿Cuánto sale la caja llena?</summary><p>La caja llena de cuatro sale $14.500 (te queda $2.900 cada pop). Para envío por correo el mínimo es una caja llena. Los pops sueltos salen $3.000 y son solo con retiro en persona.</p></details>
+  <details><summary>¿Cuánto sale la caja llena?</summary><p>La caja llena de cuatro sale $12.000 (te queda $3.000 cada pop). Para envío por correo el mínimo es una caja llena. Los pops sueltos salen $3.000 y son solo con retiro en persona.</p></details>
   <details><summary>¿Cuánto sale el envío?</summary><p>Con una caja llena, el envío a sucursal de Correo Argentino sale $2.990 a todo el país (a domicilio, $5.990). Desde 2 cajas llenas, el envío a sucursal es gratis (a domicilio pagás $4.000). Si no llenás una caja, es solo con retiro en persona, sin cargo.</p></details>
   <details><summary>¿Cuántas cajas puedo reservar?</summary><p>Hasta 5 cajas por reserva. Cada caja lleva 4 pops y la armás como quieras.</p></details>
   <details><summary>¿Necesito una cuenta?</summary><p>No. Tus cajas y tu reserva quedan guardadas en este dispositivo.</p></details>
@@ -407,7 +407,7 @@ addEventListener('resize',navH);addEventListener('load',navH);
 function drawLines(){const ks=Object.keys(LINES).filter(k=>POPS.some(p=>p.line===k));
  $('#lines').innerHTML=[['all','Todas','#F6884C'],...ks.map(k=>[k,LINES[k].n.replace('Línea ',''),LINES[k].c])].map(([k,n,c])=>`<button data-line="${k}" style="--lc:${c}" aria-pressed="${LINE===k}">${k==='all'?'':'<i></i>'}${esc(n)}</button>`).join('')}
 const LINES={base:{n:'Línea BASE',tag:'Para siempre',c:'#2F6FE0'},ar:{n:'Línea ARGENTINA',tag:'Nuevo',c:'#74ACDF'},bf:{n:'Línea BREAKFAST',tag:'Tiempo limitado',c:'#F6884C'},sweet:{n:'Línea SWEET',tag:'Nuevo',c:'#F06A8C'}};
-const PRICE=3000,PBOX=14500,FREE=2,MAX=4,MAXB=5,KEY='clickly.pedido',OLDKEY='clickly.caja5',RKEY='clickly.reservas';
+const PRICE=3000,PBOX=12000,FREE=2,MAX=4,MAXB=5,KEY='clickly.pedido',OLDKEY='clickly.caja5',RKEY='clickly.reservas';
 /* Catálogo en vivo (Clickly Admin): stock y pops visibles */
 const API='https://script.google.com/macros/s/AKfycbytXWgqCYSoKk4d-IXCPy8l8VOAkVaSji5PFaJ2E286vdpWDoWcHg7TQ9ALT4pyhkw/exec',CATKEY='clickly.catalogo';
 const ENV={retiro:{n:'Retiro en persona',s:'Sin cargo. Coordinamos por mensaje.'},sucursal:{n:'Correo Argentino a sucursal',s:'Retirás en la sucursal más cercana.'},domicilio:{n:'Correo Argentino a domicilio',s:'Te lo llevan a tu casa.'}};
